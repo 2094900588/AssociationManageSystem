@@ -43,8 +43,16 @@ public class AmController {
     //模糊查询的时候进行添加条件既可
     @GetMapping("/page")
     public Result findPage(@RequestParam Integer pageNum,
-                           @RequestParam Integer pageSize) {
+                           @RequestParam Integer pageSize,
+                           @RequestParam(defaultValue = "") String studentid,
+                           @RequestParam(defaultValue = "") String amname) {
         QueryWrapper<Am> queryWrapper=new QueryWrapper<>();
+        if(!"".equals(studentid)) {
+            queryWrapper.like("studentid", studentid);
+        }
+        if(!"".equals(amname)) {
+            queryWrapper.like("amname", amname);
+        }
         //让新添加的排在页面前面，进行一个排序工作
         queryWrapper.orderByDesc("id");
         //获取当前用户信息

@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -44,4 +46,6 @@ public class Option {
     @ApiModelProperty("举办活动角色ID")
     private Integer roleid;
 
+    @ApiModelProperty("活动时间")
+    private LocalDateTime optiondate;
 }

@@ -43,9 +43,13 @@ public class ClubController {
     //模糊查询的时候进行添加条件既可
     @GetMapping("/page")
     public Result findPage(@RequestParam Integer pageNum,
-                           @RequestParam Integer pageSize) {
+                           @RequestParam Integer pageSize,
+                           @RequestParam(defaultValue = "") String clubname) {
         QueryWrapper<Club> queryWrapper=new QueryWrapper<>();
         //让新添加的排在页面前面，进行一个排序工作
+        if(!"".equals(clubname)) {
+            queryWrapper.like("clubname", clubname);
+        }
         queryWrapper.orderByDesc("id");
         //获取当前用户信息
 //            User currentUser = TokenUtils.getCurrentUser();

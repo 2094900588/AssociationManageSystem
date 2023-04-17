@@ -2,7 +2,7 @@ import axios from 'axios'
 import ElementUI from "element-ui";
 
 const request = axios.create({
-    baseURL: 'http://localhost:9090',  // 注意！！ 这里是全局统一加上了 后端接口前缀 前缀，后端必须进行跨域配置！
+    baseURL: 'http://' + location.hostname + ':9090/api',  // 注意！！ 这里是全局统一加上了 后端接口前缀 前缀，后端必须进行跨域配置！
     timeout: 5000
 })
 
@@ -13,7 +13,7 @@ request.interceptors.request.use(config => {
     config.headers['Content-Type'] = 'application/json;charset=utf-8';
 
     let user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null
-    if(user){
+    if (user) {
         config.headers['token'] = user.token;  // 设置请求头
     }
     return config
@@ -35,10 +35,10 @@ request.interceptors.response.use(
             res = res ? JSON.parse(res) : res
         }
         //当权限验证不通过时给出提示
-        if (res.code === '401'){
+        if (res.code === '401') {
             ElementUI.Message({
-                message:res.msg,
-                type:'error'
+                message: res.msg,
+                type: 'error'
             });
         }
         return res;
