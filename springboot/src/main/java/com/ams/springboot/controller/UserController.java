@@ -34,7 +34,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @since 2023-03-28
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 public class UserController {
 
         @Resource

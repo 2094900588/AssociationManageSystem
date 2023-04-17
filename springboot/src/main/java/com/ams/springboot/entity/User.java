@@ -64,8 +64,8 @@ public class User implements Serializable {
       private String studentid;
 
       @ApiModelProperty("社团ID")
-      private String clubid;
+      private Integer clubid;
 
       @ApiModelProperty("角色ID")
-      private String roleid;
+      private Integer roleid;
 }

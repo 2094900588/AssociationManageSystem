@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class Option {
     @ApiModelProperty("活动编号")
     @TableId(value = "id", type = IdType.AUTO)
-    private String id;
+    private Integer id;
 
     @ApiModelProperty("活动名称")
     private String optionname;
@@ -27,7 +27,7 @@ public class Option {
     private String optionaim;
 
     @ApiModelProperty("活动参与人数")
-    private String optionnum;
+    private Integer optionnum;
 
     @ApiModelProperty("活动成绩表")
     private String optionfile;
@@ -39,9 +39,9 @@ public class Option {
     private String isgrade;
 
     @ApiModelProperty("举办活动社团ID")
-    private String clubid;
+    private Integer clubid;
 
     @ApiModelProperty("举办活动角色ID")
-    private String roleid;
+    private Integer roleid;
 
 }

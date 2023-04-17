@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 
 @RestController
-@RequestMapping("/operator")
+@RequestMapping("/api/operator")
 public class OperatorController {
 
     @Resource

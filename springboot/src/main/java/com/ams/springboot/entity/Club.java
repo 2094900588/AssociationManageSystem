@@ -9,6 +9,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class Club {
     @ApiModelProperty("社团编号")
     @TableId(value = "id", type = IdType.AUTO)
-    private String id;
+    private Integer id;
 
     @ApiModelProperty("社团名称")
     private String clubname;
@@ -28,11 +31,11 @@ public class Club {
     private String clubfounder;
 
     @ApiModelProperty("社团创建时间")
-    private String clubtime;
+    private LocalDateTime clubtime;
 
     @ApiModelProperty("社团照片")
     private String clubphoto;
 
     @ApiModelProperty("社团积分")
-    private String integral;
+    private Integer integral;
 }

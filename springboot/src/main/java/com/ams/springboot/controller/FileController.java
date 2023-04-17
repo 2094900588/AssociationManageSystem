@@ -22,7 +22,7 @@ import java.net.URLEncoder;
 import java.util.List;
 
 @RestController
-@RequestMapping("/file")
+@RequestMapping("/api/file")
 public class FileController {
 
     @Value("${files.upload.path}")

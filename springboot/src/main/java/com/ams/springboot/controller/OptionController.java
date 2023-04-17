@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 
 @RestController
-@RequestMapping("/option")
+@RequestMapping("/api/option")
 public class OptionController {
     @Resource
     private IOptionService optionService;

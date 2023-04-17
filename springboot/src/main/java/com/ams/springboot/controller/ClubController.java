@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 
 @RestController
-@RequestMapping("/club")
+@RequestMapping("/api/club")
 public class ClubController {
     @Resource
     private IClubService clubService;

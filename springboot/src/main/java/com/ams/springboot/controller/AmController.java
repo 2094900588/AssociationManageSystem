@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 
 @RestController
-@RequestMapping("/am")
+@RequestMapping("/api/am")
 public class AmController {
 
     @Resource
