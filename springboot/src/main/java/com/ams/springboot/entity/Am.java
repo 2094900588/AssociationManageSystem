@@ -2,11 +2,13 @@ package com.ams.springboot.entity;
 
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.models.auth.In;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -33,6 +35,7 @@ public class Am {
     @ApiModelProperty("社员政治面貌")
     private String status;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @ApiModelProperty("社员加入社团时间")
     private LocalDateTime intotime;
 

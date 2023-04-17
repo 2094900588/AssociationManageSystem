@@ -3,10 +3,12 @@ package com.ams.springboot.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
@@ -46,6 +48,7 @@ public class Option {
     @ApiModelProperty("举办活动角色ID")
     private Integer roleid;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @ApiModelProperty("活动时间")
     private LocalDateTime optiondate;
 }
