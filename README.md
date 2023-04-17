@@ -176,7 +176,7 @@
   
   操作时间：operatetime
   
-  撤销删除操作：cloperate
+  撤销删除操作：cloperate（0代表可以撤销，1代表已经撤销掉了）
   
   
   
