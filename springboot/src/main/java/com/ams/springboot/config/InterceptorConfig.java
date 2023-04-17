@@ -16,9 +16,9 @@ public class InterceptorConfig  implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(jwtInterceptor())
-                .addPathPatterns("/**") //拦截所有请求，通过判断token是否合法决定是否需要登录
+//                .addPathPatterns("/**") //拦截所有请求，通过判断token是否合法决定是否需要登录
                 .excludePathPatterns("/api/user/login","/api/user/register","/**/export","/**/import","/api/file/**","/swagger-ui.html",
-                        "/swagger-resources/**","/webjars/**","/v2/**"
+                        "/swagger-resources/**","/webjars/**","/v2/**","/**"
                 );
     }
 }

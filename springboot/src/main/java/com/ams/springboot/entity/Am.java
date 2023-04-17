@@ -16,12 +16,13 @@ import java.util.Date;
 @NoArgsConstructor
 @TableName("sys_am")
 public class Am {
+
     @ApiModelProperty("社员编号")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     @ApiModelProperty("社员学号")
-    private Integer studentid;
+    private String studentid;
 
     @ApiModelProperty("社员名称")
     private String amname;
