@@ -34,7 +34,7 @@ public class Club {
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     @ApiModelProperty("社团创建时间")
-    private LocalDateTime clubtime;
+    private Date clubtime;
 
     @ApiModelProperty("社团照片")
     private String clubphoto;

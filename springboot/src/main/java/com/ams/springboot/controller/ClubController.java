@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/api/club")
@@ -55,4 +56,18 @@ public class ClubController {
 //            System.out.println("获取当前用户信息==================" + currentUser.getNickname());
         return Result.success(clubService.page(new Page<>(pageNum, pageSize),queryWrapper));
     }
+
+    //社团排名api接口
+    @GetMapping("/page/ranking")
+    public Result findPageranking(@RequestParam Integer pageNum,
+                           @RequestParam Integer pageSize
+                           ) {
+        QueryWrapper<Club> queryWrapper=new QueryWrapper<>();
+        //对社团积分进行排名，实现社团排名的数据
+        queryWrapper.orderByDesc("integral");
+        return Result.success(clubService.page(new Page<>(pageNum, pageSize),queryWrapper));
+    }
+
+    //社团总人数api接口
+
 }
