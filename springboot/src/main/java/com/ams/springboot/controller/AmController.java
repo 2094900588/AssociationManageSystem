@@ -54,7 +54,9 @@ public class AmController {
         operator.setObjectid(id);
         //数据库中插入数据
         operatorService.save(operator);
-        return Result.success(amService.removeById(id));
+        Am am =  amService.getById(id);
+        am.setIsamdelete(1);
+        return Result.success(amService.saveOrUpdate(am));
     }
 
     //查询整个列表
@@ -76,6 +78,7 @@ public class AmController {
                            @RequestParam(defaultValue = "") String studentid,
                            @RequestParam(defaultValue = "") String amname) {
         QueryWrapper<Am> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("isamdelete",false);
         if(!"".equals(studentid)) {
             queryWrapper.like("studentid", studentid);
         }

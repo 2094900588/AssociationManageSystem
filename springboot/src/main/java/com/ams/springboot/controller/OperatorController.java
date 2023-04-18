@@ -3,6 +3,7 @@ package com.ams.springboot.controller;
 
 import com.ams.springboot.common.Result;
 import com.ams.springboot.entity.Operator;
+import com.ams.springboot.service.IAmService;
 import com.ams.springboot.service.IOperatorService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -16,10 +17,16 @@ public class OperatorController {
 
     @Resource
     private IOperatorService operatorService;
+    @Resource
+    private IAmService amService;
 
     //增加修改同一个方法
-    @PostMapping
-    public Result save(@RequestBody Operator operator) {
+    @PostMapping("/{id}")
+    public Result revoke(@PathVariable Integer id) {
+        Operator operator = operatorService.getById(id);
+        amService.getById(operator.getObjectid()).setIsamdelete(0);
+        //点击撤销时置为1
+        operator.setCloperate(1);
         return Result.success(operatorService.saveOrUpdate(operator));
     }
 

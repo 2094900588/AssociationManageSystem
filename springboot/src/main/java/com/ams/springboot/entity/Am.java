@@ -39,10 +39,8 @@ public class Am {
     @ApiModelProperty("社员加入社团时间")
     private LocalDateTime intotime;
 
-    @TableLogic
-    @TableField(select = false)
     @ApiModelProperty("社员是否删除")
-    private Boolean isamdelete;
+    private Integer isamdelete;
 
     @ApiModelProperty("社团ID")
     private Integer clubid;

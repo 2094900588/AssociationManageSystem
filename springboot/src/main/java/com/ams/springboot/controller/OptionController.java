@@ -4,6 +4,7 @@ package com.ams.springboot.controller;
 import com.ams.springboot.common.Result;
 import com.ams.springboot.entity.Am;
 import com.ams.springboot.entity.Option;
+import com.ams.springboot.service.IAmService;
 import com.ams.springboot.service.IOptionService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -16,6 +17,7 @@ import javax.annotation.Resource;
 public class OptionController {
     @Resource
     private IOptionService optionService;
+
 
     //增加修改同一个方法
     @PostMapping
@@ -53,4 +55,5 @@ public class OptionController {
 //            System.out.println("获取当前用户信息==================" + currentUser.getNickname());
         return Result.success(optionService.page(new Page<>(pageNum, pageSize),queryWrapper));
     }
+
 }
