@@ -49,6 +49,8 @@ public class Operator {
     private LocalDateTime operatetime;
 
     @ApiModelProperty("撤销删除操作")
-    @TableLogic
     private Integer cloperate;
+
+    @ApiModelProperty("操作对象id")
+    private Integer objectid;
 }
