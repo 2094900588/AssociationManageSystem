@@ -4,10 +4,12 @@ package com.ams.springboot.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -30,6 +32,7 @@ public class Club {
     @ApiModelProperty("社团创始人")
     private String clubfounder;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @ApiModelProperty("社团创建时间")
     private LocalDateTime clubtime;
 

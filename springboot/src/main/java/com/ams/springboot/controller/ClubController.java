@@ -1,7 +1,6 @@
 package com.ams.springboot.controller;
 
 import com.ams.springboot.common.Result;
-import com.ams.springboot.entity.Am;
 import com.ams.springboot.entity.Club;
 import com.ams.springboot.service.IClubService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
