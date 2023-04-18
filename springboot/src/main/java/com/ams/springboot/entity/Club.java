@@ -41,4 +41,7 @@ public class Club {
 
     @ApiModelProperty("社团积分")
     private Integer integral;
+
+    @ApiModelProperty("社团总人数")
+    private Integer sum;
 }
