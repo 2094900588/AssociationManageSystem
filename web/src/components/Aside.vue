@@ -13,12 +13,12 @@
         </el-menu-item>
         <el-submenu index="2">
             <template slot="title">
-                <i class="el-icon-menu"></i>
+                <i class="el-icon-setting"></i>
                 <span slot="title">系统管理</span>
             </template>
             <el-menu-item index="2-1" :route="{ name: '用户管理' }">
                 <template slot="title">
-                    <i class="el-icon-s-custom"></i>
+                    <i class="el-icon-user"></i>
                     <span slot="title">用户管理</span>
                 </template>
             </el-menu-item>
@@ -36,7 +36,7 @@
             </el-menu-item>
             <el-menu-item index="2-4" :route="{ name: '操作日志' }">
                 <template slot="title">
-                    <i class="el-icon-s-custom"></i>
+                    <i class="el-icon-edit"></i>
                     <span slot="title">操作日志</span>
                 </template>
             </el-menu-item>
@@ -48,19 +48,19 @@
             </template>
             <el-menu-item index="3-1" :route="{ name: '社团管理' }">
                 <template slot="title">
-                    <i class="el-icon-folder-opened"></i>
+                    <i class="el-icon-postcard"></i>
                     <span slot="title">社团管理</span>
                 </template>
             </el-menu-item>
             <el-menu-item index="3-2" :route="{ name: '社团人员管理' }">
                 <template slot="title">
-                    <i class="el-icon-s-custom"></i>
+                    <i class="el-icon-user-solid"></i>
                     <span slot="title">社员管理</span>
                 </template>
             </el-menu-item>
             <el-menu-item index="3-3" :route="{ name: '社团活动管理' }">
                 <template slot="title">
-                    <i class="el-icon-s-custom"></i>
+                    <i class="el-icon-star-off"></i>
                     <span slot="title">活动管理</span>
                 </template>
             </el-menu-item>

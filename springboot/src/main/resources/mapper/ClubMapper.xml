@@ -2,4 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ams.springboot.mapper.ClubMapper">
 
+    <select id="getAllClubAndSum" resultType="com.ams.springboot.entity.Club">
+        select c.*, COUNT(*) as sum
+        FROM sys_club c join sys_am a
+        on c.id = a.clubid
+        GROUP BY c.id  order by COUNT(*) desc
+    </select>
 </mapper>

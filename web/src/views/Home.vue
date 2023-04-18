@@ -29,7 +29,7 @@
                 <el-col :span="10" :offset="2">
                     <el-card :body-style="{ padding: '20px' }">
                         <h1>社团人数榜</h1>
-                        <el-table :data="NumtableData" :show-header="false">
+                        <el-table :data="NumTableData" :show-header="false">
                             <el-table-column width="80">
                                 <template slot-scope="scope">
                                     <img v-if="scope.$index < rankphoto.length" :src="rankphoto[scope.$index]" class="image"
@@ -41,7 +41,7 @@
                             </el-table-column>
                             <el-table-column prop="clubname" width="180">
                             </el-table-column>
-                            <el-table-column prop="integral" width="180">
+                            <el-table-column prop="sum" width="180">
                             </el-table-column>
                         </el-table>
 
@@ -102,9 +102,10 @@ export default {
                 pageSize: this.NumpageSize,
             }
             homeapi.getNumPage(params).then(res => {
-                console.log(res);
-                this.NumTableData = res.data.records
+                // console.log(res);
+                this.NumTableData = res.data
                 this.Numtotal = res.data.total
+                // console.log(this.NumTableData);
             })
 
         }

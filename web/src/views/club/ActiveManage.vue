@@ -45,8 +45,9 @@
         </el-table>
 
         <div style="padding: 10px 0">
-            <el-pagination @current-change="handleCurrentChange" :current-page="pageNum" :page-sizes="[2, 5, 10, 20]"
-                :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
+            <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageNum"
+                :page-sizes="[2, 5, 10, 20]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper"
+                :total="total">
             </el-pagination>
             <el-dialog title="活动信息" :visible.sync="dialogFormVisible" width="30%">
                 <el-form label-width="100px" size="small">
@@ -125,6 +126,7 @@ export default {
                 pageSize: this.pageSize,
                 optionname: this.optionname,
             }
+            console.log(params);
             activeapi.getPage(params).then(res => {
                 this.tableData = res.data.records
                 this.total = res.data.total

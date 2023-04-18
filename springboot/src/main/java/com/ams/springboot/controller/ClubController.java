@@ -19,9 +19,6 @@ public class ClubController {
     @Resource
     private IClubService clubService;
 
-    @Resource
-    private IAmService amService;
-
     //增加修改同一个方法
     @PostMapping
     public Result save(@RequestBody Club club) {
@@ -76,19 +73,9 @@ public class ClubController {
 
     //社团总人数api接口
     @GetMapping("/page/sum")
-    public Result findPageSum(@RequestParam Integer pageNum,
-                              @RequestParam Integer pageSize)
+    public Result findPageSum()
     {
-        List<Club> clublist = clubService.list();
-        for (Club club : clublist) {
-            QueryWrapper<Am> queryWrapper = new QueryWrapper<>();
-            queryWrapper.eq("clubid",club.getId());
-            List<Am> list = amService.list(queryWrapper);
-//            club.setSum(list.size());
-        }
-        QueryWrapper<Club> queryWrapper=new QueryWrapper<>();
-        queryWrapper.orderByDesc("sum");
-        return Result.success(clubService.page(new Page<>(pageNum, pageSize),queryWrapper));
+        return Result.success(clubService.getAllClubAndSum());
     }
 
 }

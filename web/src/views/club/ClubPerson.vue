@@ -43,8 +43,9 @@
         </el-table>
 
         <div style="padding: 10px 0">
-            <el-pagination @current-change="handleCurrentChange" :current-page="pageNum" :page-sizes="[2, 5, 10, 20]"
-                :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
+            <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageNum"
+                :page-sizes="[2, 5, 10, 20]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper"
+                :total="total">
             </el-pagination>
 
             <el-dialog title="社员信息" :visible.sync="dialogFormVisible" width="30%">
