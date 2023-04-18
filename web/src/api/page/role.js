@@ -10,5 +10,8 @@ export default {
     },
     delete(data) {
         return ajax.delete("/role/" + data);
+    },
+    getall() {
+        return ajax.get("/role/");
     }
 }

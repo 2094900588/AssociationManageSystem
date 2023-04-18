@@ -15,7 +15,7 @@
             <!-- <el-table-column type="selection" width="50"></el-table-column> -->
             <!-- <el-table-column prop="id" label="id" width="80">
             </el-table-column> -->
-            <el-table-column type="index" width="50"></el-table-column>
+            <el-table-column type="index" width="50" :index="getindex"></el-table-column>
             <el-table-column prop="optionname" label="活动名称" width="140">
             </el-table-column>
             <el-table-column prop="optiondesc" label="活动描述" width="120">
@@ -111,6 +111,9 @@ export default {
         this.load()
     },
     methods: {
+        getindex(index) {
+            return this.pageSize * (this.pageNum - 1) + index + 1
+        },
         handleSizeChange(pageSize) {
             this.pageSize = pageSize
             this.load()

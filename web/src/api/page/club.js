@@ -10,5 +10,8 @@ export default {
     },
     delete(data) {
         return ajax.delete("/club/" + data);
+    },
+    getall() {
+        return ajax.get("/club/");
     }
 }
