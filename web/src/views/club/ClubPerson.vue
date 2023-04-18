@@ -47,7 +47,7 @@
                 :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
             </el-pagination>
 
-            <el-dialog title="用户信息" :visible.sync="dialogFormVisible" width="30%">
+            <el-dialog title="社员信息" :visible.sync="dialogFormVisible" width="30%">
 
                 <el-form label-width="100px" size="small">
                     <el-form-item label="社员学号">
@@ -73,7 +73,7 @@
                 </el-form>
                 <div slot="footer" class="dialog-footer">
                     <el-button @click="dialogFormVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="saveUser">确 定</el-button>
+                    <el-button type="primary" @click="save">确 定</el-button>
                 </div>
             </el-dialog>
         </div>
@@ -130,7 +130,7 @@ export default {
                 this.amname = "",
                 this.load()
         },
-        saveUser() {
+        save() {
             personapi.save(this.form).then(res => {
                 if (res.code === '200') {
                     this.$message.success("保存成功"),

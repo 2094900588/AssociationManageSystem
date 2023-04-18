@@ -45,7 +45,7 @@
                 :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
             </el-pagination>
 
-            <el-dialog title="用户信息" :visible.sync="dialogFormVisible" width="30%">
+            <el-dialog title="社团信息" :visible.sync="dialogFormVisible" width="30%">
 
                 <el-form label-width="100px" size="small">
                     <el-form-item label="社团名称">
@@ -57,11 +57,11 @@
                     <el-form-item label="社团创始人">
                         <el-input v-model="form.clubfounder" type="text" autocomplete="off"></el-input>
                     </el-form-item>
-                    <el-form-item label="社团创建时间">
+                    <!-- <el-form-item label="社团创建时间">
                         <el-date-picker v-model="form.clubtime" type="date" placeholder="选择日期">
                         </el-date-picker>
-                        <!-- <el-input v-model="form.clubtime" type="text" autocomplete="off"></el-input> -->
-                    </el-form-item>
+                        <el-input v-model="form.clubtime" type="text" autocomplete="off"></el-input>
+                    </el-form-item> -->
                     <el-form-item label="社团照片">
                         <el-input v-model="form.clubphoto" type="text" autocomplete="off"></el-input>
                     </el-form-item>
@@ -71,7 +71,7 @@
                 </el-form>
                 <div slot="footer" class="dialog-footer">
                     <el-button @click="dialogFormVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="saveUser">确 定</el-button>
+                    <el-button type="primary" @click="save">确 定</el-button>
                 </div>
             </el-dialog>
         </div>
@@ -81,7 +81,7 @@
 <script>
 import clubapi from '@/api/page/club'
 export default {
-    name: "User",
+    name: "ClubManage",
     data() {
         return {
             tableData: [],
@@ -114,7 +114,6 @@ export default {
                 pageSize: this.pageSize,
                 clubname: this.clubname,
             }
-            console.log(params);
             clubapi.getPage(params).then(res => {
                 this.tableData = res.data.records
                 this.total = res.data.total
@@ -125,7 +124,7 @@ export default {
             this.clubname = "",
                 this.load()
         },
-        saveUser() {
+        save() {
             clubapi.save(this.form).then(res => {
                 if (res.code === '200') {
                     this.$message.success("保存成功"),

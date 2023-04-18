@@ -48,9 +48,7 @@
             <el-pagination @current-change="handleCurrentChange" :current-page="pageNum" :page-sizes="[2, 5, 10, 20]"
                 :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
             </el-pagination>
-
-            <el-dialog title="用户信息" :visible.sync="dialogFormVisible" width="30%">
-
+            <el-dialog title="活动信息" :visible.sync="dialogFormVisible" width="30%">
                 <el-form label-width="100px" size="small">
                     <el-form-item label="活动名称">
                         <el-input v-model="form.optionname" type="text" autocomplete="off"></el-input>
@@ -84,7 +82,7 @@
                 </el-form>
                 <div slot="footer" class="dialog-footer">
                     <el-button @click="dialogFormVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="saveUser">确 定</el-button>
+                    <el-button type="primary" @click="save">确 定</el-button>
                 </div>
             </el-dialog>
         </div>
@@ -94,7 +92,7 @@
 <script>
 import activeapi from '@/api/page/active'
 export default {
-    name: "Person",
+    name: "Active",
     data() {
         return {
             tableData: [],
@@ -137,7 +135,7 @@ export default {
             this.optionname = "",
                 this.load()
         },
-        saveUser() {
+        save() {
             activeapi.save(this.form).then(res => {
                 if (res.code === '200') {
                     this.$message.success("保存成功"),

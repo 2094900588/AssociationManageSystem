@@ -49,7 +49,7 @@
                 </el-form>
                 <div slot="footer" class="dialog-footer">
                     <el-button @click="dialogFormVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="saveUser">确 定</el-button>
+                    <el-button type="primary" @click="save">确 定</el-button>
                 </div>
             </el-dialog>
         </div>
@@ -103,7 +103,7 @@ export default {
             this.rolename = "",
                 this.load()
         },
-        saveUser() {
+        save() {
             roleapi.save(this.form).then(res => {
                 if (res.code === '200') {
                     this.$message.success("保存成功"),
