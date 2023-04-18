@@ -48,7 +48,7 @@ public class Operator {
     @ApiModelProperty("操作时间")
     private LocalDateTime operatetime;
 
-    @ApiModelProperty("撤销删除操作")
+    @ApiModelProperty("撤销删除操作 0未撤销 1已撤销")
     private Integer cloperate;
 
     @ApiModelProperty("操作对象id")

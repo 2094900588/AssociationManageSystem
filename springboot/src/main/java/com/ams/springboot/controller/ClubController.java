@@ -84,7 +84,7 @@ public class ClubController {
             QueryWrapper<Am> queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("clubid",club.getId());
             List<Am> list = amService.list(queryWrapper);
-            club.setSum(list.size());
+//            club.setSum(list.size());
         }
         QueryWrapper<Club> queryWrapper=new QueryWrapper<>();
         queryWrapper.orderByDesc("sum");

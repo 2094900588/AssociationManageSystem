@@ -25,13 +25,17 @@
             <el-table-column prop=" " label=" " width="230">
                 <template slot-scope="scope">
                     <!-- <el-button type="success" @click="handleEdit(scope.row)">编辑<i class="el-icon-edit"></i></el-button> -->
-                    <el-popconfirm class="ml-5" confirm-button-text='好的' cancel-button-text='我再想想' icon="el-icon-info"
-                        icon-color="red" title="你确定撤销操作吗？" @confirm="handleDel(scope.row.id)">
-                        <el-button slot="reference" type="danger">撤销<i class="el-icon-remove-outline"></i></el-button>
-                    </el-popconfirm>
+                    <div v-if="scope.row.cloperate === 0">
+                        <el-popconfirm class="ml-5" confirm-button-text='好的' cancel-button-text='我再想想' icon="el-icon-info"
+                            icon-color="red" title="你确定撤销操作吗？" @confirm="revoke(scope.row.id)">
+                            <el-button slot="reference" type="danger">撤销<i class="el-icon-remove-outline"></i></el-button>
+                        </el-popconfirm>
+                    </div>
+                    <div v-else>
+                        已撤销
+                    </div>
                 </template>
             </el-table-column>
-
         </el-table>
 
     </div>
@@ -75,6 +79,7 @@ export default {
                 rolename: this.rolename,
             }
             logapi.getPage(params).then(res => {
+                console.log(res);
                 this.tableData = res.data.records
                 this.total = res.data.total
             })
@@ -83,6 +88,16 @@ export default {
         reset() {
             this.rolename = "",
                 this.load()
+        },
+        revoke(id) {
+            logapi.revoke(id).then(res => {
+                if (res.code === '200') {
+                    this.$message.success("已撤销"),
+                        this.load()
+                } else {
+                    this.$message.error("撤销失败")
+                }
+            })
         }
     }
 }

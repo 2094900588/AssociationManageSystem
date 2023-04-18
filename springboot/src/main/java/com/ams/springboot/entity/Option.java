@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -50,5 +51,5 @@ public class Option {
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     @ApiModelProperty("活动时间")
-    private LocalDateTime optiondate;
+    private Date optiondate;
 }

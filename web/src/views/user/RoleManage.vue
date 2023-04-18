@@ -14,8 +14,8 @@
         <el-table :data="tableData" border stripe :header-cell-class-name="headBg">
             <el-table-column type="selection" width="50">
             </el-table-column>
-            <el-table-column prop="id" label="id" width="80">
-            </el-table-column>
+            <!-- <el-table-column prop="id" label="id" width="80"></el-table-column> -->
+            <el-table-column type="index" width="50" :index="getindex"></el-table-column>
             <el-table-column prop="rolename" label="角色名称" width="140">
             </el-table-column>
             <el-table-column prop="roledesc" label="角色描述" width="120">
@@ -78,6 +78,9 @@ export default {
         this.load()
     },
     methods: {
+        getindex(index) {
+            return this.pageSize * (this.pageNum - 1) + index + 1
+        },
         handleSizeChange(pageSize) {
             this.pageSize = pageSize
             this.load()

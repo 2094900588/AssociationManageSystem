@@ -37,7 +37,7 @@ public class Am {
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     @ApiModelProperty("社员加入社团时间")
-    private LocalDateTime intotime;
+    private Date intotime;
 
     @ApiModelProperty("社员是否删除")
     private Integer isamdelete;
