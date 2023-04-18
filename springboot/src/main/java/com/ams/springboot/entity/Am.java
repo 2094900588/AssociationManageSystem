@@ -35,7 +35,7 @@ public class Am {
     @ApiModelProperty("社员政治面貌")
     private String status;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "Asia/Shanghai")
     @ApiModelProperty("社员加入社团时间")
     private Date intotime;
 

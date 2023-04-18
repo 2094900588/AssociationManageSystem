@@ -73,7 +73,7 @@
                         <el-input v-model="form.optiongrade" type="text" autocomplete="off"></el-input>
                     </el-form-item>
                     <el-form-item label="活动时间">
-                        <el-date-picker v-model="form.optiondate" type="date" placeholder="选择日期">
+                        <el-date-picker v-model="form.optiondate" type="date" placeholder="选择日期"  value-format="yyyy-MM-dd">
                         </el-date-picker>
                         <!-- <el-input v-model="form.clubtime" type="text" autocomplete="off"></el-input> -->
                     </el-form-item>

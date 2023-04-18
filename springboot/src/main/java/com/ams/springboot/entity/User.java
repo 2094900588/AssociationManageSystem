@@ -57,7 +57,7 @@ public class User implements Serializable {
       @ApiModelProperty("头像")
       private String userphoto;
 
-      @JsonFormat(pattern = "yyyy-MM-dd")
+      @JsonFormat(pattern = "yyyy-MM-dd",timezone = "Asia/Shanghai")
       @ApiModelProperty("创建时间")
       private LocalDateTime createTime;
 

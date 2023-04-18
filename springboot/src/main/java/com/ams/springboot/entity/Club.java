@@ -33,7 +33,7 @@ public class Club {
     @ApiModelProperty("社团创始人")
     private String clubfounder;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "Asia/Shanghai")
     @ApiModelProperty("社团创建时间")
     private Date clubtime;
 

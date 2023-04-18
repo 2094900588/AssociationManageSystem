@@ -72,7 +72,7 @@
                         <el-input v-model="form.status" type="text" autocomplete="off"></el-input>
                     </el-form-item>
                     <el-form-item label="加入社团时间">
-                        <el-date-picker v-model="form.intotime" type="date" placeholder="选择日期">
+                        <el-date-picker v-model="form.intotime" type="date" placeholder="选择日期" value-format="yyyy-MM-dd">
                         </el-date-picker>
                         <!-- <el-input v-model="form.clubtime" type="text" autocomplete="off"></el-input> -->
                     </el-form-item>

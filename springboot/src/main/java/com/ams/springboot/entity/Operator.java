@@ -44,7 +44,7 @@ public class Operator {
     @ApiModelProperty("操作人员社团名称")
     private String clubname;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "Asia/Shanghai")
     @ApiModelProperty("操作时间")
     private LocalDateTime operatetime;
 
