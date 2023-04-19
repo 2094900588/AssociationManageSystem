@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
     name: "Header",
     props: {
@@ -51,13 +52,15 @@ export default {
         }
     },
     methods: {
+        ...mapActions(['exit']),
         collapses() {
             this.$emit("asideCollapse")
         },
         logout() {
-            this.$router.push("/login")
+            this.exit()
             localStorage.removeItem("user")
             this.$message.success("退出成功！")
+            this.$router.push("/login")
         }
     }
 }

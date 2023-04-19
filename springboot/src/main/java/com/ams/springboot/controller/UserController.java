@@ -91,11 +91,10 @@ public class UserController {
             return Result.success(userService.getById(id));
         }
 
-        @GetMapping("/username/{username}")
-        public Result findOne(@PathVariable String username) {
-            QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-            queryWrapper.eq("username",username);
-            return Result.success(userService.getOne(queryWrapper));
+        @GetMapping("/username")
+        public Result findOne() {
+            User user = TokenUtils.getCurrentUser();
+            return Result.success(userService.getById(user.getId()));
     }
 
         //批量删除

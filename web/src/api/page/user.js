@@ -13,5 +13,8 @@ export default {
     },
     multidelete(data) {
         return ajax.post("/user/del/batch", data);
+    },
+    getinfo() {
+        return ajax.get("/user/username");
     }
 }

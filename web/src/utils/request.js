@@ -1,5 +1,6 @@
 import axios from 'axios'
 import ElementUI from "element-ui";
+import router from '@/router';
 
 const request = axios.create({
     baseURL: 'http://' + location.hostname + ':9090/api',  // 注意！！ 这里是全局统一加上了 后端接口前缀 前缀，后端必须进行跨域配置！
@@ -40,6 +41,11 @@ request.interceptors.response.use(
                 message: res.msg,
                 type: 'error'
             });
+        }
+        if (res.code === '402') {//当要重新登陆的时候跳转到登录页面
+            router.push({
+                name: "Login"
+            })
         }
         return res;
     },

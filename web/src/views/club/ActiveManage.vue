@@ -87,14 +87,14 @@
                         </el-date-picker>
                         <!-- <el-input v-model="form.clubtime" type="text" autocomplete="off"></el-input> -->
                     </el-form-item>
-                    <el-form-item label="角色">
+                    <el-form-item label="角色" v-if="user.sysroleid !== 3">
                         <!-- <el-input v-model="form.address" type="text" autocomplete="off"></el-input> -->
                         <el-select v-model="form.roleid" filterable placeholder="请选择">
                             <el-option v-for="item in roles" :key="item.id" :label="item.rolename" :value="item.id">
                             </el-option>
                         </el-select>
                     </el-form-item>
-                    <el-form-item label="所属社团">
+                    <el-form-item label="所属社团" v-if="user.sysroleid !== 3">
                         <!-- <el-input v-model="form.address" type="text" autocomplete="off"></el-input> -->
                         <el-select v-model="form.clubid" filterable placeholder="请选择">
                             <el-option v-for="item in clubs" :key="item.id" :label="item.clubname" :value="item.id">
@@ -115,6 +115,7 @@
 import activeapi from '@/api/page/active'
 import roleapi from '@/api/page/role'
 import clubapi from '@/api/page/club'
+import { mapState } from 'vuex'
 export default {
     name: "Active",
     data() {
@@ -134,6 +135,9 @@ export default {
     },
     created() {
         this.load()
+    },
+    computed: {
+        ...mapState(['user'])
     },
     methods: {
         getindex(index) {

@@ -10,7 +10,7 @@
             </el-header>
             <el-main>
                 <!--  表示当前页面的子路由会在router-view中显示  -->
-                <router-view @refreshUser="getUser" />
+                <router-view />
             </el-main>
         </el-container>
     </el-container>
@@ -20,6 +20,7 @@
 // @ is an alias to /src
 import Aside from '@/components/Aside'
 import Header from '@/components/Header'
+import { mapState } from 'vuex'
 export default {
     name: 'Home',
     data() {
@@ -28,7 +29,7 @@ export default {
             isCollapse: false,
             side_With: 200,
             logoTextShow: true,
-            user: {}
+            // user: {}
         }
     },
     components: {
@@ -37,18 +38,11 @@ export default {
         Header
     },
     created() {
-        //一开始就从后台获取
-        this.getUser()
+    },
+    computed: {
+        ...mapState(['user'])
     },
     methods: {
-        getUser() {
-            let username = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).username : ""
-            //从后台获取数据
-            this.request.get("/user/username/" + username).then(res => {
-                //user重新赋值了，变成更新后的user
-                this.user = res.data
-            })
-        },
         collapse() {//点击收缩按钮触发
             this.isCollapse = !this.isCollapse;
             if (this.isCollapse) {

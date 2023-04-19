@@ -16,29 +16,29 @@
         <el-table :data="tableData" border stripe :header-cell-class-name="headBg">
             <!-- <el-table-column prop="id" label="id" width="80"></el-table-column> -->
             <el-table-column type="index" width="50" :index="getindex"></el-table-column>
-            <el-table-column prop="studentid" label="社员学号" width="140">
+            <el-table-column prop="studentid" label="社员学号">
             </el-table-column>
-            <el-table-column prop="amname" label="社员姓名" width="120">
+            <el-table-column prop="amname" label="社员姓名">
             </el-table-column>
-            <el-table-column prop="phone" label="社员电话" width="150">
+            <el-table-column prop="phone" label="社员电话">
             </el-table-column>
-            <el-table-column prop="status" label="政治面貌" width="150">
+            <el-table-column prop="status" label="政治面貌">
             </el-table-column>
-            <el-table-column prop="intotime" label="加入社团时间" width="150">
+            <el-table-column prop="intotime" label="加入社团时间">
             </el-table-column>
             <!-- <el-table-column prop="integral" label="社团积分" width="150">
             </el-table-column> -->
-            <el-table-column label="角色" width="150">
+            <el-table-column label="角色">
                 <template slot-scope="scope">
                     <span>{{ getrole(scope.row.roleid) }}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="所属社团" width="150">
+            <el-table-column label="所属社团">
                 <template slot-scope="scope">
                     <span>{{ getclub(scope.row.clubid) }}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop=" " label=" " width="230">
+            <el-table-column prop=" " label=" " width="165">
                 <template slot-scope="scope">
                     <el-button type="success" @click="handleEdit(scope.row)">编辑<i class="el-icon-edit"></i></el-button>
                     <el-popconfirm class="ml-5" confirm-button-text='好的' cancel-button-text='我再想想' icon="el-icon-info"
@@ -69,7 +69,11 @@
                         <el-input v-model="form.phone" type="text" autocomplete="off"></el-input>
                     </el-form-item>
                     <el-form-item label="政治面貌">
-                        <el-input v-model="form.status" type="text" autocomplete="off"></el-input>
+                        <!-- <el-input v-model="form.address" type="text" autocomplete="off"></el-input> -->
+                        <el-select v-model="form.status" placeholder="请选择">
+                            <el-option v-for="item in ['党员', '群众', '预备党员', '团员']" :key="item" :label="item" :value="item">
+                            </el-option>
+                        </el-select>
                     </el-form-item>
                     <el-form-item label="加入社团时间">
                         <el-date-picker v-model="form.intotime" type="date" placeholder="选择日期" value-format="yyyy-MM-dd">

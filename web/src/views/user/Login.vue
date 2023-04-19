@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
     name: "Login",
     data() {
@@ -40,12 +41,14 @@ export default {
         }
     },
     methods: {
+        ...mapActions(['getUserInfo']),
         login() {
             this.$refs['userFrom'].validate((valid) => {
                 if (valid) {//表单校验合法
                     this.request.post("/user/login", this.user).then(res => {
                         if (res.code === '200') {
                             localStorage.setItem("user", JSON.stringify(res.data)); //存储用户信息到浏览器
+                            this.getUserInfo();
                             this.$router.push({ name: "主页" });
                             this.$message.success("登录成功，欢迎使用本系统！");
                         }
