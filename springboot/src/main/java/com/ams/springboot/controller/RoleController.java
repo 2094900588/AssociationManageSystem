@@ -6,7 +6,9 @@ import com.ams.springboot.common.Result;
 import com.ams.springboot.entity.Am;
 import com.ams.springboot.entity.Role;
 import com.ams.springboot.entity.User;
+import com.ams.springboot.service.IAmService;
 import com.ams.springboot.service.IRoleService;
+import com.ams.springboot.service.IUserService;
 import com.ams.springboot.utils.TokenUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -20,13 +22,17 @@ public class RoleController {
 
     @Resource
     private IRoleService roleService;
+    @Resource
+    private IUserService userService;
+    @Resource
+    private IAmService amService;
 
     //增加修改同一个方法
     @PostMapping
     public Result save(@RequestBody Role role) {
         User user = TokenUtils.getCurrentUser();
         if (isPower(user)){
-            return Result.success(roleService.saveOrUpdate(role));
+          return Result.success(roleService.save(role));
         }else {
             return Result.error(Constants.CODE_401,"当前用户权限不足！");
         }
@@ -35,9 +41,18 @@ public class RoleController {
     //根据id删除记录
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable Integer id) {
+        QueryWrapper<User> userQueryWrapper=new QueryWrapper<>();
+        QueryWrapper<Am> amQueryWrapper=new QueryWrapper<>();
+        Role role = roleService.getById(id);
         User user = TokenUtils.getCurrentUser();
         if (isPower(user)){
-            return Result.success(roleService.removeById(id));
+            userQueryWrapper.eq("roleid",role.getId());
+            amQueryWrapper.eq("roleid",role.getId());
+            if(userService.list(userQueryWrapper).size()==0 && amService.list(amQueryWrapper).size()==0){
+                return Result.success(roleService.removeById(id));
+            }else {
+                return Result.error(Constants.CODE_600,"当前角色还存在社员或者用户，不能删除！");
+            }
         }else {
             return Result.error(Constants.CODE_401,"当前用户权限不足！");
         }

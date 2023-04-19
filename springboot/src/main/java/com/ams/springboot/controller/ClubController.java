@@ -2,9 +2,12 @@ package com.ams.springboot.controller;
 
 import com.ams.springboot.common.Constants;
 import com.ams.springboot.common.Result;
+import com.ams.springboot.entity.Am;
 import com.ams.springboot.entity.Club;
 import com.ams.springboot.entity.User;
+import com.ams.springboot.service.IAmService;
 import com.ams.springboot.service.IClubService;
+import com.ams.springboot.service.IUserService;
 import com.ams.springboot.utils.TokenUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -17,6 +20,10 @@ import javax.annotation.Resource;
 public class ClubController {
     @Resource
     private IClubService clubService;
+    @Resource
+    private IUserService userService;
+    @Resource
+    private IAmService amService;
 
     //增加修改同一个方法
     @PostMapping
@@ -42,12 +49,21 @@ public class ClubController {
     //根据id删除记录
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable Integer id) {
+        QueryWrapper<User> userQueryWrapper=new QueryWrapper<>();
+        QueryWrapper<Am> amQueryWrapper=new QueryWrapper<>();
         User user = TokenUtils.getCurrentUser();
+        Club club = clubService.getById(id);
         if (isPower(user)){
             if (user.getSysroleid() == 3){
-                return Result.error(Constants.CODE_401,"当前用户权限不足!");
+                return  Result.error(Constants.CODE_401,"当前用户权限不足!");
             }else {
-                return Result.success(clubService.removeById(id));
+                userQueryWrapper.eq("clubid",club.getId());
+                amQueryWrapper.eq("clubid",club.getId());
+                if(userService.list(userQueryWrapper).size()==0 && amService.list(amQueryWrapper).size()==0){
+                    return Result.success(clubService.removeById(id));
+                }else {
+                    return Result.error(Constants.CODE_600,"当前社团还存在社员或者用户，不能删除!");
+                }
             }
         }
         else{
