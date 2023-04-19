@@ -1,10 +1,13 @@
 package com.ams.springboot.controller;
 
+import com.ams.springboot.common.Constants;
 import com.ams.springboot.common.Result;
 import com.ams.springboot.entity.Am;
 import com.ams.springboot.entity.Club;
+import com.ams.springboot.entity.User;
 import com.ams.springboot.service.IAmService;
 import com.ams.springboot.service.IClubService;
+import com.ams.springboot.utils.TokenUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.bind.annotation.*;
@@ -22,13 +25,33 @@ public class ClubController {
     //增加修改同一个方法
     @PostMapping
     public Result save(@RequestBody Club club) {
-        return Result.success(clubService.saveOrUpdate(club));
+        User user = TokenUtils.getCurrentUser();
+        if (user.getRoleid()==0 || user.getRoleid()==1 || user.getRoleid()==2 || user.getRoleid()==3){
+            if (club.getId().equals("")){
+                return Result.success(clubService.saveOrUpdate(club));
+            }else {
+                if (user.getClubid()==club.getId()){
+                    return Result.success(clubService.saveOrUpdate(club));
+                }else {
+                    return  Result.error(Constants.CODE_401,"社团信息只能由本社团会长和社团联合会管理人员更改!");
+                }
+            }
+        }
+        else{
+            return  Result.error(Constants.CODE_401,"当前用户权限不足!");
+        }
     }
 
     //根据id删除记录
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable Integer id) {
-        return Result.success(clubService.removeById(id));
+        User user = TokenUtils.getCurrentUser();
+        if (user.getRoleid()==0 || user.getRoleid()==1){
+            return Result.success(clubService.removeById(id));
+        }
+        else{
+            return  Result.error(Constants.CODE_401,"当前用户权限不足!");
+        }
     }
 
     //查询整个列表

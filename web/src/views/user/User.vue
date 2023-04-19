@@ -78,6 +78,9 @@
                     <el-form-item label="用户名">
                         <el-input v-model="form.username" type="text" autocomplete="off"></el-input>
                     </el-form-item>
+                    <el-form-item label="密码">
+                        <el-input v-model="form.password" type="password" autocomplete="off"></el-input>
+                    </el-form-item>
                     <el-form-item label="昵称">
                         <el-input v-model="form.nickname" type="text" autocomplete="off"></el-input>
                     </el-form-item>
@@ -92,6 +95,9 @@
                     </el-form-item>
                     <el-form-item label="学号">
                         <el-input v-model="form.studentid" type="text" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="真实姓名">
+                        <el-input v-model="form.name" type="text" autocomplete="off"></el-input>
                     </el-form-item>
                     <el-form-item label="角色">
                         <!-- <el-input v-model="form.address" type="text" autocomplete="off"></el-input> -->

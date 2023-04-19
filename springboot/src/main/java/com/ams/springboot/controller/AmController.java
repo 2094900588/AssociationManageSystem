@@ -77,8 +77,10 @@ public class AmController {
                            @RequestParam Integer pageSize,
                            @RequestParam(defaultValue = "") String studentid,
                            @RequestParam(defaultValue = "") String amname) {
+        User user = TokenUtils.getCurrentUser();
         QueryWrapper<Am> queryWrapper=new QueryWrapper<>();
         queryWrapper.eq("isamdelete",false);
+        queryWrapper.eq("clubid",user.getClubid());
         if(!"".equals(studentid)) {
             queryWrapper.like("studentid", studentid);
         }
