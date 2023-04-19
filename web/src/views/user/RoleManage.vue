@@ -11,16 +11,16 @@
             <el-button type="primary" class="ml-5" @click="handleAdd">新增<i class="el-icon-circle-plus-outline"></i>
             </el-button>
         </div>
-        <el-table :data="tableData" border stripe :header-cell-class-name="headBg">
+        <el-table :data="tableData" border stripe :header-cell-class-name="headBg" style="width: 100%;">
             <el-table-column type="selection" width="50">
             </el-table-column>
             <!-- <el-table-column prop="id" label="id" width="80"></el-table-column> -->
             <el-table-column type="index" width="50" :index="getindex"></el-table-column>
-            <el-table-column prop="rolename" label="角色名称" width="140">
+            <el-table-column prop="rolename" label="角色名称">
             </el-table-column>
-            <el-table-column prop="roledesc" label="角色描述" width="120">
+            <el-table-column prop="roledesc" label="角色描述">
             </el-table-column>
-            <el-table-column prop=" " label=" " width="230">
+            <el-table-column prop=" " label=" " width="165">
                 <template slot-scope="scope">
                     <el-button type="success" @click="handleEdit(scope.row)">编辑<i class="el-icon-edit"></i></el-button>
                     <el-popconfirm class="ml-5" confirm-button-text='好的' cancel-button-text='我再想想' icon="el-icon-info"

@@ -25,10 +25,10 @@
                 <el-button type="danger" slot="reference" class="ml-5" >批量删除<i class="el-icon-remove-outline"></i> </el-button>
             </el-popconfirm>
         </div>
-        <el-table :data="tableData" border stripe :header-cell-class-name="headBg" @selection-change="handleSelectionChange">
+        <el-table :data="tableData" border stripe :header-cell-class-name="headBg" @selection-change="handleSelectionChange" style="width: 100%;">
             <el-table-column type="selection" width="50">
             </el-table-column>
-            <el-table-column prop="id" label="id" width="80">
+            <el-table-column prop="id" label="id">
             </el-table-column>
             <el-table-column prop="name" label="文件名称">
             </el-table-column>
@@ -36,22 +36,22 @@
             </el-table-column>
             <el-table-column prop="size" label="文件大小(KB)">
             </el-table-column>
-            <el-table-column label="预览"  width="150">
+            <el-table-column label="预览"  width="100">
                 <template slot-scope="scope">
                     <el-button type="primary" @click="look(scope.row.url)">预览</el-button>
                 </template>
             </el-table-column>
-            <el-table-column label="下载"  width="150">
+            <el-table-column label="下载"  width="100">
                 <template slot-scope="scope">
                    <el-button type="primary" @click="download(scope.row.url)">下载</el-button>
                 </template>
             </el-table-column>
-            <el-table-column  label="启用" width="150">
+            <el-table-column  label="启用" width="100">
                 <template slot-scope="scope">
                     <el-switch v-model="scope.row.enable" active-color="#13ce66" inactive-color="#ccc" @change="changeEnable(scope.row)"></el-switch>
                 </template>
             </el-table-column>
-            <el-table-column prop=" " label=" " width="230">
+            <el-table-column prop=" " label=" " width="165">
                 <template slot-scope="scope">
                     <el-popconfirm
                             class="ml-5"

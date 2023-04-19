@@ -72,4 +72,7 @@ public class User implements Serializable {
 
       @ApiModelProperty("角色ID")
       private Integer roleid;
+
+      @ApiModelProperty("系统角色ID")
+      private Integer sysroleid;
 }

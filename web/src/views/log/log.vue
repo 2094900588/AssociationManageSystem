@@ -7,22 +7,22 @@
             <el-button type="warning" class="ml-5" @click="reset">重置</el-button>
         </div>
 
-        <el-table :data="tableData" border stripe :header-cell-class-name="headBg">
+        <el-table :data="tableData" border stripe :header-cell-class-name="headBg" style="width: 100%;">
             <el-table-column type="selection" width="50">
             </el-table-column>
-            <el-table-column prop="id" label="id" width="80">
+            <el-table-column prop="id" label="id">
             </el-table-column>
-            <el-table-column prop="operatename" label="操作名称" width="140">
+            <el-table-column prop="operatename" label="操作名称">
             </el-table-column>
-            <el-table-column prop="username" label="操作人员名称" width="120">
+            <el-table-column prop="username" label="操作人员名称">
             </el-table-column>
-            <el-table-column prop="rolename" label="操作人员角色名称" width="140">
+            <el-table-column prop="rolename" label="操作人员角色名称">
             </el-table-column>
-            <el-table-column prop="clubname" label="操作人员社团名称" width="120">
+            <el-table-column prop="clubname" label="操作人员社团名称">
             </el-table-column>
-            <el-table-column prop="operatetime" label="操作时间" width="140">
+            <el-table-column prop="operatetime" label="操作时间">
             </el-table-column>
-            <el-table-column prop=" " label=" " width="230">
+            <el-table-column prop=" " label=" " width="165">
                 <template slot-scope="scope">
                     <!-- <el-button type="success" @click="handleEdit(scope.row)">编辑<i class="el-icon-edit"></i></el-button> -->
                     <div v-if="scope.row.cloperate === 0">

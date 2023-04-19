@@ -11,38 +11,38 @@
             <el-button type="primary" class="ml-5" @click="handleAdd">新增<i class="el-icon-circle-plus-outline"></i>
             </el-button>
         </div>
-        <el-table :data="tableData" border stripe :header-cell-class-name="headBg">
+        <el-table :data="tableData" border stripe :header-cell-class-name="headBg" style="width: 100%;">
             <!-- <el-table-column type="selection" width="50"></el-table-column> -->
             <!-- <el-table-column prop="id" label="id" width="80">
             </el-table-column> -->
             <el-table-column type="index" width="50" :index="getindex"></el-table-column>
-            <el-table-column prop="optionname" label="活动名称" width="140">
+            <el-table-column prop="optionname" label="活动名称">
             </el-table-column>
-            <el-table-column prop="optiondesc" label="活动描述" width="120">
+            <el-table-column prop="optiondesc" label="活动描述">
             </el-table-column>
-            <el-table-column prop="optionaim" label="活动目的" width="150">
+            <el-table-column prop="optionaim" label="活动目的">
             </el-table-column>
-            <el-table-column prop="optionnum" label="活动参与人数" width="150">
+            <el-table-column prop="optionnum" label="活动参与人数">
             </el-table-column>
-            <el-table-column prop="optionnum" label="活动成绩表" width="150">
+            <el-table-column prop="optionnum" label="活动成绩表">
             </el-table-column>
-            <el-table-column prop="optionnum" label="活动是否评分" width="150">
+            <el-table-column prop="optionnum" label="活动是否评分">
             </el-table-column>
-            <el-table-column prop="optionnum" label="活动评分" width="150">
+            <el-table-column prop="optionnum" label="活动评分">
             </el-table-column>
-            <el-table-column prop="optiondate" label="活动时间" width="150">
+            <el-table-column prop="optiondate" label="活动时间">
             </el-table-column>
-            <el-table-column label="角色" width="150">
+            <el-table-column label="角色">
                 <template slot-scope="scope">
                     <span>{{ getrole(scope.row.roleid) }}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="所属社团" width="150">
+            <el-table-column label="所属社团">
                 <template slot-scope="scope">
                     <span>{{ getclub(scope.row.clubid) }}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop=" " label=" " width="230">
+            <el-table-column prop=" " label=" " width="165">
                 <template slot-scope="scope">
                     <el-button type="success" @click="handleEdit(scope.row)">编辑<i class="el-icon-edit"></i></el-button>
                     <el-popconfirm class="ml-5" confirm-button-text='好的' cancel-button-text='我再想想' icon="el-icon-info"

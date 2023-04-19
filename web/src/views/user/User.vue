@@ -27,36 +27,36 @@
             <el-button type="primary" class="ml-5" @click="exp">导出<i class="el-icon-top"></i> </el-button>
         </div>
         <el-table :data="tableData" border stripe :header-cell-class-name="headBg"
-            @selection-change="handleSelectionChange">
+            @selection-change="handleSelectionChange" style="width: 100%;">
             <el-table-column type="selection" width="50">
             </el-table-column>
             <!-- <el-table-column prop="id" label="id" width="80"></el-table-column> -->
             <el-table-column type="index" width="50" :index="getindex"></el-table-column>
-            <el-table-column prop="username" label="用户名" width="140">
+            <el-table-column prop="username" label="用户名">
             </el-table-column>
-            <el-table-column prop="nickname" label="昵称" width="120">
+            <el-table-column prop="nickname" label="昵称">
             </el-table-column>
-            <el-table-column prop="email" label="邮箱地址" width="150">
+            <el-table-column prop="email" label="邮箱地址">
             </el-table-column>
-            <el-table-column prop="phone" label="电话" width="150">
+            <el-table-column prop="phone" label="电话">
             </el-table-column>
-            <el-table-column prop="address" label="地址" width="150">
+            <el-table-column prop="address" label="地址">
             </el-table-column>
-            <el-table-column prop="name" label="真实姓名" width="150">
+            <el-table-column prop="name" label="真实姓名">
             </el-table-column>
-            <el-table-column label="角色" width="150">
+            <el-table-column label="角色">
                 <template slot-scope="scope">
                     <span>{{ getrole(scope.row.roleid) }}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="所属社团" width="150">
+            <el-table-column label="所属社团">
                 <template slot-scope="scope">
                     <span>{{ getclub(scope.row.clubid) }}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop="studentid" label="学号" width="150">
+            <el-table-column prop="studentid" label="学号">
             </el-table-column>
-            <el-table-column prop=" " label=" " width="230">
+            <el-table-column prop=" " label=" " width="165">
                 <template slot-scope="scope">
                     <el-button type="success" @click="handleEdit(scope.row)">编辑<i class="el-icon-edit"></i></el-button>
                     <el-popconfirm class="ml-5" confirm-button-text='好的' cancel-button-text='我再想想' icon="el-icon-info"

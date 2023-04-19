@@ -7,5 +7,6 @@
         FROM sys_club c join sys_am a
         on c.id = a.clubid
         GROUP BY c.id  order by COUNT(*) desc
+        LIMIT 5
     </select>
 </mapper>

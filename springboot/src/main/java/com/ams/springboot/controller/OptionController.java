@@ -4,8 +4,10 @@ package com.ams.springboot.controller;
 import com.ams.springboot.common.Result;
 import com.ams.springboot.entity.Am;
 import com.ams.springboot.entity.Option;
+import com.ams.springboot.entity.User;
 import com.ams.springboot.service.IAmService;
 import com.ams.springboot.service.IOptionService;
+import com.ams.springboot.utils.TokenUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.bind.annotation.*;
@@ -48,12 +50,25 @@ public class OptionController {
     public Result findPage(@RequestParam Integer pageNum,
                            @RequestParam Integer pageSize) {
         QueryWrapper<Option> queryWrapper=new QueryWrapper<>();
+        User user = TokenUtils.getCurrentUser();
+        if (!isPower(user)){
+            queryWrapper.eq("clubid",user.getClubid());
+        }
         //让新添加的排在页面前面，进行一个排序工作
         queryWrapper.orderByDesc("id");
         //获取当前用户信息
 //            User currentUser = TokenUtils.getCurrentUser();
 //            System.out.println("获取当前用户信息==================" + currentUser.getNickname());
         return Result.success(optionService.page(new Page<>(pageNum, pageSize),queryWrapper));
+    }
+
+    //进行权限验证
+    public  boolean isPower(User user){
+        if (user.getSysroleid()==0 || user.getSysroleid()==1 || user.getSysroleid()==2){
+            return true;
+        }else {
+            return false;
+        }
     }
 
 }

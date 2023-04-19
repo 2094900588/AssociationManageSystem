@@ -2,10 +2,8 @@ package com.ams.springboot.controller;
 
 import com.ams.springboot.common.Constants;
 import com.ams.springboot.common.Result;
-import com.ams.springboot.entity.Am;
 import com.ams.springboot.entity.Club;
 import com.ams.springboot.entity.User;
-import com.ams.springboot.service.IAmService;
 import com.ams.springboot.service.IClubService;
 import com.ams.springboot.utils.TokenUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -13,8 +11,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/club")
@@ -26,9 +22,10 @@ public class ClubController {
     @PostMapping
     public Result save(@RequestBody Club club) {
         User user = TokenUtils.getCurrentUser();
-        if (user.getRoleid()==0 || user.getRoleid()==1 || user.getRoleid()==2 || user.getRoleid()==3){
+        if (isPower(user)){
             if (club.getId().equals("")){
-                return Result.success(clubService.saveOrUpdate(club));
+                //如果社团id为空说明是新增，直接执行既可
+            return Result.success(clubService.saveOrUpdate(club));
             }else {
                 if (user.getClubid()==club.getId()){
                     return Result.success(clubService.saveOrUpdate(club));
@@ -46,8 +43,12 @@ public class ClubController {
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable Integer id) {
         User user = TokenUtils.getCurrentUser();
-        if (user.getRoleid()==0 || user.getRoleid()==1){
-            return Result.success(clubService.removeById(id));
+        if (isPower(user)){
+            if (user.getSysroleid() == 3){
+                return Result.error(Constants.CODE_401,"当前用户权限不足!");
+            }else {
+                return Result.success(clubService.removeById(id));
+            }
         }
         else{
             return  Result.error(Constants.CODE_401,"当前用户权限不足!");
@@ -99,6 +100,16 @@ public class ClubController {
     public Result findPageSum()
     {
         return Result.success(clubService.getAllClubAndSum());
+    }
+
+
+    //进行权限验证
+    public  boolean isPower(User user){
+        if (user.getSysroleid()==0 || user.getSysroleid()==1 || user.getSysroleid()==2 || user.getSysroleid()==3){
+            return true;
+        }else {
+            return false;
+        }
     }
 
 }

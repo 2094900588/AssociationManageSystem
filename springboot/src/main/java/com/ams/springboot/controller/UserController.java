@@ -6,6 +6,7 @@ import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import com.ams.springboot.entity.User;
+import com.ams.springboot.utils.TokenUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ams.springboot.common.Constants;
@@ -48,7 +49,6 @@ public class UserController {
                 return Result.error(Constants.CODE_400,"参数错误");
             }
             UserDTO dto = userService.login(userDTO);
-
             return Result.success(dto);
     }
 
@@ -63,12 +63,22 @@ public class UserController {
 
         @PostMapping
         public Result save(@RequestBody User user) {
-            return Result.success(userService.saveOrUpdate(user));
+            User user1 = TokenUtils.getCurrentUser();
+            if (isPower(user1)){
+                return Result.success(userService.saveOrUpdate(user));
+            }else {
+                return Result.error(Constants.CODE_401,"当前用户权限不足");
+            }
         }
 
         @DeleteMapping("/{id}")
         public Result delete(@PathVariable Integer id) {
-            return Result.success(userService.removeById(id));
+            User user = TokenUtils.getCurrentUser();
+            if (isPower(user)){
+                return Result.success(userService.removeById(id));
+            }else {
+                return Result.error(Constants.CODE_401,"当前用户权限不足");
+            }
         }
 
         @GetMapping
@@ -91,7 +101,12 @@ public class UserController {
         //批量删除
         @PostMapping("/del/batch")
         public Result deleteBatch(@RequestBody List<Integer> ids){
+            User user = TokenUtils.getCurrentUser();
+            if (isPower(user)){
                 return Result.success(userService.removeByIds(ids));
+            }else {
+                return Result.error(Constants.CODE_401,"当前用户权限不足");
+            }
         }
 
         @GetMapping("/page")
@@ -112,20 +127,18 @@ public class UserController {
             }
             queryWrapper.orderByDesc("id");
 
-            //获取当前用户信息
-//            User currentUser = TokenUtils.getCurrentUser();
-//            System.out.println("获取当前用户信息==================" + currentUser.getNickname());
-
             return Result.success(userService.page(new Page<>(pageNum, pageSize),queryWrapper));
         }
 
         //导出用户信息
         @GetMapping("/export")
-        public void export(HttpServletResponse response) throws IOException {
-            //从数据库查询出所有数据
-            List<User> list =userService.list();
-            //自定义列表名
-            ExcelWriter writer = ExcelUtil.getWriter(true);
+        public Result export(HttpServletResponse response) throws IOException {
+            User user = TokenUtils.getCurrentUser();
+            if (isPower(user)){
+                //从数据库查询出所有数据
+                List<User> list =userService.list();
+                //自定义列表名
+                ExcelWriter writer = ExcelUtil.getWriter(true);
 //            writer.addHeaderAlias("username","用户名");
 //            writer.addHeaderAlias("password","密码");
 //            writer.addHeaderAlias("nickname","昵称");
@@ -134,28 +147,46 @@ public class UserController {
 //            writer.addHeaderAlias("address","地址");
 //            writer.addHeaderAlias("createTime","创建时间");
 //            writer.addHeaderAlias("avatarUrl","头像");
-            //一次性写出list对象到excel。使用默认样式，强制输出标题
-            writer.write(list,true);
+                //一次性写出list对象到excel。使用默认样式，强制输出标题
+                writer.write(list,true);
+                //设置浏览器响应的格式
+                response.setContentType("application/vnd.openxmlfonmats-officedocument.spreadsheetml.sheet;charset=utf-8");
+                String fileName = URLEncoder.encode("用户信息.","UTF-8");
+                response.setHeader( "Content-Disposition","attachment;filename=" + fileName +".xlsx");
 
-            //设置浏览器响应的格式
-            response.setContentType("application/vnd.openxmlfonmats-officedocument.spreadsheetml.sheet;charset=utf-8");
-            String fileName = URLEncoder.encode("用户信息.","UTF-8");
-            response.setHeader( "Content-Disposition","attachment;filename=" + fileName +".xlsx");
-
-            ServletOutputStream out = response.getOutputStream();
-            writer.flush(out,true);
-            out.close();
-            writer.close();
+                ServletOutputStream out = response.getOutputStream();
+                writer.flush(out,true);
+                out.close();
+                writer.close();
+                return Result.success(new Result(Constants.CODE_200,"成功",null));
+            }else {
+                return Result.error(Constants.CODE_401,"当前用户权限不足");
+            }
         }
 
         //导入用户信息
         @PostMapping("/import")
         public  Result imp(MultipartFile file) throws IOException {
-            InputStream inputStream = file.getInputStream();
-            ExcelReader reader = ExcelUtil.getReader(inputStream);
-            //写入时模板需要使用英文表头
-            List<User> list = reader.readAll(User.class);
-            userService.saveBatch(list);
-            return Result.success(true);
+            User user = TokenUtils.getCurrentUser();
+            if (isPower(user)){
+                InputStream inputStream = file.getInputStream();
+                ExcelReader reader = ExcelUtil.getReader(inputStream);
+                //写入时模板需要使用英文表头
+                List<User> list = reader.readAll(User.class);
+                userService.saveBatch(list);
+                return Result.success(true);
+            }else
+            {
+                return Result.error(Constants.CODE_401,"当前用户权限不足");
+            }
         }
+
+    //进行权限验证
+    public  boolean isPower(User user){
+        if (user.getSysroleid()==0 || user.getSysroleid()==1){
+            return true;
+        }else {
+            return false;
+        }
+    }
 }

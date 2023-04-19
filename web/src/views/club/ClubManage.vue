@@ -11,22 +11,22 @@
             <el-button type="primary" class="ml-5" @click="handleAdd">新增<i class="el-icon-circle-plus-outline"></i>
             </el-button>
         </div>
-        <el-table :data="tableData" border stripe :header-cell-class-name="headBg">
+        <el-table :data="tableData" border stripe :header-cell-class-name="headBg" style="width: 100%;">
             <!-- <el-table-column prop="id" label="id" width="80"></el-table-column> -->
             <el-table-column type="index" width="50" :index="getindex"></el-table-column>
-            <el-table-column prop="clubname" label="社团名称" width="140">
+            <el-table-column prop="clubname" label="社团名称">
             </el-table-column>
-            <el-table-column prop="clubdesc" label="社团描述" width="120">
+            <el-table-column prop="clubdesc" label="社团描述">
             </el-table-column>
-            <el-table-column prop="clubfounder" label="社团创始人" width="150">
+            <el-table-column prop="clubfounder" label="社团创始人">
             </el-table-column>
-            <el-table-column prop="clubtime" label="社团创建时间" width="150">
+            <el-table-column prop="clubtime" label="社团创建时间">
             </el-table-column>
-            <el-table-column prop="clubphoto" label="社团照片" width="150">
+            <el-table-column prop="clubphoto" label="社团照片">
             </el-table-column>
-            <el-table-column prop="integral" label="社团积分" width="150">
+            <el-table-column prop="integral" label="社团积分">
             </el-table-column>
-            <el-table-column prop=" " label=" " width="230">
+            <el-table-column prop=" " label=" " width="165">
                 <template slot-scope="scope">
                     <el-button type="success" @click="handleEdit(scope.row)">编辑<i class="el-icon-edit"></i></el-button>
                     <el-popconfirm class="ml-5" confirm-button-text='好的' cancel-button-text='我再想想' icon="el-icon-info"

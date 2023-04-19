@@ -1,9 +1,6 @@
 <template>
-    <div>
+    <div >
         <!-- <h1>这是一个主页</h1> -->
-        <div>
-            <img src="../assets/home.jpg" class="img">
-        </div>
         <div>
             <el-row>
                 <el-col :span="10" :offset="0">
@@ -64,7 +61,7 @@ export default {
             InteTableData: [],
             Intetotal: 0,
             IntepageNum: 1,
-            IntepageSize: 10,
+            IntepageSize: 5,
             NumTableData: [],
             Numtotal: 0,
             NumpageNum: 1,
@@ -131,4 +128,5 @@ export default {
     width: auto\9;
     width: 100%;
 }
+
 </style>

@@ -80,7 +80,9 @@ public class AmController {
         User user = TokenUtils.getCurrentUser();
         QueryWrapper<Am> queryWrapper=new QueryWrapper<>();
         queryWrapper.eq("isamdelete",false);
-        queryWrapper.eq("clubid",user.getClubid());
+        if (!isPower(user)){
+            queryWrapper.eq("clubid",user.getClubid());
+        }
         if(!"".equals(studentid)) {
             queryWrapper.like("studentid", studentid);
         }
@@ -93,5 +95,14 @@ public class AmController {
 //            User currentUser = TokenUtils.getCurrentUser();
 //            System.out.println("获取当前用户信息==================" + currentUser.getNickname());
         return Result.success(amService.page(new Page<>(pageNum, pageSize),queryWrapper));
+    }
+
+    //进行权限验证
+    public  boolean isPower(User user){
+        if (user.getSysroleid()==0 || user.getSysroleid()==1 || user.getSysroleid()==2){
+            return true;
+        }else {
+            return false;
+        }
     }
 }
