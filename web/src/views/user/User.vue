@@ -42,6 +42,8 @@
             </el-table-column>
             <el-table-column prop="address" label="地址" width="150">
             </el-table-column>
+            <el-table-column prop="name" label="真实姓名" width="150">
+            </el-table-column>
             <el-table-column label="角色" width="150">
                 <template slot-scope="scope">
                     <span>{{ getrole(scope.row.roleid) }}</span>

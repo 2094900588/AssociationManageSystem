@@ -2,8 +2,9 @@
     <el-menu :default-openeds="['1']" style="height: 100%;" background-color="rgb(48,65,86)" text-color="#fff"
         overflow-x:hidden active-text-color="#ffd04b" :collapse-transition="false" :collapse="isCollapse" router>
         <div style="height: 60px;line-height: 60px;text-align: center">
-            <img src="../assets/logo.png" alt="" style="width: 50px;position: relative;top:5px;margin-right:5px">
-            <b style="color: azure;" v-show="logoTextShow">后台管理系统</b>
+            <img src="../assets/logo.png" alt=""
+                style="width: 50px;position: relative;vertical-align: middle;margin-right:5px">
+            <b style="color: azure;vertical-align: middle;" v-show="logoTextShow">社团管理系统</b>
         </div>
         <el-menu-item index="1" :route="{ name: '主页' }">
             <template slot="title">

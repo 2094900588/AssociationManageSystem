@@ -6,10 +6,10 @@
         </div>
         <div>
             <el-row>
-                <el-col :span="12" :offset="0">
-                    <el-card :body-style="{ padding: '20px' }">
+                <el-col :span="10" :offset="0">
+                    <el-card :body-style="{ padding: '20px' }" class="table_card">
                         <h1>社团积分榜</h1>
-                        <el-table :data="InteTableData" :show-header="false">
+                        <el-table :data="InteTableData" :show-header="false" class="table_card">
                             <el-table-column width="80">
                                 <template slot-scope="scope">
                                     <img v-if="scope.$index < rankphoto.length" :src="rankphoto[scope.$index]" class="image"
@@ -29,7 +29,7 @@
                 </el-col>
 
                 <el-col :span="10" :offset="2">
-                    <el-card :body-style="{ padding: '20px' }">
+                    <el-card :body-style="{ padding: '20px' }" class="table_card">
                         <h1>社团人数榜</h1>
                         <el-table :data="NumTableData" :show-header="false">
                             <el-table-column width="80">
@@ -120,5 +120,15 @@ export default {
     font-size: 20px;
     padding: 20px 0;
 }
-.img {height: 450px; width: auto\9; width:100%;}
+
+.table_card {
+    display: flex;
+    justify-content: center;
+}
+
+.img {
+    height: 450px;
+    width: auto\9;
+    width: 100%;
+}
 </style>

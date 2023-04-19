@@ -32,6 +32,16 @@
             </el-table-column>
             <el-table-column prop="optiondate" label="活动时间" width="150">
             </el-table-column>
+            <el-table-column label="角色" width="150">
+                <template slot-scope="scope">
+                    <span>{{ getrole(scope.row.roleid) }}</span>
+                </template>
+            </el-table-column>
+            <el-table-column label="所属社团" width="150">
+                <template slot-scope="scope">
+                    <span>{{ getclub(scope.row.clubid) }}</span>
+                </template>
+            </el-table-column>
             <el-table-column prop=" " label=" " width="230">
                 <template slot-scope="scope">
                     <el-button type="success" @click="handleEdit(scope.row)">编辑<i class="el-icon-edit"></i></el-button>
@@ -73,13 +83,24 @@
                         <el-input v-model="form.optiongrade" type="text" autocomplete="off"></el-input>
                     </el-form-item>
                     <el-form-item label="活动时间">
-                        <el-date-picker v-model="form.optiondate" type="date" placeholder="选择日期"  value-format="yyyy-MM-dd">
+                        <el-date-picker v-model="form.optiondate" type="date" placeholder="选择日期" value-format="yyyy-MM-dd">
                         </el-date-picker>
                         <!-- <el-input v-model="form.clubtime" type="text" autocomplete="off"></el-input> -->
                     </el-form-item>
-                    <!-- <el-form-item label="社团积分">
-                        <el-input v-model="form.integral" type="text" autocomplete="off"></el-input>
-                    </el-form-item> -->
+                    <el-form-item label="角色">
+                        <!-- <el-input v-model="form.address" type="text" autocomplete="off"></el-input> -->
+                        <el-select v-model="form.roleid" filterable placeholder="请选择">
+                            <el-option v-for="item in roles" :key="item.id" :label="item.rolename" :value="item.id">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="所属社团">
+                        <!-- <el-input v-model="form.address" type="text" autocomplete="off"></el-input> -->
+                        <el-select v-model="form.clubid" filterable placeholder="请选择">
+                            <el-option v-for="item in clubs" :key="item.id" :label="item.clubname" :value="item.id">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
                     <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -92,11 +113,15 @@
 
 <script>
 import activeapi from '@/api/page/active'
+import roleapi from '@/api/page/role'
+import clubapi from '@/api/page/club'
 export default {
     name: "Active",
     data() {
         return {
             tableData: [],
+            roles: [],
+            clubs: [],
             total: 0,
             pageNum: 1,
             pageSize: 10,
@@ -113,6 +138,16 @@ export default {
     methods: {
         getindex(index) {
             return this.pageSize * (this.pageNum - 1) + index + 1
+        },
+        getrole(id) {
+            var t = this.roles.filter((item) => id == item.id)
+            if (t.length === 1) return t[0].rolename;
+            return id;
+        },
+        getclub(id) {
+            var t = this.clubs.filter((item) => id == item.id)
+            if (t.length === 1) return t[0].clubname;
+            return id;
         },
         handleSizeChange(pageSize) {
             this.pageSize = pageSize
@@ -133,6 +168,12 @@ export default {
             activeapi.getPage(params).then(res => {
                 this.tableData = res.data.records
                 this.total = res.data.total
+            })
+            roleapi.getall().then(res => {
+                this.roles = res.data
+            })
+            clubapi.getall().then(res => {
+                this.clubs = res.data
             })
 
         },
