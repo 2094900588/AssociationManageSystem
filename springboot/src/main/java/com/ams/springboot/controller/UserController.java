@@ -93,7 +93,13 @@ public class UserController {
                         return Result.success(userService.saveOrUpdate(user));
                     }
                 }else {
-                    return Result.success(userService.saveOrUpdate(user));
+                    User serviceById = userService.getById(user.getId());
+                    if (serviceById.getPassword()==user.getPassword()){
+                        return Result.success(userService.saveOrUpdate(user));
+                    }else {
+                        user.setPassword(MD5Utils.code(user.getPassword()));
+                        return Result.success(userService.saveOrUpdate(user));
+                    }
                 }
             }else {
                 return Result.error(Constants.CODE_401,"当前用户权限不足");
