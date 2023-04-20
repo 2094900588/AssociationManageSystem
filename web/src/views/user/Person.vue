@@ -22,6 +22,12 @@
             <el-form-item label="地址">
                 <el-input v-model="form.address" type="textarea" autocomplete="off"></el-input>
             </el-form-item>
+            <el-form-item label="姓名">
+                <el-input v-model="form.name" type="text" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="学号">
+                <el-input v-model="form.studentid" type="text" autocomplete="off"></el-input>
+            </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="saveUser">确 定</el-button>
             </el-form-item>

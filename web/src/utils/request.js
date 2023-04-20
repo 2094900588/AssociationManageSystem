@@ -3,7 +3,7 @@ import ElementUI from "element-ui";
 import router from '@/router';
 
 const request = axios.create({
-    baseURL: 'http://' + location.hostname + ':9090/api',  // 注意！！ 这里是全局统一加上了 后端接口前缀 前缀，后端必须进行跨域配置！
+    baseURL: process.env.NODE_ENV !== 'production' ? 'http://' + location.hostname + ':9090/api' : '/api',  // 注意！！ 这里是全局统一加上了 后端接口前缀 前缀，后端必须进行跨域配置！
     timeout: 5000
 })
 

@@ -89,7 +89,7 @@ public class AmController {
         if(!"".equals(amname)) {
             queryWrapper.like("amname", amname);
         }
-        if(!"".equals(amname)) {
+        if(!"".equals(status)) {
             queryWrapper.like("status", status);
         }
         //让新添加的排在页面前面，进行一个排序工作

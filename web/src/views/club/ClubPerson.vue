@@ -10,7 +10,7 @@
 
             <!-- <el-input v-model="form.address" type="text" autocomplete="off"></el-input> -->
             <el-select v-model="status" placeholder="请选择">
-                <el-option v-for="item, index in ['党员', '预备党员', '共青团员', '群众']" :key="item" :label="item" :value="index">
+                <el-option v-for="item in ['党员', '预备党员', '共青团员', '群众', '']" :key="item" :label="item" :value="item">
                 </el-option>
             </el-select>
 
@@ -80,8 +80,7 @@
                     <el-form-item label="政治面貌">
                         <!-- <el-input v-model="form.address" type="text" autocomplete="off"></el-input> -->
                         <el-select v-model="form.status" placeholder="请选择">
-                            <el-option v-for="item, index in ['党员', '预备党员', '共青团员', '群众']" :key="item" :label="item"
-                                :value="index">
+                            <el-option v-for="item in ['党员', '预备党员', '共青团员', '群众']" :key="item" :label="item" :value="item">
                             </el-option>
                         </el-select>
                     </el-form-item>
@@ -188,7 +187,8 @@ export default {
         reset() {
             this.studentid = "",
                 this.amname = "",
-                this.load()
+                this.status = ""
+            this.load()
         },
         save() {
             personapi.save(this.form).then(res => {

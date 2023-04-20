@@ -7,9 +7,7 @@
             <el-button type="warning" class="ml-5" @click="reset">重置</el-button>
         </div>
 
-        <el-table :data="tableData" border stripe :header-cell-class-name="headBg" style="width: 100%;">
-            <el-table-column type="selection" width="50">
-            </el-table-column>
+        <el-table :data="tableData" border stripe :header-cell-class-name="headBg" style="width: 100%; margin-top: 60px;">
             <el-table-column prop="id" label="id">
             </el-table-column>
             <el-table-column prop="operatename" label="操作名称">
