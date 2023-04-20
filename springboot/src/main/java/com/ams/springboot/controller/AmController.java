@@ -2,10 +2,7 @@ package com.ams.springboot.controller;
 
 import com.ams.springboot.common.Result;
 import com.ams.springboot.entity.*;
-import com.ams.springboot.service.IAmService;
-import com.ams.springboot.service.IClubService;
-import com.ams.springboot.service.IOperatorService;
-import com.ams.springboot.service.IRoleService;
+import com.ams.springboot.service.*;
 import com.ams.springboot.utils.TokenUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -25,6 +22,8 @@ public class AmController {
     @Resource
     private IRoleService roleService;
     @Resource
+    private ISysRoleService sysRoleService;
+    @Resource
     private IOperatorService operatorService;
 
     //增加修改同一个方法
@@ -38,15 +37,15 @@ public class AmController {
     public Result delete(@PathVariable Integer id) {
         User user = TokenUtils.getCurrentUser();
         Operator operator = new Operator();
-        Role role = roleService.getById(user.getId());
+        SysRole sysRole = sysRoleService.getById(user.getId());
         Club club = clubService.getById(user.getClubid());
         //填入需要填写的数据
         operator.setUserid(user.getId());
         operator.setUsername(user.getName());
         operator.setClubid(user.getClubid());
         operator.setClubname(club.getClubname());
-        operator.setRoleid(user.getRoleid());
-        operator.setRolename(role.getRolename());
+        operator.setRoleid(user.getSysroleid());
+        operator.setRolename(sysRole.getSysrolename());
         operator.setOperatename("删除社员");
         operator.setOperatetime(LocalDateTime.now());
         //默认填写0，可以进行撤销操作

@@ -3,6 +3,7 @@ package com.ams.springboot.controller;
 
 import com.ams.springboot.common.Constants;
 import com.ams.springboot.common.Result;
+import com.ams.springboot.entity.Am;
 import com.ams.springboot.entity.Operator;
 import com.ams.springboot.entity.User;
 import com.ams.springboot.service.IAmService;
@@ -29,8 +30,10 @@ public class OperatorController {
         User user = TokenUtils.getCurrentUser();
         if (isPower(user)){
             Operator operator = operatorService.getById(id);
-            amService.getById(operator.getObjectid()).setIsamdelete(0);
-            //点击撤销时置为1
+            Am am = amService.getById(operator.getObjectid());
+            am.setIsamdelete(0);
+            amService.saveOrUpdate(am);
+            //点击撤销时置为
             operator.setCloperate(1);
             return Result.success(operatorService.saveOrUpdate(operator));
         }
