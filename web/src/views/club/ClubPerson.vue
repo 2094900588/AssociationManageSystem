@@ -5,6 +5,8 @@
                 v-model="studentid"></el-input>
             <el-input style="width: 200px;cursor: pointer" suffix-icon="el-icon-search" placeholder="请输入姓名"
                 v-model="amname"></el-input>
+            <el-input style="width: 200px;cursor: pointer" suffix-icon="el-icon-search" placeholder="请输入政治面貌"
+            v-model="astatus"></el-input>
             <el-button type="primary" class="ml-5" @click="load">搜索</el-button>
             <el-button type="warning" class="ml-5" @click="reset">重置</el-button>
         </div>
@@ -121,6 +123,7 @@ export default {
             pageSize: 10,
             studentid: "",
             amname: "",
+            astatus: "",
             dialogFormVisible: false,
             form: {},
             multipleSelection: [],
@@ -159,6 +162,7 @@ export default {
                 pageSize: this.pageSize,
                 studentid: this.studentid,
                 amname: this.amname,
+                astatus: this.astatus,
             }
             personapi.getPage(params).then(res => {
                 this.tableData = res.data.records
