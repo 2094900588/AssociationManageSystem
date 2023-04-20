@@ -123,7 +123,7 @@ export default {
             pageSize: 10,
             studentid: "",
             amname: "",
-            astatus: "",
+            astatus: -1,
             dialogFormVisible: false,
             form: {},
             multipleSelection: [],

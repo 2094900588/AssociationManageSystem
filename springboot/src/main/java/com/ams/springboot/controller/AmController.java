@@ -77,7 +77,7 @@ public class AmController {
                            @RequestParam Integer pageSize,
                            @RequestParam(defaultValue = "") String studentid,
                            @RequestParam(defaultValue = "") String amname,
-                           @RequestParam(defaultValue = "") Integer status) {
+                           @RequestParam Integer astatus) {
         User user = TokenUtils.getCurrentUser();
         QueryWrapper<Am> queryWrapper=new QueryWrapper<>();
         queryWrapper.eq("isamdelete",false);
@@ -91,8 +91,8 @@ public class AmController {
             queryWrapper.like("amname", amname);
         }
         //对政治面貌进行模糊查询
-        if(!"".equals(status)) {
-            queryWrapper.like("status", status);
+        if(astatus!=-1) {
+            queryWrapper.eq("status", astatus);
         }
         //让新添加的排在页面前面，进行一个排序工作
         queryWrapper.orderByDesc("id");
