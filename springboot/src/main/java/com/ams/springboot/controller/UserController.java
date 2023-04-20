@@ -116,10 +116,10 @@ public class UserController {
         @PostMapping("/updatepassword")
         public Result updatepassword(@RequestBody UserPassword userPassword){
             //查出当前用户
-            User user = userService.getById(userPassword.getId());
+            User user = TokenUtils.getCurrentUser();
             //验证旧密码是否输入正确
-            if (MD5Utils.code(userPassword.getOldpassword())==user.getPassword()){
-                if (userPassword.getNewpassword()==userPassword.getSecondpassword()){
+            if (MD5Utils.code(userPassword.getOldpassword()).equals(user.getPassword())){
+                if (userPassword.getNewpassword().equals(userPassword.getSecondpassword())){
                     //对新密码进行加密
                     user.setPassword(MD5Utils.code(userPassword.getNewpassword()));
                     //进行修改密码

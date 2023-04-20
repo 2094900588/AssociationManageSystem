@@ -64,6 +64,7 @@ export default {
                     }
                     userapi.modifypassword(this.pwd).then(res => {
                         if (res.code === '200') {
+                            this.$router.push("/login")
                             this.$message.success("修改成功")
                             //触发父级更新User的方法
                             this.getUserInfo()

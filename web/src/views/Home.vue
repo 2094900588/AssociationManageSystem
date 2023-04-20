@@ -2,7 +2,7 @@
     <div>
         <!-- <h1>这是一个主页</h1> -->
         <div>
-            <el-row style="top:50px">
+            <el-row style="top:150px; left: 70px;">
                 <el-col :span="10" :offset="0">
                     <el-card :body-style="{ padding: '0px' }" class="table_card">
                         <h1 style="margin-top: 30px;margin-bottom: 20px;">社团积分榜</h1>
