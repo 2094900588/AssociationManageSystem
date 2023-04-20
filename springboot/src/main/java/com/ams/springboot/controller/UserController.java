@@ -5,7 +5,10 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
+import com.ams.springboot.controller.dto.UserDTI;
+import com.ams.springboot.controller.dto.UserPassword;
 import com.ams.springboot.entity.User;
+import com.ams.springboot.utils.MD5Utils;
 import com.ams.springboot.utils.TokenUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -49,7 +52,12 @@ public class UserController {
                 return Result.error(Constants.CODE_400,"参数错误");
             }
             UserDTO dto = userService.login(userDTO);
-            return Result.success(dto);
+            UserDTI dti = new UserDTI();
+            dti.setUsername(dto.getUsername());
+            dti.setNickname(dto.getNickname());
+            dti.setAvatarUrl(dto.getAvatarUrl());
+            dti.setToken(dto.getToken());
+            return Result.success(dti);
     }
 
     @PostMapping("/register")
@@ -57,6 +65,8 @@ public class UserController {
         if (StrUtil.isBlank(user.getUsername())||StrUtil.isBlank(user.getPassword())) {
             return Result.error(Constants.CODE_400,"参数错误");
         }else {
+            //对注册密码进行加密
+            user.setPassword(MD5Utils.code(user.getPassword()));
             return Result.success(userService.register(user));
         }
     }
@@ -65,9 +75,37 @@ public class UserController {
         public Result save(@RequestBody User user) {
             User user1 = TokenUtils.getCurrentUser();
             if (isPower(user1)){
+                //对密码进行加密，不论修改还是新增都执行一次
+                user.setPassword(MD5Utils.code(user.getPassword()));
                 return Result.success(userService.saveOrUpdate(user));
             }else {
                 return Result.error(Constants.CODE_401,"当前用户权限不足");
+            }
+        }
+
+        //修改个人信息接口
+        @PostMapping("/personupdate")
+        public Result personsave(@RequestBody User user) {
+                return Result.success(userService.saveOrUpdate(user));
+        }
+
+        //修改密码接口
+        @PostMapping("/updatepassword")
+        public Result updatepassword(@RequestBody UserPassword userPassword){
+            //查出当前用户
+            User user = userService.getById(userPassword.getId());
+            //验证旧密码是否输入正确
+            if (MD5Utils.code(userPassword.getOldpassword())==user.getPassword()){
+                if (userPassword.getNewpassword()==userPassword.getSecondpassword()){
+                    //对新密码进行加密
+                    user.setPassword(MD5Utils.code(userPassword.getNewpassword()));
+                    //进行修改密码
+                    return Result.success(userService.saveOrUpdate(user));
+                }else {
+                    return Result.error(Constants.CODE_600,"两次密码输入不一致！");
+                }
+            }else {
+                return Result.error(Constants.CODE_600,"旧密码输入错误！");
             }
         }
 
@@ -83,7 +121,11 @@ public class UserController {
 
         @GetMapping
         public Result findAll() {
-            return Result.success(userService.list());
+            List<User> users = userService.list();
+            for (User user : users) {
+                user.setPassword("");
+            }
+            return Result.success(users);
         }
 
         @GetMapping("/{id}")
@@ -126,7 +168,6 @@ public class UserController {
                 queryWrapper.like("address", address);
             }
             queryWrapper.orderByDesc("id");
-
             return Result.success(userService.page(new Page<>(pageNum, pageSize),queryWrapper));
         }
 

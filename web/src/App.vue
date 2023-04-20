@@ -6,7 +6,7 @@
 
 <style>
 .index_background{
-    background: url('./assets/BG.jpg') center top no-repeat;
+    background: url('./assets/BG.bmp') center top no-repeat;
     /* background-position:left top; */
 }
 </style>

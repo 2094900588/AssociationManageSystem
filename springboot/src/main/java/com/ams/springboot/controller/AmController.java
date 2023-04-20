@@ -76,7 +76,8 @@ public class AmController {
     public Result findPage(@RequestParam Integer pageNum,
                            @RequestParam Integer pageSize,
                            @RequestParam(defaultValue = "") String studentid,
-                           @RequestParam(defaultValue = "") String amname) {
+                           @RequestParam(defaultValue = "") String amname,
+                           @RequestParam(defaultValue = "") Integer status) {
         User user = TokenUtils.getCurrentUser();
         QueryWrapper<Am> queryWrapper=new QueryWrapper<>();
         queryWrapper.eq("isamdelete",false);
@@ -88,6 +89,10 @@ public class AmController {
         }
         if(!"".equals(amname)) {
             queryWrapper.like("amname", amname);
+        }
+        //对政治面貌进行模糊查询
+        if(!"".equals(status)) {
+            queryWrapper.like("status", status);
         }
         //让新添加的排在页面前面，进行一个排序工作
         queryWrapper.orderByDesc("id");

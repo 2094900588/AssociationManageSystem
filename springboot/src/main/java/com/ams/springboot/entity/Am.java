@@ -33,7 +33,7 @@ public class Am {
     private String phone;
 
     @ApiModelProperty("社员政治面貌")
-    private String status;
+    private Integer status;
 
     @JsonFormat(pattern = "yyyy-MM-dd",timezone = "Asia/Shanghai")
     @ApiModelProperty("社员加入社团时间")

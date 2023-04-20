@@ -7,11 +7,15 @@ import com.ams.springboot.controller.dto.UserDTO;
 import com.ams.springboot.entity.User;
 import com.ams.springboot.exception.ServiceException;
 import com.ams.springboot.service.IUserService;
+import com.ams.springboot.utils.MD5Utils;
 import com.ams.springboot.utils.TokenUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.ams.springboot.mapper.UserMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 /**
  * <p>
@@ -24,12 +28,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
 
+    @Autowired
+    private UserMapper userMapper;
+
     private static final Log LOG = Log.get();
     @Override
     public UserDTO login(UserDTO userDTO) {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("username",userDTO.getUsername());
-        queryWrapper.eq("password",userDTO.getPassword());
+        queryWrapper.eq("password", MD5Utils.code(userDTO.getPassword()));
         User one = getOne(queryWrapper);
         //密码错误时使用这个抛出异常
         if (one != null){
