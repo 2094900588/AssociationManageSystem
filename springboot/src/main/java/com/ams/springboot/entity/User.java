@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
@@ -61,7 +62,7 @@ public class User implements Serializable {
 
       @JsonFormat(pattern = "yyyy-MM-dd",timezone = "Asia/Shanghai")
       @ApiModelProperty("创建时间")
-      private LocalDateTime createTime;
+      private Date createTime;
 
       @ApiModelProperty("账号使用者")
       private String name;

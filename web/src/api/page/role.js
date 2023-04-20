@@ -13,5 +13,8 @@ export default {
     },
     getall() {
         return ajax.get("/role/");
+    },
+    getSysall() {
+        return ajax.get("/sysrole/");
     }
 }

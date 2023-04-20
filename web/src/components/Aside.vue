@@ -12,7 +12,7 @@
                 <span slot="title">主页</span>
             </template>
         </el-menu-item>
-        <el-submenu index="2">
+        <el-submenu index="2" v-if="user.sysroleid !== 3">
             <template slot="title">
                 <i class="el-icon-setting"></i>
                 <span slot="title">系统管理</span>
@@ -29,7 +29,7 @@
                     <span slot="title">文件管理</span>
                 </template>
             </el-menu-item>
-            <el-menu-item index="2-3" :route="{ name: '角色管理' }">
+            <el-menu-item index="2-3" :route="{ name: '角色管理' }" v-if="user.sysroleid === 0 || user.sysroleid === 1">
                 <template slot="title">
                     <i class="el-icon-s-custom"></i>
                     <span slot="title">角色管理</span>
@@ -71,8 +71,13 @@
 </template>
 
 <script>
+
+import { mapState } from 'vuex'
 export default {
     name: "Aside",
+    computed: {
+        ...mapState(['user'])
+    },
     props: {
         isCollapse: Boolean,
         logoTextShow: Boolean

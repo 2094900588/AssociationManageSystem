@@ -1,10 +1,10 @@
 <template>
-    <div >
+    <div>
         <!-- <h1>这是一个主页</h1> -->
         <div>
             <el-row>
                 <el-col :span="10" :offset="0">
-                    <el-card :body-style="{ padding: '20px' }" class="table_card">
+                    <el-card :body-style="{ padding: '0px' }" class="table_card">
                         <h1>社团积分榜</h1>
                         <el-table :data="InteTableData" :show-header="false" class="table_card">
                             <el-table-column width="80">
@@ -18,7 +18,7 @@
                             </el-table-column>
                             <el-table-column prop="clubname" width="180">
                             </el-table-column>
-                            <el-table-column prop="integral" width="180">
+                            <el-table-column prop="integral">
                             </el-table-column>
                         </el-table>
 
@@ -26,7 +26,7 @@
                 </el-col>
 
                 <el-col :span="10" :offset="2">
-                    <el-card :body-style="{ padding: '20px' }" class="table_card">
+                    <el-card :body-style="{ padding: '0px' }" class="table_card">
                         <h1>社团人数榜</h1>
                         <el-table :data="NumTableData" :show-header="false">
                             <el-table-column width="80">
@@ -40,7 +40,7 @@
                             </el-table-column>
                             <el-table-column prop="clubname" width="180">
                             </el-table-column>
-                            <el-table-column prop="sum" width="180">
+                            <el-table-column prop="sum">
                             </el-table-column>
                         </el-table>
 
@@ -128,5 +128,4 @@ export default {
     width: auto\9;
     width: 100%;
 }
-
 </style>

@@ -12,8 +12,7 @@
             </el-button>
         </div>
         <el-table :data="tableData" border stripe :header-cell-class-name="headBg" style="width: 100%;">
-            <el-table-column type="selection" width="50">
-            </el-table-column>
+            <!-- <el-table-column type="selection" width="50"></el-table-column> -->
             <!-- <el-table-column prop="id" label="id" width="80"></el-table-column> -->
             <el-table-column type="index" width="50" :index="getindex"></el-table-column>
             <el-table-column prop="rolename" label="角色名称">

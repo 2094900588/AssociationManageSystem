@@ -26,8 +26,8 @@
             </el-upload>
             <el-button type="primary" class="ml-5" @click="exp">导出<i class="el-icon-top"></i> </el-button>
         </div>
-        <el-table :data="tableData" border stripe :header-cell-class-name="headBg"
-            @selection-change="handleSelectionChange" style="width: 100%;">
+        <el-table :data="tableData" border stripe :header-cell-class-name="headBg" @selection-change="handleSelectionChange"
+            style="width: 100%;">
             <el-table-column type="selection" width="50">
             </el-table-column>
             <!-- <el-table-column prop="id" label="id" width="80"></el-table-column> -->
@@ -46,7 +46,7 @@
             </el-table-column>
             <el-table-column label="角色">
                 <template slot-scope="scope">
-                    <span>{{ getrole(scope.row.roleid) }}</span>
+                    <span>{{ getrole(scope.row.roleid, scope.row.sysroleid) }}</span>
                 </template>
             </el-table-column>
             <el-table-column label="所属社团">
@@ -101,7 +101,14 @@
                     <el-form-item label="真实姓名">
                         <el-input v-model="form.name" type="text" autocomplete="off"></el-input>
                     </el-form-item>
-                    <el-form-item label="角色">
+                    <el-form-item label="角色" v-if="user.sysroleid === 0 || user.sysroleid === 1">
+                        <!-- <el-input v-model="form.address" type="text" autocomplete="off"></el-input> -->
+                        <el-select v-model="form.sysroleid" filterable placeholder="请选择">
+                            <el-option v-for="item in rolesys" :key="item.id" :label="item.sysrolename" :value="item.id">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="从属角色" v-if="form.sysroleid === 3 || user.sysroleid === 2 || user.sysroleid === 3">
                         <!-- <el-input v-model="form.address" type="text" autocomplete="off"></el-input> -->
                         <el-select v-model="form.roleid" filterable placeholder="请选择">
                             <el-option v-for="item in roles" :key="item.id" :label="item.rolename" :value="item.id">
@@ -126,6 +133,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import userapi from '@/api/page/user'
 import roleapi from '@/api/page/role'
 import clubapi from '@/api/page/club'
@@ -136,6 +144,7 @@ export default {
             tableData: [],
             roles: [],
             clubs: [],
+            rolesys: [],
             total: 0,
             pageNum: 1,
             pageSize: 10,
@@ -152,11 +161,21 @@ export default {
     created() {
         this.load()
     },
+    computed: {
+        ...mapState(['user'])
+    },
     methods: {
         getindex(index) {
             return this.pageSize * (this.pageNum - 1) + index + 1
         },
-        getrole(id) {
+        getsysrole(id) {
+            var t = this.rolesys.filter((item) => id == item.id)
+            if (t.length === 1) return t[0].sysrolename;
+            return id;
+        },
+        getrole(id, sysid) {
+            console.log(id, sysid);
+            if (sysid != null && sysid !== 3) return this.getsysrole(sysid);
             var t = this.roles.filter((item) => id == item.id)
             if (t.length === 1) return t[0].rolename;
             return id;
@@ -190,6 +209,9 @@ export default {
             })
             roleapi.getall().then(res => {
                 this.roles = res.data
+            })
+            roleapi.getSysall().then(res => {
+                this.rolesys = res.data
             })
             clubapi.getall().then(res => {
                 this.clubs = res.data
