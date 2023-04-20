@@ -65,9 +65,16 @@ public class UserController {
         if (StrUtil.isBlank(user.getUsername())||StrUtil.isBlank(user.getPassword())) {
             return Result.error(Constants.CODE_400,"参数错误");
         }else {
-            //对注册密码进行加密
-            user.setPassword(MD5Utils.code(user.getPassword()));
-            return Result.success(userService.register(user));
+            QueryWrapper<User> queryWrapper=new QueryWrapper<>();
+            queryWrapper.like("username",user.getUsername());
+            List<User> users = userService.list(queryWrapper);
+            if (users.size()>0){
+                return Result.error(Constants.CODE_600,"用户名重复请重新输入用户名！");
+            }else {
+                //对注册密码进行加密
+                user.setPassword(MD5Utils.code(user.getPassword()));
+                return Result.success(userService.register(user));
+            }
         }
     }
 
@@ -75,9 +82,19 @@ public class UserController {
         public Result save(@RequestBody User user) {
             User user1 = TokenUtils.getCurrentUser();
             if (isPower(user1)){
-                //对密码进行加密，不论修改还是新增都执行一次
-                user.setPassword(MD5Utils.code(user.getPassword()));
-                return Result.success(userService.saveOrUpdate(user));
+                if (user.getId()==null){
+                    QueryWrapper<User> queryWrapper=new QueryWrapper<>();
+                    queryWrapper.like("username",user.getUsername());
+                    List<User> users = userService.list(queryWrapper);
+                    if (users.size()>0){
+                        return Result.error(Constants.CODE_600,"用户名重复请重新输入用户名！");
+                    }else {
+                        user.setPassword(MD5Utils.code(user.getPassword()));
+                        return Result.success(userService.saveOrUpdate(user));
+                    }
+                }else {
+                    return Result.success(userService.saveOrUpdate(user));
+                }
             }else {
                 return Result.error(Constants.CODE_401,"当前用户权限不足");
             }

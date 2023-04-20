@@ -230,7 +230,7 @@ export default {
                         this.dialogFormVisible = false,
                         this.load()
                 } else {
-                    this.$message.error("保存失败")
+                    this.$message.error(res.msg)
                 }
             })
         },
