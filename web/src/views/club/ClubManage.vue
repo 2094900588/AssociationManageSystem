@@ -11,7 +11,7 @@
             <el-button type="primary" class="ml-5" @click="handleAdd">新增<i class="el-icon-circle-plus-outline"></i>
             </el-button>
         </div>
-        <el-table :data="tableData" border stripe :header-cell-class-name="headBg" style="width: 100%;">
+        <el-table :data="tableData" border stripe :header-cell-class-name="headBg" style="width: 100%; margin-top: 30px;">
             <!-- <el-table-column prop="id" label="id" width="80"></el-table-column> -->
             <el-table-column type="index" width="50" :index="getindex"></el-table-column>
             <el-table-column prop="clubname" label="社团名称">

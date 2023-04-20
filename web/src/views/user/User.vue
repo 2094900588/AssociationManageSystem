@@ -27,7 +27,7 @@
             <el-button type="primary" class="ml-5" @click="exp">导出<i class="el-icon-top"></i> </el-button>
         </div>
         <el-table :data="tableData" border stripe :header-cell-class-name="headBg" @selection-change="handleSelectionChange"
-            style="width: 100%;">
+            style="width: 100%; margin-top: 30px;">
             <el-table-column type="selection" width="50">
             </el-table-column>
             <!-- <el-table-column prop="id" label="id" width="80"></el-table-column> -->

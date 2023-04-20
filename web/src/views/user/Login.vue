@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
         <div
-            style="margin: auto;position: fixed;right: 0;left: 0;top: 0;bottom: 0; background-color: #fff; width: 450px; height: 400px; padding: 20px; border-radius: 10px">
+            style="margin: auto;position: fixed;right: 0;left: 0;top: 0;bottom: 0; background-color: #fff; width: 450px; height: 400px; padding: 20px; border-radius: 20px">
             <div style="margin: 20px 0; text-align: center; font-size: 24px"><b>登录</b></div>
             <el-form :model="user" :rules="rules" ref="userFrom">
                 <el-form-item label="用户名" prop="username">
