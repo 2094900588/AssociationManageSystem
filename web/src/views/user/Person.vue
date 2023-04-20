@@ -31,24 +31,25 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
+import userapi from '@/api/page/user'
 export default {
     name: "Person",
     data() {
         return {
-            form: {},
+            // form: {},
         }
     },
     computed: {
-        ...mapState(['user'])
+        ...mapState({ form: 'user' })
     },
     created() {
-        this.form = this.user
-        console.log(this.user);
+        // this.form = this.user
     },
     methods: {
         ...mapActions(['getUserInfo']),
         saveUser() {
-            this.request.post("/user/", this.form).then(res => {
+            // this.form.password = ""
+            userapi.modifyinfo(this.form).then(res => {
                 if (res.code === '200') {
                     this.$message.success("保存成功")
                     //触发父级更新User的方法
@@ -57,6 +58,15 @@ export default {
                     this.$message.error("保存失败")
                 }
             })
+            // this.request.post("/user/", this.form).then(res => {
+            //     if (res.code === '200') {
+            //         this.$message.success("保存成功")
+            //         //触发父级更新User的方法
+            //         this.getUserInfo()
+            //     } else {
+            //         this.$message.error("保存失败")
+            //     }
+            // })
         },
         handleAvatarSuccess(res) {
             this.form.avatarUrl = res
