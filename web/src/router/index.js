@@ -13,6 +13,7 @@ const routes = [
       { path: '', name: '主页', component: () => import('../views/Home') },
       { path: 'user', name: '用户管理', component: () => import('../views/user/User') },
       { path: 'person', name: '个人信息', component: () => import('../views/user/Person') },
+      { path: 'modifypwd', name: '修改密码', component: () => import('../views/user/ModifyPassword') },
       { path: 'role', name: '角色管理', component: () => import('../views/user/RoleManage') },
       { path: 'log', name: '操作日志', component: () => import('../views/log/log') },
       { path: 'file', name: '文件管理', component: () => import('../views/File') },

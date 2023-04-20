@@ -16,5 +16,11 @@ export default {
     },
     getinfo() {
         return ajax.get("/user/username");
+    },
+    modifyinfo(data) {
+        return ajax.post("/user/personupdate", data);
+    },
+    modifypassword(data) {
+        return ajax.post("/user/updatepassword", data);
     }
 }

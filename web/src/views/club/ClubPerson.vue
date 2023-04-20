@@ -5,8 +5,15 @@
                 v-model="studentid"></el-input>
             <el-input style="width: 200px;cursor: pointer" suffix-icon="el-icon-search" placeholder="请输入姓名"
                 v-model="amname"></el-input>
-            <el-input style="width: 200px;cursor: pointer" suffix-icon="el-icon-search" placeholder="请输入政治面貌"
-            v-model="astatus"></el-input>
+            <!-- <el-input style="width: 200px;cursor: pointer" suffix-icon="el-icon-search" placeholder="请输入政治面貌"
+                v-model="astatus"></el-input> -->
+
+            <!-- <el-input v-model="form.address" type="text" autocomplete="off"></el-input> -->
+            <el-select v-model="status" placeholder="请选择">
+                <el-option v-for="item, index in ['党员', '预备党员', '共青团员', '群众']" :key="item" :label="item" :value="index">
+                </el-option>
+            </el-select>
+
             <el-button type="primary" class="ml-5" @click="load">搜索</el-button>
             <el-button type="warning" class="ml-5" @click="reset">重置</el-button>
         </div>
@@ -73,7 +80,8 @@
                     <el-form-item label="政治面貌">
                         <!-- <el-input v-model="form.address" type="text" autocomplete="off"></el-input> -->
                         <el-select v-model="form.status" placeholder="请选择">
-                            <el-option v-for="item in ['党员', '群众', '预备党员', '团员']" :key="item" :label="item" :value="item">
+                            <el-option v-for="item, index in ['党员', '预备党员', '共青团员', '群众']" :key="item" :label="item"
+                                :value="index">
                             </el-option>
                         </el-select>
                     </el-form-item>
@@ -123,7 +131,7 @@ export default {
             pageSize: 10,
             studentid: "",
             amname: "",
-            astatus: -1,
+            status: "",
             dialogFormVisible: false,
             form: {},
             multipleSelection: [],
@@ -162,9 +170,10 @@ export default {
                 pageSize: this.pageSize,
                 studentid: this.studentid,
                 amname: this.amname,
-                astatus: this.astatus,
+                status: this.status,
             }
             personapi.getPage(params).then(res => {
+                console.log(res);
                 this.tableData = res.data.records
                 this.total = res.data.total
             })
@@ -206,7 +215,7 @@ export default {
                     this.$message.success("删除成功"),
                         this.load()
                 } else {
-                    this.$message.error("删除失败")
+                    this.$message.error(res.msg)
                 }
             })
         }
