@@ -4,6 +4,9 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
+import cn.hutool.json.JSONObject;
+import com.ams.springboot.common.Constants;
+import com.ams.springboot.utils.AliOssUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ams.springboot.common.Result;
@@ -20,6 +23,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/file")
@@ -27,14 +31,29 @@ public class FileController {
 
     @Value("${files.upload.path}")
     private String fileUploadPath;
-
+    public static String getUUID() {
+        return UUID.randomUUID().toString().replaceAll("-", "");
+    }
     @Autowired
     private FileMapper fileMapper;
     /**
      * 文件存储
      * **/
     @PostMapping("/upload")
-    public String upload(@RequestParam MultipartFile file) throws IOException {
+    public Result upload(@RequestParam MultipartFile file) {
+        String url=null;
+        JSONObject resp = new JSONObject();
+        try{
+            url=AliOssUtil.upload("photo",file);
+            resp.set("url",url);
+            return Result.success(resp);
+        }catch (Exception e){
+            resp.set("msg",e.getMessage());
+            return Result.error(Constants.CODE_400,"图片上传失败");
+        }
+    }
+    @PostMapping("/upload1")
+    public String upload1(@RequestParam MultipartFile file) throws IOException {
         String originalFilename = file.getOriginalFilename();
         String type = FileUtil.extName(originalFilename);
         long size = file.getSize();

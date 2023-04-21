@@ -56,6 +56,14 @@
             </el-table-column>
             <el-table-column prop="studentid" label="学号">
             </el-table-column>
+            <el-table-column prop="" label="头像">
+                <template slot-scope="scope">
+                    <img v-if="scope.row.userphoto" :src="scope.row.userphoto"
+                        style="height: 30px;width: 30px; border-radius: 50%;">
+                    <span v-else>暂无</span>
+                </template>
+            </el-table-column>
+
             <el-table-column prop=" " label=" " width="165">
                 <template slot-scope="scope">
                     <el-button type="success" @click="handleEdit(scope.row)">编辑<i class="el-icon-edit"></i></el-button>
@@ -101,6 +109,15 @@
                     <el-form-item label="真实姓名">
                         <el-input v-model="form.name" type="text" autocomplete="off"></el-input>
                     </el-form-item>
+                    <el-form-item label="头像">
+                        <el-upload class="upload-demo" ref="upload" action="#" :show-file-list="false"
+                            :on-change="handleChange" :auto-upload="false" list-type="picture-card">
+                            <!-- <i class="el-icon-plus"></i> -->
+                            <img v-if="form.userphoto" :src="form.userphoto" class="avatar" width="148" height="148">
+                            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                        </el-upload>
+
+                    </el-form-item>
                     <el-form-item label="角色" v-if="user.sysroleid === 0 || user.sysroleid === 1">
                         <!-- <el-input v-model="form.address" type="text" autocomplete="off"></el-input> -->
                         <el-select v-model="form.sysroleid" filterable placeholder="请选择">
@@ -137,10 +154,12 @@ import { mapState } from 'vuex'
 import userapi from '@/api/page/user'
 import roleapi from '@/api/page/role'
 import clubapi from '@/api/page/club'
+import fileapi from '@/api/page/file'
 export default {
     name: "User",
     data() {
         return {
+            file: null,
             tableData: [],
             roles: [],
             clubs: [],
@@ -165,6 +184,21 @@ export default {
         ...mapState(['user'])
     },
     methods: {
+        //上传文件让第二次覆盖第一的文件
+        handleChange(file, fileList) {
+            const isJPG = file.raw.type.indexOf("image") !== -1;
+            const isLt2M = file.raw.size / 1024 / 1024 < 2;
+            if (!isJPG) {
+                this.$message.error('上传头像图片只能是 JPG 格式!');
+                return
+            }
+            if (!isLt2M) {
+                this.$message.error('上传头像图片大小不能超过 2MB!');
+                return
+            }
+            this.form.userphoto = file.url
+            this.file = file
+        },
         getindex(index) {
             return this.pageSize * (this.pageNum - 1) + index + 1
         },
@@ -174,7 +208,6 @@ export default {
             return id;
         },
         getrole(id, sysid) {
-            console.log(id, sysid);
             if (sysid != null && sysid !== 3) return this.getsysrole(sysid);
             var t = this.roles.filter((item) => id == item.id)
             if (t.length === 1) return t[0].rolename;
@@ -203,7 +236,6 @@ export default {
                 address: this.address,
             }
             userapi.getPage(params).then(res => {
-                console.log(res);
                 this.tableData = res.data.records
                 this.total = res.data.total
             })
@@ -223,14 +255,25 @@ export default {
                 this.address = "",
                 this.load()
         },
+
         saveUser() {
-            userapi.save(this.form).then(res => {
+            let fromdata = new FormData()
+            fromdata.append("file", this.file.raw)
+            fileapi.uploadfile(fromdata).then(res => {
                 if (res.code === '200') {
-                    this.$message.success("保存成功"),
-                        this.dialogFormVisible = false,
-                        this.load()
+                    this.form.userphoto = res.data.url
+                    userapi.save(this.form).then(res => {
+                        if (res.code === '200') {
+                            this.$message.success("保存成功"),
+                                this.dialogFormVisible = false,
+                                this.load()
+                        } else {
+                            this.$message.error(res.msg)
+                        }
+                    })
                 } else {
                     this.$message.error(res.msg)
+                    return false
                 }
             })
         },
@@ -273,8 +316,8 @@ export default {
             })
         },
         handleSelectionChange(val) {
-            console.log(val),
-                this.multipleSelection = val
+            // console.log(val),
+            this.multipleSelection = val
         }
     }
 }

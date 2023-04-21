@@ -1,9 +1,15 @@
 <template>
     <el-card style="width: 500px">
         <el-form label-width="70px" size="small">
-            <el-upload class="avatar-uploader" action="http://localhost:9090/file/upload" :show-file-list="false"
-                :on-success="handleAvatarSuccess">
-                <img v-if="form.avatarUrl" :src="form.avatarUrl" class="avatar">
+            <!-- <el-upload class="avatar-uploader" action="#" :show-file-list="false" :on-success="handleAvatarSuccess"
+                :auto-upload="false">
+                <img v-if="form.userphoto" :src="form.userphoto" class="avatar">
+                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload> -->
+            <el-upload class="avatar-uploader" ref="upload" action="#" :show-file-list="false" :on-change="handleChange"
+                :auto-upload="false" list-type="picture-card">
+                <!-- <i class="el-icon-plus"></i> -->
+                <img v-if="form.userphoto" :src="form.userphoto" class="avatar" width="148" height="148">
                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
 
@@ -38,41 +44,65 @@
 <script>
 import { mapActions, mapState } from 'vuex'
 import userapi from '@/api/page/user'
+import fileapi from '@/api/page/file'
 export default {
     name: "Person",
     data() {
         return {
-            // form: {},
+            file: null,
+            form: {},
         }
     },
     computed: {
-        ...mapState({ form: 'user' })
+        ...mapState(['user'])
     },
     created() {
-        // this.form = this.user
+        this.form = this.user
+    },
+    watch: {
+        user: function (o) {
+            this.form = JSON.parse(JSON.stringify(o))
+        }
     },
     methods: {
         ...mapActions(['getUserInfo']),
+        //上传文件让第二次覆盖第一的文件
+        handleChange(file, fileList) {
+            const isJPG = file.raw.type.indexOf("image") !== -1;
+            const isLt2M = file.raw.size / 1024 / 1024 < 2;
+            if (!isJPG) {
+                this.$message.error('上传头像图片只能是 JPG 格式!');
+                return
+            }
+            if (!isLt2M) {
+                this.$message.error('上传头像图片大小不能超过 2MB!');
+                return
+            }
+            this.form.userphoto = file.url
+            this.file = file
+        },
         saveUser() {
             // this.form.password = ""
-            userapi.modifyinfo(this.form).then(res => {
+
+            let fromdata = new FormData()
+            fromdata.append("file", this.file.raw)
+            fileapi.uploadfile(fromdata).then(res => {
                 if (res.code === '200') {
-                    this.$message.success("保存成功")
-                    //触发父级更新User的方法
-                    this.getUserInfo()
+                    this.form.userphoto = res.data.url
+                    userapi.modifyinfo(this.form).then(res => {
+                        if (res.code === '200') {
+                            this.$message.success("保存成功")
+                            //触发父级更新User的方法
+                            this.getUserInfo()
+                        } else {
+                            this.$message.error("保存失败")
+                        }
+                    })
                 } else {
-                    this.$message.error("保存失败")
+                    this.$message.error(res.msg)
+                    return false
                 }
             })
-            // this.request.post("/user/", this.form).then(res => {
-            //     if (res.code === '200') {
-            //         this.$message.success("保存成功")
-            //         //触发父级更新User的方法
-            //         this.getUserInfo()
-            //     } else {
-            //         this.$message.error("保存失败")
-            //     }
-            // })
         },
         handleAvatarSuccess(res) {
             this.form.avatarUrl = res
@@ -102,15 +132,11 @@ export default {
 .avatar-uploader-icon {
     font-size: 28px;
     color: #8c939d;
-    width: 128px;
-    height: 128px;
     line-height: 128px;
     text-align: center;
 }
 
 .avatar {
-    width: 128px;
-    height: 128px;
     display: block;
 }
 </style>

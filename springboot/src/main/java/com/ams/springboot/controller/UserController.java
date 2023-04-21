@@ -94,7 +94,7 @@ public class UserController {
                     }
                 }else {
                     User serviceById = userService.getById(user.getId());
-                    if (serviceById.getPassword()==user.getPassword()){
+                    if (serviceById.getPassword().equals(user.getPassword())){
                         return Result.success(userService.saveOrUpdate(user));
                     }else {
                         user.setPassword(MD5Utils.code(user.getPassword()));

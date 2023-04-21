@@ -9,8 +9,8 @@
         </div>
         <el-dropdown style=" cursor:pointer; text-align: right">
             <div style="display:inline-block;">
-                <img :src="user.avatarUrl" alt=""
-                    style="width: 30px; border-radius: 50%; position: relative; top: 10px; left: 60px">
+                <img :src="user.userphoto" alt=""
+                    style="width: 30px;height: 30px; border-radius: 50%; position: relative; top: 10px; left: 70px">
                 <span style="margin-left: 80px">{{ user.nickname }}</span><i class="el-icon-arrow-down"></i>
             </div>
             <el-dropdown-menu slot="dropdown" style="width: 100px; text-align: center">
