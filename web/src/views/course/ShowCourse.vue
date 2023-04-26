@@ -1,14 +1,27 @@
 <template>
     <div class="home">
         <el-table :data="tabledata" tooltip-effect="dark" size="small">
-            <el-table-column label="节次">
+            <el-table-column label="节次" width="120">
                 <template slot-scope="scope">
                     {{ getjcName(scope.$index) }}
                 </template>
             </el-table-column>
-            <el-table-column :label="getWeek(index)" v-for="(item, index) in tabledata[0]" :key="index">
+            <el-table-column :label="getWeek(index)" v-for="(item, index) in  tabledata[0] " :key="index">
                 <template slot-scope="scope">
-                    {{ scope.row[index] }}
+                    <div :style="{ color: scope.row[index] == '全有课' ? 'red' : '' }">
+                        <el-row :gutter="16"
+                            v-for="(item, x) in scope.row[index].slice(parseInt(scope.row[index].length / 3))">
+                            <el-col :span="10">
+                                {{ scope.row[index][x * 3] }}
+                            </el-col>
+                            <el-col :span="10" style="margin-right: -23px; margin-left: -22px;">
+                                {{ scope.row[index][x * 3 + 1] }}
+                            </el-col>
+                            <el-col :span="10">
+                                {{ scope.row[index][x * 3 + 2] }}
+                            </el-col>
+                        </el-row>
+                    </div>
                 </template>
             </el-table-column>
 
@@ -23,6 +36,7 @@ import personapi from '@/api/page/person'
 export default {
     data() {
         return {
+            x: 0,
             person: {},
             totalperson: 0,
             courses: [],
@@ -35,13 +49,47 @@ export default {
             tabledata: [
                 [], []
             ]
-
         }
     },
     created() {
         this.load()
     },
+    watch: {
+        totalperson: function (e) {
+            let classlist = Object.keys(this.person)
+            for (var i = 0; i < 6; i++) {
+                this.NoneCourseClass[i] = []
+                for (var j = 0; j < 7; j++) {
+                    this.NoneCourseClass[i].push(JSON.parse(JSON.stringify(classlist)))
+                }
+            }
+            if (JSON.stringify(this.courses) != '{}') this.init()
+        },
+        courses: function (e) {
+            if (this.totalperson != 0) this.init()
+        }
+
+    },
     methods: {
+        init() { //生成无课课表 
+
+            for (var i of this.courses) {
+                this.NoneCourseClass[i.coursedate][i.week] = this.NoneCourseClass[i.coursedate][i.week].filter(item => item != i.classid)
+            }
+            for (var i = 0; i < this.NoneCourseClass.length; i++) {
+                this.NoneCourse[i] = []
+                for (var j = 0; j < this.NoneCourseClass[i].length; j++) {
+                    this.NoneCourse[i][j] = []
+                    for (var k = 0; k < this.NoneCourseClass[i][j].length; k++) {
+                        this.NoneCourse[i][j] = this.NoneCourse[i][j].concat(this.person[this.NoneCourseClass[i][j][k]])
+                    }
+                    if (this.NoneCourse[i][j].length == this.totalperson) this.NoneCourse[i][j] = "全员无课"
+                    else if (this.NoneCourse[i][j].length == 0) this.NoneCourse[i][j] = "全有课"
+                    //else this.NoneCourse[i][j] = this.NoneCourse[i][j].join("\n")
+                }
+            }
+            this.tabledata = JSON.parse(JSON.stringify(this.NoneCourse))
+        },
         getjcName(n) {
             let dx = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '十二'];
             // console.log(n);
@@ -63,6 +111,7 @@ export default {
                 this.courses = res.data
             })
             personapi.list().then(res => {
+                this.person = {}
                 for (var i of res.data) {
                     if (this.person[i.classid] == null) {
                         this.person[i.classid] = [i.amname]
@@ -71,35 +120,9 @@ export default {
                     }
                 }
                 this.totalperson = res.data.length
-                let classlist = Object.keys(this.person)
-                for (var i = 0; i < 6; i++) {
-                    this.NoneCourseClass[i] = []
-                    for (var j = 0; j < 7; j++) {
-                        this.NoneCourseClass[i].push(JSON.parse(JSON.stringify(classlist)))
-                    }
-                }
                 // console.log(this.courses);
-                setTimeout(() => {
-                    for (var i of this.courses) {
-                        this.NoneCourseClass[i.coursedate][i.week] = this.NoneCourseClass[i.coursedate][i.week].filter(item => item != i.classid)
-                        // console.log(this.NoneCourseClass[i.coursedate][i.week]);
-                        // console.log();
-                    }
-                    // console.log(this.NoneCourseClass);
-                    for (var i = 0; i < this.NoneCourseClass.length; i++) {
-                        this.NoneCourse[i] = []
-                        for (var j = 0; j < this.NoneCourseClass[i].length; j++) {
-                            this.NoneCourse[i][j] = []
-                            for (var k = 0; k < this.NoneCourseClass[i][j].length; k++) {
-                                this.NoneCourse[i][j] = this.NoneCourse[i][j].concat(this.person[this.NoneCourseClass[i][j][k]])
-                            }
-                            if (this.NoneCourse[i][j].length == this.totalperson) this.NoneCourse[i][j] = "全员无课"
-                            else this.NoneCourse[i][j] = this.NoneCourse[i][j].join("\n")
-                        }
-                    }
-                    this.tabledata = this.NoneCourse
-                    console.log(JSON.stringify(this.NoneCourse));
-                }, 500);
+                // setTimeout(() => {
+                // }, 500);
             })
         }
     }
