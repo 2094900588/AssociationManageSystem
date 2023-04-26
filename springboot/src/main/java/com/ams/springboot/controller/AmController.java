@@ -39,6 +39,7 @@ public class AmController {
         Operator operator = new Operator();
         SysRole sysRole = sysRoleService.getById(user.getId());
         Club club = clubService.getById(user.getClubid());
+
         //填入需要填写的数据
         operator.setUserid(user.getId());
         operator.setUsername(user.getName());

@@ -27,6 +27,8 @@
             <el-table-column type="index" width="50" :index="getindex"></el-table-column>
             <el-table-column prop="studentid" label="社员学号">
             </el-table-column>
+            <el-table-column prop="classid" label="社员班号">
+            </el-table-column>
             <el-table-column prop="amname" label="社员姓名">
             </el-table-column>
             <el-table-column prop="phone" label="社员电话">
@@ -70,6 +72,9 @@
                 <el-form label-width="100px" size="small">
                     <el-form-item label="社员学号">
                         <el-input v-model="form.studentid" type="text" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="社员班号">
+                        <el-input v-model="form.classid" type="text" autocomplete="off"></el-input>
                     </el-form-item>
                     <el-form-item label="社员姓名">
                         <el-input v-model="form.amname" type="text" autocomplete="off"></el-input>

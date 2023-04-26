@@ -1,5 +1,6 @@
 package com.ams.springboot;
 
+import com.ams.springboot.mapper.CourseMapper;
 import com.ams.springboot.service.IClubService;
 import com.ams.springboot.utils.AliOssUtil;
 import org.apache.http.entity.ContentType;
@@ -18,17 +19,10 @@ import java.util.List;
 class SpringbootApplicationTests {
 
     @Resource
-    private IClubService clubService;
+    private CourseMapper courseMapper;
     @Test
     void contextLoads() throws IOException {
-
-        File file = new File("C:\\Users\\Administrator\\Desktop\\index.html");
-        InputStream inputStream = Files.newInputStream(file.toPath());
-        MultipartFile multipartFile = new MockMultipartFile(file.getName(), file.getName(), ContentType.APPLICATION_OCTET_STREAM.toString(),inputStream);
-        System.out.println("aaaaaaa");
-        System.out.println(file.getName());
-        System.out.println(multipartFile.getOriginalFilename());
-//        System.out.println(AliOssUtil.upload("photo/",multipartFile));
+        System.out.println(courseMapper.getall());
     }
 
 }

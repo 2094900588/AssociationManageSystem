@@ -26,6 +26,9 @@ public class Am {
     @ApiModelProperty("社员学号")
     private String studentid;
 
+    @ApiModelProperty("社员班号")
+    private String classid;
+
     @ApiModelProperty("社员名称")
     private String amname;
 

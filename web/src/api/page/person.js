@@ -10,5 +10,8 @@ export default {
     },
     delete(data) {
         return ajax.delete("/am/" + data);
+    },
+    list() {
+        return ajax.get("/am");
     }
 }

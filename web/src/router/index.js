@@ -20,6 +20,9 @@ const routes = [
       { path: 'activemanage', name: '社团活动管理', component: () => import('../views/club/ActiveManage') },
       { path: 'clubmanage', name: '社团管理', component: () => import('../views/club/ClubManage') },
       { path: 'clubperson', name: '社团人员管理', component: () => import('../views/club/ClubPerson') },
+      { path: 'addcourst', name: '添加无课课表', component: () => import('../views/course/AddCourse') },
+      { path: 'listcourse', name: '显示无课课表', component: () => import('../views/course/ListCourse') },
+      { path: 'showcourse', name: '查看无课课表', component: () => import('../views/course/ShowCourse') },
     ]
   },
   {

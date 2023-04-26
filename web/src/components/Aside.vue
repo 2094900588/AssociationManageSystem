@@ -66,7 +66,32 @@
                 </template>
             </el-menu-item>
         </el-submenu>
+        <el-submenu index="4">
+            <template slot="title">
+                <i class="el-icon-menu"></i>
+                <span slot="title">课表管理</span>
+            </template>
+            <el-menu-item index="4-1" :route="{ name: '添加无课课表' }">
+                <template slot="title">
+                    <i class="el-icon-postcard"></i>
+                    <span slot="title">添加无课课表</span>
+                </template>
+            </el-menu-item>
+            <el-menu-item index="4-2" :route="{ name: '显示无课课表' }">
+                <template slot="title">
+                    <i class="el-icon-postcard"></i>
+                    <span slot="title">显示无课课表</span>
+                </template>
+            </el-menu-item>
+            <el-menu-item index="4-3" :route="{ name: '查看无课课表' }">
+                <template slot="title">
+                    <i class="el-icon-postcard"></i>
+                    <span slot="title">查看无课课表</span>
+                </template>
+            </el-menu-item>
 
+
+        </el-submenu>
     </el-menu>
 </template>
 
