@@ -13,16 +13,8 @@
                 v-model="formData.studentid"></el-input>
             <el-input style="width: 200px;cursor: pointer" placeholder="请输入班级" :disabled="formData.studentid !== ''"
                 v-model="formData.classid" class="ml-5"></el-input>
-            <el-select v-model="formData.isoeweek" placeholder="请选择单双周" style="width: 80px;">
-                <el-option label="全周" value="0">
-                </el-option>
-                <el-option label="单周" value="1">
-                </el-option>
-                <el-option label="双周" value="2">
-                </el-option>
-            </el-select>
             <el-table :data="formData.course" tooltip-effect="dark" size="small">
-                <el-table-column label="节次">
+                <el-table-column label="节次" width="120">
                     <template slot-scope="scope">
                         {{ getjcName(scope.$index) }}
                     </template>
@@ -31,6 +23,20 @@
                     <template slot-scope="scope">
                         <el-form-item :prop="'course.' + scope.$index">
                             <el-checkbox v-model="scope.row[index].iscourse">有课</el-checkbox>
+                            <div class="inputDeep" v-if="scope.row[index].iscourse">
+                                <el-input v-model="scope.row[index].begin" style="width: 30px;cursor: pointer;"></el-input>
+                                <span>~</span>
+                                <el-input v-model="scope.row[index].end" style="width: 30px;cursor: pointer;"></el-input>
+                                <br>
+                                <el-select v-model="scope.row[index].isoeweek" placeholder="请选择单双周" style="width: 80px;">
+                                    <el-option label="全周" value="0">
+                                    </el-option>
+                                    <el-option label="单周" value="1">
+                                    </el-option>
+                                    <el-option label="双周" value="2">
+                                    </el-option>
+                                </el-select>
+                            </div>
                         </el-form-item>
                     </template>
                 </el-table-column>
@@ -54,16 +60,15 @@ export default {
                     // [false, false, false, false, false, false, false],
                     // [false, false, false, false, false, false, false],
                     // [false, false, false, false, false, false, false],
-                    [{ iscourse: false }, { iscourse: false }, { iscourse: false }, { iscourse: false }, { iscourse: false }, { iscourse: false }, { iscourse: false }],
-                    [{ iscourse: false }, { iscourse: false }, { iscourse: false }, { iscourse: false }, { iscourse: false }, { iscourse: false }, { iscourse: false }],
-                    [{ iscourse: false }, { iscourse: false }, { iscourse: false }, { iscourse: false }, { iscourse: false }, { iscourse: false }, { iscourse: false }],
-                    [{ iscourse: false }, { iscourse: false }, { iscourse: false }, { iscourse: false }, { iscourse: false }, { iscourse: false }, { iscourse: false }],
-                    [{ iscourse: false }, { iscourse: false }, { iscourse: false }, { iscourse: false }, { iscourse: false }, { iscourse: false }, { iscourse: false }],
-                    [{ iscourse: false }, { iscourse: false }, { iscourse: false }, { iscourse: false }, { iscourse: false }, { iscourse: false }, { iscourse: false }],
+                    [{ iscourse: false, isoeweek: "0", begin: 1, end: 16 }, { iscourse: false, isoeweek: "0", begin: 1, end: 16 }, { iscourse: false, isoeweek: "0", begin: 1, end: 16 }, { iscourse: false, isoeweek: "0", begin: 1, end: 16 }, { iscourse: false, isoeweek: "0", begin: 1, end: 16 }, { iscourse: false, isoeweek: "0", begin: 1, end: 16 }, { iscourse: false, isoeweek: "0", begin: 1, end: 16 }],
+                    [{ iscourse: false, isoeweek: "0", begin: 1, end: 16 }, { iscourse: false, isoeweek: "0", begin: 1, end: 16 }, { iscourse: false, isoeweek: "0", begin: 1, end: 16 }, { iscourse: false, isoeweek: "0", begin: 1, end: 16 }, { iscourse: false, isoeweek: "0", begin: 1, end: 16 }, { iscourse: false, isoeweek: "0", begin: 1, end: 16 }, { iscourse: false, isoeweek: "0", begin: 1, end: 16 }],
+                    [{ iscourse: false, isoeweek: "0", begin: 1, end: 16 }, { iscourse: false, isoeweek: "0", begin: 1, end: 16 }, { iscourse: false, isoeweek: "0", begin: 1, end: 16 }, { iscourse: false, isoeweek: "0", begin: 1, end: 16 }, { iscourse: false, isoeweek: "0", begin: 1, end: 16 }, { iscourse: false, isoeweek: "0", begin: 1, end: 16 }, { iscourse: false, isoeweek: "0", begin: 1, end: 16 }],
+                    [{ iscourse: false, isoeweek: "0", begin: 1, end: 16 }, { iscourse: false, isoeweek: "0", begin: 1, end: 16 }, { iscourse: false, isoeweek: "0", begin: 1, end: 16 }, { iscourse: false, isoeweek: "0", begin: 1, end: 16 }, { iscourse: false, isoeweek: "0", begin: 1, end: 16 }, { iscourse: false, isoeweek: "0", begin: 1, end: 16 }, { iscourse: false, isoeweek: "0", begin: 1, end: 16 }],
+                    [{ iscourse: false, isoeweek: "0", begin: 1, end: 16 }, { iscourse: false, isoeweek: "0", begin: 1, end: 16 }, { iscourse: false, isoeweek: "0", begin: 1, end: 16 }, { iscourse: false, isoeweek: "0", begin: 1, end: 16 }, { iscourse: false, isoeweek: "0", begin: 1, end: 16 }, { iscourse: false, isoeweek: "0", begin: 1, end: 16 }, { iscourse: false, isoeweek: "0", begin: 1, end: 16 }],
+                    [{ iscourse: false, isoeweek: "0", begin: 1, end: 16 }, { iscourse: false, isoeweek: "0", begin: 1, end: 16 }, { iscourse: false, isoeweek: "0", begin: 1, end: 16 }, { iscourse: false, isoeweek: "0", begin: 1, end: 16 }, { iscourse: false, isoeweek: "0", begin: 1, end: 16 }, { iscourse: false, isoeweek: "0", begin: 1, end: 16 }, { iscourse: false, isoeweek: "0", begin: 1, end: 16 }],
                 ],
                 studentid: '',
                 classid: '',
-                isoeweek: "0"
             },
         }
     }, created() {
@@ -73,12 +78,16 @@ export default {
     methods: {
         getone(n) {
             courseapi.getone(n).then(res => {
+                console.log(res.data);
                 for (var i of res.data) {
                     this.formData.course[i.coursedate][i.week].iscourse = true
+                    this.formData.course[i.coursedate][i.week].begin = i.begin
+                    this.formData.course[i.coursedate][i.week].isoeweek = i.isoeweek.toString()
+                    this.formData.course[i.coursedate][i.week].end = i.end
+
                 }
                 this.formData.studentid = res.data[0].studentid
                 this.formData.classid = res.data[0].classid
-                this.formData.isoeweek = res.data[0].isoeweek.toString()
             })
         },
         getjcName(n) {
@@ -112,4 +121,8 @@ export default {
 
 </script>
 
-<style scoped></style>
+<style scoped>
+.inputDeep>>>.el-input__inner {
+    padding: 4px;
+}
+</style>

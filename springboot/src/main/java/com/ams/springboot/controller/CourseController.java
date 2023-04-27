@@ -49,7 +49,7 @@ public class CourseController {
         courseService.remove(queryWrapper);
 
         Course course= new Course(null,object.getStr("studentid"), object.getStr("classid"),"无",
-                null,null,object.getInt("isoeweek"),null);
+                null,null,null,null,null,null);
         JSONArray array = object.getJSONArray("course");
         for(int i=0;i<array.size();i++){
             JSONArray array1 = array.getJSONArray(i);
@@ -57,6 +57,9 @@ public class CourseController {
                 if(array1.getJSONObject(j).getBool("iscourse")){
                     course.setCoursedate(i);
                     course.setWeek(j);
+                    course.setBegin(array1.getJSONObject(j).getInt("begin"));
+                    course.setEnd(array1.getJSONObject(j).getInt("end"));
+                    course.setIsoeweek(array1.getJSONObject(j).getInt("isoeweek"));
                     list.add((Course) SerializationUtils.clone(course));
                 }
             }

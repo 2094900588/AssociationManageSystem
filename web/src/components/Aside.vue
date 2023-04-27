@@ -59,10 +59,22 @@
                     <span slot="title">社员管理</span>
                 </template>
             </el-menu-item>
-            <el-menu-item index="3-3" :route="{ name: '社团活动管理' }">
+            <el-menu-item index="3-3" :route="{ name: '社团活动申请' }">
+                <template slot="title">
+                    <i class="el-icon-star-off"></i>
+                    <span slot="title">活动申请</span>
+                </template>
+            </el-menu-item>
+            <el-menu-item index="3-4" :route="{ name: '社团活动管理' }">
                 <template slot="title">
                     <i class="el-icon-star-off"></i>
                     <span slot="title">活动管理</span>
+                </template>
+            </el-menu-item>
+            <el-menu-item index="3-5" :route="{ name: '社团人员升降职' }">
+                <template slot="title">
+                    <i class="el-icon-star-off"></i>
+                    <span slot="title">社团人员升降职</span>
                 </template>
             </el-menu-item>
         </el-submenu>

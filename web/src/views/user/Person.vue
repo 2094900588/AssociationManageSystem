@@ -86,7 +86,7 @@ export default {
 
             let fromdata = new FormData()
             fromdata.append("file", this.file.raw)
-            fileapi.uploadfile(fromdata).then(res => {
+            fileapi.upload_photo(fromdata).then(res => {
                 if (res.code === '200') {
                     this.form.userphoto = res.data.url
                     userapi.modifyinfo(this.form).then(res => {

@@ -39,12 +39,26 @@ public class FileController {
     /**
      * 文件存储
      * **/
-    @PostMapping("/upload")
-    public Result upload(@RequestParam MultipartFile file) {
+    @PostMapping("/upload_photo")
+    public Result upload_photo(@RequestParam MultipartFile file) {
         String url=null;
         JSONObject resp = new JSONObject();
         try{
             url=AliOssUtil.upload("photo",file);
+            resp.set("url",url);
+            return Result.success(resp);
+        }catch (Exception e){
+            resp.set("msg",e.getMessage());
+            return Result.error(Constants.CODE_400,"图片上传失败");
+        }
+    }
+
+    @PostMapping("/upload_annex")
+    public Result upload_annex(@RequestParam MultipartFile file) {
+        String url=null;
+        JSONObject resp = new JSONObject();
+        try{
+            url=AliOssUtil.upload("annex",file);
             resp.set("url",url);
             return Result.success(resp);
         }catch (Exception e){

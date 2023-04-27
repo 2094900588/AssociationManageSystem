@@ -42,4 +42,10 @@ public class Course implements Serializable {
 
     @ApiModelProperty("上课地点")
     private String courselocal;
+
+    @ApiModelProperty("开始时间")
+    private Integer begin;
+
+    @ApiModelProperty("结束时间")
+    private Integer end;
 }

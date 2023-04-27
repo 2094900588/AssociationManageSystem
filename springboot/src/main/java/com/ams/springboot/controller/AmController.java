@@ -71,6 +71,21 @@ public class AmController {
         return Result.success(amService.getById(id));
     }
 
+    @GetMapping("list")
+    public Result list() {
+        User user = TokenUtils.getCurrentUser();
+        QueryWrapper<Am> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("isamdelete",false);
+        if (!isPower(user)){
+            queryWrapper.eq("clubid",user.getClubid());
+        }
+        queryWrapper.orderByDesc("id");
+        //获取当前用户信息
+//            User currentUser = TokenUtils.getCurrentUser();
+//            System.out.println("获取当前用户信息==================" + currentUser.getNickname());
+        return Result.success(amService.list(queryWrapper));
+    }
+
     //模糊查询的时候进行添加条件既可
     @GetMapping("/page")
     public Result findPage(@RequestParam Integer pageNum,

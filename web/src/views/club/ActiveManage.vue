@@ -74,7 +74,12 @@
                         <el-input v-model="form.optionnum" type="text" autocomplete="off"></el-input>
                     </el-form-item>
                     <el-form-item label="活动成绩表">
-                        <el-input v-model="form.optionfile" type="text" autocomplete="off"></el-input>
+                        <!-- <el-input v-model="form.optionfile" type="text" autocomplete="off"></el-input> -->
+                        <el-upload class="upload-demo" action="#" :show-file-list="false" multiple :limit="3"
+                            :on-exceed="handleExceed" :file-list="fileList">
+                            <el-button size="small" type="primary">点击上传</el-button>
+                            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+                        </el-upload>
                     </el-form-item>
                     <el-form-item label="活动是否评分">
                         <el-input v-model="form.optiongrade" type="text" autocomplete="off"></el-input>
