@@ -26,9 +26,15 @@
             </el-table-column>
             <el-table-column prop="optionfile" label="活动成绩表">
             </el-table-column>
+<<<<<<< HEAD
             <el-table-column prop="isgrade" label="活动是否评分">
             </el-table-column>
             <el-table-column prop="optiongrade" label="活动评分">
+=======
+            <el-table-column prop="optiongrade" label="活动是否评分">
+            </el-table-column>
+            <el-table-column prop="isgrade" label="活动评分">
+>>>>>>> 569f7aa0c4dfd6eda2e2336c871130fe0bb51a4d
             </el-table-column>
             <el-table-column prop="optiondate" label="活动时间">
             </el-table-column>

@@ -1,12 +1,12 @@
 <template>
     <div>
-        <div style="width: 500px;">
+        <div style="width: 35%; margin-left: 30%; margin-top: 10%;">
             <el-form label-width="100px" size="small">
                 <el-form-item label="活动名称">
                     <el-input v-model="form.optionname" type="text" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="活动描述">
-                    <el-input v-model="form.optiondesc" type="textarea" autosize autocomplete="off"></el-input>
+                    <el-input  v-model="form.optiondesc" type="textarea" autosize autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="活动目的">
                     <el-input v-model="form.optionaim" type="text" autocomplete="off"></el-input>
@@ -24,38 +24,36 @@
                     <el-input v-model="form.optiongrade" type="text" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="活动时间">
-                    <el-date-picker v-model="form.optiondate" type="date" placeholder="选择日期" value-format="yyyy-MM-dd">
+                    <el-date-picker v-model="form.optiondate" type="date" placeholder="选择日期" value-format="yyyy-MM-dd" style="width: 100%;">
                     </el-date-picker>
                     <!-- <el-input v-model="form.clubtime" type="text" autocomplete="off"></el-input> -->
                 </el-form-item>
                 <el-form-item label="活动周数">
-                    <el-select v-model="week" placeholder="请选择周数" @change="weekCurrentChange">
+                    <el-select v-model="week" placeholder="请选择周数" @change="weekCurrentChange" style="width: 100%;">
                         <el-option
                             v-for="item in ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19']"
                             :key="item" :label="item" :value="item">
                         </el-option>
                     </el-select>
-                    <span style="color: red;">{{ msg }}</span>
+                    <span style="color: red; font-size: 18px;">推荐举办时间段：{{ msg }}</span>
                 </el-form-item>
 
                 <el-form-item label="角色" v-if="user.sysroleid !== 3">
                     <!-- <el-input v-model="form.address" type="text" autocomplete="off"></el-input> -->
-                    <el-select v-model="form.roleid" filterable placeholder="请选择">
+                    <el-select v-model="form.roleid" filterable placeholder="请选择" style="width: 100%;">
                         <el-option v-for="item in roles" :key="item.id" :label="item.rolename" :value="item.id">
                         </el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="所属社团" v-if="user.sysroleid !== 3">
                     <!-- <el-input v-model="form.address" type="text" autocomplete="off"></el-input> -->
-                    <el-select v-model="form.clubid" filterable placeholder="请选择">
+                    <el-select v-model="form.clubid" filterable placeholder="请选择" style="width: 100%;">
                         <el-option v-for="item in clubs" :key="item.id" :label="item.clubname" :value="item.id">
                         </el-option>
                     </el-select>
                 </el-form-item>
             </el-form>
         </div>
-
-
     </div>
 </template>
 
@@ -78,7 +76,7 @@ export default {
             courses: [],
             tabledata: [],
             week: 1,
-            msg: ''
+            msg: '',
         }
     },
     created() {

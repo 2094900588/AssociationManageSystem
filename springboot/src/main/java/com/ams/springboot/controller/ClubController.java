@@ -30,11 +30,11 @@ public class ClubController {
     public Result save(@RequestBody Club club) {
         User user = TokenUtils.getCurrentUser();
         if (isPower(user)){
-            if (club.getId().equals("")){
+            if ("".equals(club.getId())||club.getId()==null){
                 //如果社团id为空说明是新增，直接执行既可
             return Result.success(clubService.saveOrUpdate(club));
             }else {
-                if (user.getClubid()==club.getId()){
+                if (isPower(user)||user.getClubid()==club.getId()){
                     return Result.success(clubService.saveOrUpdate(club));
                 }else {
                     return  Result.error(Constants.CODE_401,"社团信息只能由本社团会长和社团联合会管理人员更改!");

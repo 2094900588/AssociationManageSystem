@@ -61,7 +61,7 @@
             </el-menu-item>
             <el-menu-item index="3-3" :route="{ name: '社团活动申请' }">
                 <template slot="title">
-                    <i class="el-icon-star-off"></i>
+                    <i class="el-icon-s-claim"></i>
                     <span slot="title">活动申请</span>
                 </template>
             </el-menu-item>
@@ -73,19 +73,19 @@
             </el-menu-item>
             <el-menu-item index="3-5" :route="{ name: '社团人员升降职' }">
                 <template slot="title">
-                    <i class="el-icon-star-off"></i>
+                    <i class="el-icon-s-custom"></i>
                     <span slot="title">社团人员升降职</span>
                 </template>
             </el-menu-item>
         </el-submenu>
         <el-submenu index="4">
             <template slot="title">
-                <i class="el-icon-menu"></i>
+                <i class="el-icon-date"></i>
                 <span slot="title">课表管理</span>
             </template>
             <el-menu-item index="4-1" :route="{ name: '添加无课课表' }">
                 <template slot="title">
-                    <i class="el-icon-postcard"></i>
+                    <i class="el-icon-edit-outline"></i>
                     <span slot="title">添加无课课表</span>
                 </template>
             </el-menu-item>
@@ -97,7 +97,7 @@
             </el-menu-item>
             <el-menu-item index="4-3" :route="{ name: '查看无课课表' }">
                 <template slot="title">
-                    <i class="el-icon-postcard"></i>
+                    <i class="el-icon-tickets"></i>
                     <span slot="title">查看无课课表</span>
                 </template>
             </el-menu-item>

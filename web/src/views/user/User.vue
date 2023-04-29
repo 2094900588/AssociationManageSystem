@@ -116,7 +116,6 @@
                             <img v-if="form.userphoto" :src="form.userphoto" class="avatar" width="148" height="148">
                             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                         </el-upload>
-
                     </el-form-item>
                     <el-form-item label="角色" v-if="user.sysroleid === 0 || user.sysroleid === 1">
                         <!-- <el-input v-model="form.address" type="text" autocomplete="off"></el-input> -->
