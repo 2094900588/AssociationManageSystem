@@ -97,7 +97,7 @@ public class ClubController {
         //获取当前用户信息
 //            User currentUser = TokenUtils.getCurrentUser();
 //            System.out.println("获取当前用户信息==================" + currentUser.getNickname());
-        return Result.success(clubService.page(new Page<>(pageNum, pageSize),queryWrapper));
+        return Result.success(clubService.getAllClub(new Page<>(pageNum, pageSize),queryWrapper));
     }
 
     //社团排名api接口
@@ -108,14 +108,15 @@ public class ClubController {
         QueryWrapper<Club> queryWrapper=new QueryWrapper<>();
         //对社团积分进行排名，实现社团排名的数据
         queryWrapper.orderByDesc("integral");
-        return Result.success(clubService.page(new Page<>(pageNum, pageSize),queryWrapper));
+        return Result.success(clubService.getAllClub(new Page<>(pageNum, pageSize),queryWrapper));
     }
 
     //社团总人数api接口
     @GetMapping("/page/sum")
-    public Result findPageSum()
+    public Result findPageSum(@RequestParam Integer pageNum,
+                              @RequestParam Integer pageSize)
     {
-        return Result.success(clubService.getAllClubAndSum());
+        return Result.success(clubService.getAllClubAndSum(new Page<>(pageNum, pageSize),new QueryWrapper<>()));
     }
 
 

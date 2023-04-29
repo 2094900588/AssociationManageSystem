@@ -65,7 +65,7 @@ export default {
             NumTableData: [],
             Numtotal: 0,
             NumpageNum: 1,
-            NumpageSize: 10,
+            NumpageSize: 5,
             rankphoto: [
                 "https://static.shiyanlou.com/lanqiao/frontend/dist/img/p-medal-1.465632f.png",
                 "https://static.shiyanlou.com/lanqiao/frontend/dist/img/p-medal-2.b7a14ad.png",
@@ -88,6 +88,8 @@ export default {
                 console.log(res);
                 this.InteTableData = res.data.records
                 this.Intetotal = res.data.total
+                for (var i = 0; i < this.InteTableData.length; i++)
+                    if (this.InteTableData[i].integral == null) this.InteTableData[i].integral = 0
             })
 
         },
@@ -99,8 +101,10 @@ export default {
             }
             homeapi.getNumPage(params).then(res => {
                 // console.log(res);
-                this.NumTableData = res.data
+                this.NumTableData = res.data.records
                 this.Numtotal = res.data.total
+                for (var i = 0; i < this.NumTableData.length; i++)
+                    if (this.NumTableData[i].num == null) this.NumTableData[i].num = 0
                 // console.log(this.NumTableData);
             })
 

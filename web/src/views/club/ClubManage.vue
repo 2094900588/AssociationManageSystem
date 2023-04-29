@@ -64,9 +64,9 @@
                     <el-form-item label="社团照片">
                         <el-input v-model="form.clubphoto" type="text" autocomplete="off"></el-input>
                     </el-form-item>
-                    <el-form-item label="社团积分">
+                    <!-- <el-form-item label="社团积分">
                         <el-input v-model="form.integral" type="text" autocomplete="off"></el-input>
-                    </el-form-item>
+                    </el-form-item> -->
                 </el-form>
                 <div slot="footer" class="dialog-footer">
                     <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -119,6 +119,8 @@ export default {
             clubapi.getPage(params).then(res => {
                 this.tableData = res.data.records
                 this.total = res.data.total
+                for (var i = 0; i < this.tableData.length; i++)
+                    if (this.tableData[i].integral == null) this.tableData[i].integral = 0
             })
 
         },

@@ -24,11 +24,11 @@
             </el-table-column>
             <el-table-column prop="optionnum" label="活动参与人数">
             </el-table-column>
-            <el-table-column prop="optionnum" label="活动成绩表">
+            <el-table-column prop="optionfile" label="活动成绩表">
             </el-table-column>
-            <el-table-column prop="optionnum" label="活动是否评分">
+            <el-table-column prop="isgrade" label="活动是否评分">
             </el-table-column>
-            <el-table-column prop="optionnum" label="活动评分">
+            <el-table-column prop="optiongrade" label="活动评分">
             </el-table-column>
             <el-table-column prop="optiondate" label="活动时间">
             </el-table-column>
@@ -82,7 +82,7 @@
                         </el-upload>
                     </el-form-item>
                     <el-form-item label="活动是否评分">
-                        <el-input v-model="form.optiongrade" type="text" autocomplete="off"></el-input>
+                        <el-input v-model="form.isgrade" type="text" autocomplete="off"></el-input>
                     </el-form-item>
                     <el-form-item label="活动评分">
                         <el-input v-model="form.optiongrade" type="text" autocomplete="off"></el-input>

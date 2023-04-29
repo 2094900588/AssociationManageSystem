@@ -3,10 +3,18 @@
 <mapper namespace="com.ams.springboot.mapper.ClubMapper">
 
     <select id="getAllClubAndSum" resultType="com.ams.springboot.entity.Club">
-        select c.*, COUNT(*) as sum
-        FROM sys_club c join sys_am a
+        select c.*, COUNT(a.clubid) as sum
+        FROM sys_club c left join sys_am a
         on c.id = a.clubid
-        GROUP BY c.id  order by COUNT(*) desc
-        LIMIT 5
+        GROUP BY c.id  order by COUNT(*) desc ${ew.customSqlSegment}
     </select>
+
+    <select id="getAllClub" resultType="com.ams.springboot.entity.Club">
+        SELECT sys_club.id,clubname,clubdesc,clubfounder,clubtime,clubphoto,SUM(optiongrade) as integral
+        FROM `sys_club`
+            left join `sys_option`
+            on sys_option.clubid=sys_club.id
+        GROUP BY sys_club.id ${ew.customSqlSegment}
+    </select>
+
 </mapper>
