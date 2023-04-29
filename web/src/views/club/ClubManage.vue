@@ -22,7 +22,12 @@
             </el-table-column>
             <el-table-column prop="clubtime" label="社团创建时间">
             </el-table-column>
-            <el-table-column prop="clubphoto" label="社团照片">
+            <el-table-column prop="" label="社团照片">
+                <template slot-scope="scope">
+                    <img v-if="scope.row.clubphoto" :src="scope.row.clubphoto"
+                        style="height: 30px;width: 30px; border-radius: 50%;">
+                    <span v-else>暂无</span>
+                </template>
             </el-table-column>
             <el-table-column prop="integral" label="社团积分">
             </el-table-column>
@@ -62,7 +67,12 @@
                         <el-input v-model="form.clubtime" type="text" autocomplete="off"></el-input>
                     </el-form-item> -->
                     <el-form-item label="社团照片">
-                        <el-input v-model="form.clubphoto" type="text" autocomplete="off"></el-input>
+                        <el-upload class="upload-demo" ref="upload" action="#" :show-file-list="false"
+                            :on-change="handleChange" :auto-upload="false" list-type="picture-card">
+                            <!-- <i class="el-icon-plus"></i> -->
+                            <img v-if="form.clubphoto" :src="form.clubphoto" class="avatar" width="148" height="148">
+                            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                        </el-upload>
                     </el-form-item>
                     <el-form-item label="社团积分">
                         <el-input v-model="form.integral" type="text" autocomplete="off"></el-input>
@@ -79,6 +89,7 @@
 
 <script>
 import clubapi from '@/api/page/club'
+import fileapi from '@/api/page/file'
 export default {
     name: "ClubManage",
     data() {
@@ -98,6 +109,21 @@ export default {
         this.load()
     },
     methods: {
+        //上传文件让第二次覆盖第一的文件
+        handleChange(file, fileList) {
+            const isJPG = file.raw.type.indexOf("image") !== -1;
+            const isLt2M = file.raw.size / 1024 / 1024 < 2;
+            if (!isJPG) {
+                this.$message.error('上传头像图片只能是 JPG 格式!');
+                return
+            }
+            if (!isLt2M) {
+                this.$message.error('上传头像图片大小不能超过 2MB!');
+                return
+            }
+            this.form.clubphoto = file.url
+            this.file = file
+        },
         getindex(index) {
             return this.pageSize * (this.pageNum - 1) + index + 1
         },
@@ -127,13 +153,23 @@ export default {
                 this.load()
         },
         save() {
-            clubapi.save(this.form).then(res => {
+            let fromdata = new FormData()
+            fromdata.append("file", this.file.raw)
+            fileapi.upload_photo(fromdata).then(res => {
                 if (res.code === '200') {
-                    this.$message.success("保存成功"),
-                        this.dialogFormVisible = false,
-                        this.load()
+                    this.form.clubphoto = res.data.url
+                    clubapi.save(this.form).then(res => {
+                        if (res.code === '200') {
+                            this.$message.success("保存成功"),
+                                this.dialogFormVisible = false,
+                                this.load()
+                        } else {
+                            this.$message.error(res.msg)
+                        }
+                    })
                 } else {
-                    this.$message.error("保存失败")
+                    this.$message.error(res.msg)
+                    return false
                 }
             })
         },

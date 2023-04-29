@@ -25,7 +25,7 @@
                         <div v-if="scope.row[index] == '全有课' || scope.row[index] == '全无课'">{{ scope.row[index] }}</div>
                         <div v-else>
                             <el-row :gutter="2"
-                                v-for="(item, x) in scope.row[index].slice(parseInt(scope.row[index].length / 3))">
+                                v-for="(item, x) in scope.row[index].slice(parseInt(scope.row[index].length / 3))"  :key="x">
                                 <el-col :span="10" style="width: 33.33%;">
                                     {{ scope.row[index][x * 3] }}
                                 </el-col>
