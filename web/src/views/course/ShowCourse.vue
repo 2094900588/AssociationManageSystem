@@ -9,7 +9,7 @@
         <el-pagination :page-size="1" :pager-count="19" layout="prev, pager, next" :total="19"
             @current-change="handleCurrentChange" style="margin-top: 3%;">
         </el-pagination>
-        <el-select v-model="roles" multiple placeholder="请选择角色" @change="roleCurrentChange">
+        <el-select v-model="roles" multiple placeholder="请选择角色" @change="roleCurrentChange" style="width: 46.5%;">
             <el-option v-for="item in origin_roles" :key="item.id" :label="item.rolename" :value="item.id">
             </el-option>
         </el-select>

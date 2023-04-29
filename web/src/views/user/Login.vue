@@ -22,7 +22,7 @@
                             </button>
                         </form>
                         <div class="social-login">
-                            <h3>去注册</h3>
+                            <el-button type="success" plain size="medium" autocomplete="off" @click="$router.push('/register')">注册</el-button>
                         </div>
 
                     </div>

@@ -1,6 +1,6 @@
 <template>
     <div class="wrapper">
-        <div style="margin: 100px auto; background-color: #fff; width: 450px; height: 600px; padding: 20px; border-radius: 10px">
+        <div style="margin: 100px auto; background-color: #fff; width: 30%; height: 70%; padding: 20px; border-radius: 10px; margin-top: 10%;">
             <div style="margin: 5px 0; text-align: center; font-size: 24px"><b>注 册</b></div>
             <el-form :model="user" :rules="rules" ref="userFrom">
                 <el-form-item prop="username">
@@ -24,6 +24,12 @@
                 <el-form-item prop="address">
                     <el-input  placeholder="请输入地址" prop="address" size="medium" style="margin: 5px 0;" prefix-icon="el-icon-s-flag"  v-model="user.address"></el-input>
                 </el-form-item>
+                <el-form-item prop="name">
+                    <el-input  placeholder="请输入姓名" prop="name" size="medium" style="margin: 5px 0;" prefix-icon="el-icon-s-flag"  v-model="user.name"></el-input>
+                </el-form-item>
+                <el-form-item prop="studentid">
+                    <el-input  placeholder="请输入学号" prop="studentid" size="medium" style="margin: 5px 0;" prefix-icon="el-icon-s-flag"  v-model="user.studentid"></el-input>
+                </el-form-item>
             </el-form>
             <div style="margin: 10px 0; text-align: center">
                 <el-button type="primary" size="medium" autocomplete="off" @click="login">注册</el-button>
@@ -39,6 +45,9 @@
     data(){
         return{
         user: {},
+        rolesys: [],
+        roles: [],
+        clubs: [],
         rules:{
             username:[
                 { required: true, message: '请输入用户名', trigger: 'blur' },
@@ -82,7 +91,7 @@
 <style>
 .wrapper{
     height: 100vh;
-    background-image: linear-gradient(to bottom right, #FC466B, #3F5EFB);
+    background: url('/src/assets/login.bmp') !important;
     overflow: hidden;
 }
 </style>
