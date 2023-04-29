@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div style="margin: 10px 0">
+        <div style="margin: 10px 0;margin-top: 2.3%;">
             <el-input style="width: 200px;cursor: pointer" suffix-icon="el-icon-search" placeholder="请输入名称"
                 v-model="username"></el-input>
             <el-input style="width: 200px;cursor: pointer" suffix-icon="el-icon-message" placeholder="请输入邮箱" v-model="email"
@@ -27,7 +27,7 @@
             <el-button type="primary" class="ml-5" @click="exp">导出<i class="el-icon-top"></i> </el-button>
         </div>
         <el-table :data="tableData" border stripe :header-cell-class-name="headBg" @selection-change="handleSelectionChange"
-            style="width: 100%; margin-top: 30px;">
+            style="width: 100%;">
             <el-table-column type="selection" width="50">
             </el-table-column>
             <!-- <el-table-column prop="id" label="id" width="80"></el-table-column> -->

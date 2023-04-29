@@ -18,7 +18,7 @@ export default {
 
 <style>
 .index_background {
-  background: url('./assets/BG.bmp') center top no-repeat;
+  background: url('./assets/bj.bmp') center top no-repeat;
   /* background-position:left top; */
 }
 </style>

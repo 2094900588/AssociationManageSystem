@@ -1,13 +1,13 @@
 <template>
     <div>
-        <div style="margin: 10px 0">
+        <div style="margin: 10px 0;margin-top: 4.2%;">
             <el-input style="width: 200px;cursor: pointer" suffix-icon="el-icon-search" placeholder="请输入名称"
                 v-model="rolename"></el-input>
             <el-button type="primary" class="ml-5" @click="load">搜索</el-button>
             <el-button type="warning" class="ml-5" @click="reset">重置</el-button>
         </div>
 
-        <el-table :data="tableData" border stripe :header-cell-class-name="headBg" style="width: 100%; margin-top: 60px;">
+        <el-table :data="tableData" border stripe :header-cell-class-name="headBg" style="width: 100%;">
             <el-table-column prop="id" label="id">
             </el-table-column>
             <el-table-column prop="operatename" label="操作名称">

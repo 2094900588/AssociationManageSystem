@@ -7,7 +7,7 @@
                 </template>
             </el-table-column>
         </el-table> -->
-        <el-form :model="formData" ref="formData" label-width="auto">
+        <el-form :model="formData" ref="formData" label-width="auto" style="width: 100%;margin-top: 4.2%;">
             <span style="color: red;">注：学号和班级号 只需要输入一个即可</span><br>
             <el-input style="width: 200px;cursor: pointer" placeholder="请输入学号" :disabled="formData.classid !== ''"
                 v-model="formData.studentid"></el-input>

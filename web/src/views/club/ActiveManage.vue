@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div style="margin: 10px 0">
+        <div style="margin: 10px 0;margin-top: 2.3%;">
             <el-input style="width: 200px;cursor: pointer" suffix-icon="el-icon-search" placeholder="请输入活动名称"
                 v-model="optionname"></el-input>
             <el-button type="primary" class="ml-5" @click="load">搜索</el-button>
@@ -11,7 +11,7 @@
             <el-button type="primary" class="ml-5" @click="handleAdd">新增<i class="el-icon-circle-plus-outline"></i>
             </el-button>
         </div>
-        <el-table :data="tableData" border stripe :header-cell-class-name="headBg" style="width: 100%; margin-top: 30px;">
+        <el-table :data="tableData" border stripe :header-cell-class-name="headBg" style="width: 100%;">
             <!-- <el-table-column type="selection" width="50"></el-table-column> -->
             <!-- <el-table-column prop="id" label="id" width="80">
             </el-table-column> -->
@@ -26,15 +26,9 @@
             </el-table-column>
             <el-table-column prop="optionfile" label="活动成绩表">
             </el-table-column>
-<<<<<<< HEAD
             <el-table-column prop="isgrade" label="活动是否评分">
             </el-table-column>
             <el-table-column prop="optiongrade" label="活动评分">
-=======
-            <el-table-column prop="optiongrade" label="活动是否评分">
-            </el-table-column>
-            <el-table-column prop="isgrade" label="活动评分">
->>>>>>> 569f7aa0c4dfd6eda2e2336c871130fe0bb51a4d
             </el-table-column>
             <el-table-column prop="optiondate" label="活动时间">
             </el-table-column>

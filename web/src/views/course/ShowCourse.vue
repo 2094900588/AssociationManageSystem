@@ -7,13 +7,13 @@
             <el-button type="warning" class="ml-5" @click="reset">重置</el-button>
         </div> -->
         <el-pagination :page-size="1" :pager-count="19" layout="prev, pager, next" :total="19"
-            @current-change="handleCurrentChange">
+            @current-change="handleCurrentChange" style="margin-top: 3%;">
         </el-pagination>
         <el-select v-model="roles" multiple placeholder="请选择角色" @change="roleCurrentChange">
             <el-option v-for="item in origin_roles" :key="item.id" :label="item.rolename" :value="item.id">
             </el-option>
         </el-select>
-        <el-table :data="tabledata" tooltip-effect="dark" size="small">
+        <el-table :data="tabledata" tooltip-effect="dark" size="small" style="width: 100%;">
             <el-table-column label="节次" width="120">
                 <template slot-scope="scope">
                     {{ getjcName(scope.$index) }}

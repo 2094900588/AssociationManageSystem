@@ -182,7 +182,7 @@ img {
 }
 
 .screen {
-    background: linear-gradient(90deg, #009688, #42ffed);
+    background: linear-gradient(90deg, #66eb78, #5af161);
     position: relative;
     height: 600px;
     width: 360px;
@@ -224,7 +224,7 @@ img {
 .screen__background span:nth-child(2) {
     height: 220px;
     width: 220px;
-    background: #3ebeb2;
+    background: #4de947;
     top: -172px;
     right: 0;
     border-radius: 32px;
@@ -233,7 +233,7 @@ img {
 .screen__background span:nth-child(3) {
     height: 540px;
     width: 190px;
-    background: linear-gradient(240deg, #009688, #00aa99, #03ae9d, #07af9e, #35e5d4);
+    background: linear-gradient(240deg, #19c243, #11c948, #5bd657, #76e776, #65df60);
     top: -24px;
     right: 0;
     border-radius: 32px;
@@ -242,7 +242,7 @@ img {
 .screen__background span:last-child {
     height: 400px;
     width: 200px;
-    background: #3ebeb2;
+    background: #34ce55;
     top: 420px;
     right: 50px;
     border-radius: 60px;
@@ -287,14 +287,14 @@ img {
 
 .login_input:valid~span,
 .login_input:focus~span {
-    color: #009688;
+    color: #6be05c;
     transform: translateY(-25px);
     font-size: 0.85em;
 }
 
 .login_input:valid,
 .login_input:focus {
-    border-bottom: 2px solid #009688;
+    border-bottom: 2px solid #3ae048;
 }
 
 .login_submit {
@@ -309,8 +309,8 @@ img {
     display: flex;
     align-items: center;
     width: 75%;
-    color: #009688;
-    box-shadow: 0px 0px 20px #009688;
+    color: #3cdf44;
+    box-shadow: 0px 0px 20px #3ae43a;
     cursor: pointer;
     transition: .2s;
     height: 40px;

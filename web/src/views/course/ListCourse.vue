@@ -1,5 +1,5 @@
 <template>
-    <el-table :data="tableData" border stripe :header-cell-class-name="headBg" style="width: 100%; margin-top: 30px;">
+    <el-table :data="tableData" border stripe :header-cell-class-name="headBg" style="width: 100%; margin-top: 6.8%;">
         <!-- <el-table-column prop="id" label="id" width="80"></el-table-column> -->
         <el-table-column type="index" width="50"></el-table-column>
         <el-table-column prop="studentid" label="学号">
