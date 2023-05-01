@@ -77,7 +77,6 @@ export default {
                 rolename: this.rolename,
             }
             logapi.getPage(params).then(res => {
-                console.log(res);
                 this.tableData = res.data.records
                 this.total = res.data.total
             })

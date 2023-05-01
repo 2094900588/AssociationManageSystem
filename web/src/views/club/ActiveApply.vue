@@ -6,7 +6,7 @@
                     <el-input v-model="form.optionname" type="text" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="活动描述">
-                    <el-input  v-model="form.optiondesc" type="textarea" autosize autocomplete="off"></el-input>
+                    <el-input v-model="form.optiondesc" type="textarea" autosize autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="活动目的">
                     <el-input v-model="form.optionaim" type="text" autocomplete="off"></el-input>
@@ -15,7 +15,8 @@
                     <el-input v-model="form.optionnum" type="text" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="活动时间">
-                    <el-date-picker v-model="form.optiondate" type="date" placeholder="选择日期" value-format="yyyy-MM-dd" style="width: 100%;">
+                    <el-date-picker v-model="form.optiondate" type="date" placeholder="选择日期" value-format="yyyy-MM-dd"
+                        style="width: 100%;">
                     </el-date-picker>
                     <!-- <el-input v-model="form.clubtime" type="text" autocomplete="off"></el-input> -->
                 </el-form-item>
@@ -26,7 +27,7 @@
                             :key="item" :label="item" :value="item">
                         </el-option>
                     </el-select>
-                    <span style="color: red; font-size: 18px;">推荐举办时间段：{{ msg }}</span>
+                    <span style="color: red; font-size: 18px;">{{ msg }}</span>
                 </el-form-item>
                 <el-form-item label="活动申请人角色" v-if="user.sysroleid !== 3">
                     <!-- <el-input v-model="form.address" type="text" autocomplete="off"></el-input> -->
@@ -42,8 +43,8 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-                    <el-button @click="reset" style="margin-left: 45%;">重 置</el-button>
-                    <el-button type="primary" @click="save" >保 存</el-button>
+                <el-button @click="reset" style="margin-left: 45%;">重 置</el-button>
+                <el-button type="primary" @click="save">保 存</el-button>
             </el-form>
         </div>
     </div>
@@ -67,7 +68,7 @@ export default {
             persons: {},
             courses: [],
             tabledata: [],
-            week: 1,
+            week: '',
             msg: '',
         }
     },
@@ -75,19 +76,19 @@ export default {
         this.load()
     },
     watch: {
-        persons(e) {
-            if (JSON.stringify(this.courses) != '{}') this.init()
-        },
-        courses(e) {
-            if (JSON.stringify(this.persons) != '{}') this.init()
-        }
+        // persons(e) {
+        //     if (JSON.stringify(this.courses) != '{}') this.init()
+        // },
+        // courses(e) {
+        //     if (JSON.stringify(this.persons) != '{}') this.init()
+        // }
 
     },
     computed: {
         ...mapState(['user'])
     }, methods: {
         reset() {
-           this.form = {}
+            this.form = {}
         },
         save() {
             activeapi.save(this.form).then(res => {
@@ -102,6 +103,7 @@ export default {
         weekCurrentChange(e) {
             this.courses = this.origin_course.filter(item => item.begin <= e && item.end >= e)
             this.courses = this.courses.filter(item => item.isoeweek == 0 || item.isoeweek % 2 == e % 2) //真保留 假不保留
+            this.init()
         },
         getjcName(n) {
             let dx = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '十二'];
@@ -162,20 +164,21 @@ export default {
             // }
             // console.log(this.NoneCourse);
             // this.tabledata = JSON.parse(JSON.stringify(NoneCourse))
-            let min = 99, x = 0, y = 0;
+            let max = -1, x = 0, y = 0;
             console.log(NoneCourse);
             for (var i = 0; i < NoneCourse.length - 2; i++) {
                 for (var j = 0; j < NoneCourse[i].length - 2; j++) {
                     if (NoneCourse[i][j] instanceof Array) {
-                        if (NoneCourse[i][j].length < min) {
-                            min = NoneCourse[i][j].length
+                        if (NoneCourse[i][j].length > max) {
+                            max = NoneCourse[i][j].length
                             x = i
                             y = j
                         }
                     }
                 }
             }
-            this.msg = this.getWeek(y) + '的' + this.getjcName(x)
+            this.msg = "推荐举办时间段："
+            this.msg += this.getWeek(y) + '的' + this.getjcName(x)
             // this.tabledata = this.NoneCourse
         },
         load() {

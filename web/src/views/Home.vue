@@ -67,9 +67,9 @@ export default {
             NumpageNum: 1,
             NumpageSize: 5,
             rankphoto: [
-                "https://static.shiyanlou.com/lanqiao/frontend/dist/img/p-medal-1.465632f.png",
-                "https://static.shiyanlou.com/lanqiao/frontend/dist/img/p-medal-2.b7a14ad.png",
-                "https://static.shiyanlou.com/lanqiao/frontend/dist/img/p-medal-3.0ce2247.png"
+                require('@/assets/1.png'),
+                require('@/assets/2.png'),
+                require('@/assets/3.png'),
             ]
         }
     },

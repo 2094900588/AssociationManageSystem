@@ -12,9 +12,6 @@
             </el-button>
         </div>
         <el-table :data="tableData" border stripe :header-cell-class-name="headBg" style="width: 100%;">
-            <!-- <el-table-column type="selection" width="50"></el-table-column> -->
-            <!-- <el-table-column prop="id" label="id" width="80">
-            </el-table-column> -->
             <el-table-column type="index" width="50" :index="getindex"></el-table-column>
             <el-table-column prop="optionname" label="活动名称">
             </el-table-column>
@@ -23,8 +20,6 @@
             <el-table-column prop="optionaim" label="活动目的">
             </el-table-column>
             <el-table-column prop="optionnum" label="活动参与人数">
-            </el-table-column>
-            <el-table-column prop="optionfile" label="活动成绩表">
             </el-table-column>
             <el-table-column prop="isgrade" label="活动是否评分">
             </el-table-column>
@@ -40,6 +35,16 @@
             <el-table-column label="所属社团">
                 <template slot-scope="scope">
                     <span>{{ getclub(scope.row.clubid) }}</span>
+                </template>
+            </el-table-column>
+            <el-table-column label="活动成绩表">
+                <template slot-scope="scope">
+                    <div v-if="scope.row.optionfile != null">
+                        <a :href="scope.row.optionfile" target="_blank">点击下载</a>
+                    </div>
+                    <div v-else>
+                        暂无
+                    </div>
                 </template>
             </el-table-column>
             <el-table-column prop=" " label=" " width="165">
@@ -74,11 +79,9 @@
                         <el-input v-model="form.optionnum" type="text" autocomplete="off"></el-input>
                     </el-form-item>
                     <el-form-item label="活动成绩表">
-                        <!-- <el-input v-model="form.optionfile" type="text" autocomplete="off"></el-input> -->
-                        <el-upload class="upload-demo" action="#" :show-file-list="false" multiple :limit="3"
-                            :on-exceed="handleExceed" :file-list="fileList">
+                        <el-upload class="upload-demo" action="#" :show-file-list="true" :auto-upload="false"
+                            :on-change="handleChange" :file-list="fileList">
                             <el-button size="small" type="primary">点击上传</el-button>
-                            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
                         </el-upload>
                     </el-form-item>
                     <el-form-item label="活动是否评分">
@@ -90,19 +93,16 @@
                     <el-form-item label="活动时间">
                         <el-date-picker v-model="form.optiondate" type="date" placeholder="选择日期" value-format="yyyy-MM-dd">
                         </el-date-picker>
-                        <!-- <el-input v-model="form.clubtime" type="text" autocomplete="off"></el-input> -->
                     </el-form-item>
                     <el-form-item label="角色" v-if="user.sysroleid !== 3">
-                        <!-- <el-input v-model="form.address" type="text" autocomplete="off"></el-input> -->
                         <el-select v-model="form.roleid" filterable placeholder="请选择">
-                            <el-option v-for="item in roles" :key="item.id" :label="item.rolename" :value="item.id">
+                            <el-option v-for=" item  in  roles " :key="item.id" :label="item.rolename" :value="item.id">
                             </el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="所属社团" v-if="user.sysroleid !== 3">
-                        <!-- <el-input v-model="form.address" type="text" autocomplete="off"></el-input> -->
                         <el-select v-model="form.clubid" filterable placeholder="请选择">
-                            <el-option v-for="item in clubs" :key="item.id" :label="item.clubname" :value="item.id">
+                            <el-option v-for=" item  in  clubs " :key="item.id" :label="item.clubname" :value="item.id">
                             </el-option>
                         </el-select>
                     </el-form-item>
@@ -120,12 +120,14 @@
 import activeapi from '@/api/page/active'
 import roleapi from '@/api/page/role'
 import clubapi from '@/api/page/club'
+import fileapi from '@/api/page/file'
 import { mapState } from 'vuex'
 export default {
     name: "Active",
     data() {
         return {
             tableData: [],
+            fileList: [],
             roles: [],
             clubs: [],
             total: 0,
@@ -145,6 +147,11 @@ export default {
         ...mapState(['user'])
     },
     methods: {
+        handleChange(file, fileList) {
+            if (fileList.length > 0) {
+                this.fileList = [fileList[fileList.length - 1]]
+            }
+        },
         getindex(index) {
             return this.pageSize * (this.pageNum - 1) + index + 1
         },
@@ -173,7 +180,6 @@ export default {
                 pageSize: this.pageSize,
                 optionname: this.optionname,
             }
-            console.log(params);
             activeapi.getPage(params).then(res => {
                 this.tableData = res.data.records
                 this.total = res.data.total
@@ -190,16 +196,55 @@ export default {
             this.optionname = "",
                 this.load()
         },
-        save() {
-            activeapi.save(this.form).then(res => {
+        async upload() {
+            if (JSON.stringify(this.fileList) == '[]') return
+
+            let fromdata = new FormData()
+            fromdata.append("file", this.fileList[0].raw)
+            fileapi.upload_annex(fromdata).then(res => {
                 if (res.code === '200') {
-                    this.$message.success("保存成功"),
-                        this.dialogFormVisible = false,
-                        this.load()
+                    this.form.optionfile = res.data.url
+                    return true
                 } else {
-                    this.$message.error("保存失败")
+                    this.$message.error(res.msg)
+                    return false
                 }
             })
+        },
+        save() {
+            if (JSON.stringify(this.fileList) == '[]') {
+                activeapi.save(this.form).then(res => {
+                    if (res.code === '200') {
+                        this.$message.success("保存成功"),
+                            this.dialogFormVisible = false,
+                            this.load()
+                    } else {
+                        this.$message.error("保存失败")
+                    }
+                })
+            } else {
+                let fromdata = new FormData()
+                fromdata.append("file", this.fileList[0].raw)
+                fileapi.upload_annex(fromdata).then(res => {
+                    if (res.code === '200') {
+                        this.form.optionfile = res.data.url
+                        activeapi.save(this.form).then(res => {
+                            if (res.code === '200') {
+                                this.$message.success("保存成功"),
+                                    this.dialogFormVisible = false,
+                                    this.load()
+                            } else {
+                                this.$message.error("保存失败")
+                            }
+                        })
+                    } else {
+                        this.$message.error(res.msg)
+                        return false
+                    }
+                })
+                this.fileList = []
+            }
+
         },
         handleAdd() {
             this.dialogFormVisible = true;

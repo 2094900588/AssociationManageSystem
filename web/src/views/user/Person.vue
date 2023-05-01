@@ -1,14 +1,8 @@
 <template>
     <el-card style="width: 500px">
         <el-form label-width="70px" size="small">
-            <!-- <el-upload class="avatar-uploader" action="#" :show-file-list="false" :on-success="handleAvatarSuccess"
-                :auto-upload="false">
-                <img v-if="form.userphoto" :src="form.userphoto" class="avatar">
-                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-            </el-upload> -->
             <el-upload class="avatar-uploader" ref="upload" action="#" :show-file-list="false" :on-change="handleChange"
                 :auto-upload="false" list-type="picture-card">
-                <!-- <i class="el-icon-plus"></i> -->
                 <img v-if="form.userphoto" :src="form.userphoto" class="avatar" width="148" height="148">
                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>

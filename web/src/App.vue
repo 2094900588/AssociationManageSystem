@@ -21,4 +21,8 @@ export default {
   background: url('./assets/bj.bmp') center top no-repeat;
   /* background-position:left top; */
 }
+
+td {
+  text-align: center !important;
+}
 </style>

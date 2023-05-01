@@ -5,10 +5,6 @@
                 v-model="studentid"></el-input>
             <el-input style="width: 200px;cursor: pointer" suffix-icon="el-icon-search" placeholder="请输入姓名"
                 v-model="amname"></el-input>
-            <!-- <el-input style="width: 200px;cursor: pointer" suffix-icon="el-icon-search" placeholder="请输入政治面貌"
-                v-model="astatus"></el-input> -->
-
-            <!-- <el-input v-model="form.address" type="text" autocomplete="off"></el-input> -->
             <el-select v-model="status" placeholder="请选择">
                 <el-option v-for="item in ['党员', '预备党员', '共青团员', '群众', '']" :key="item" :label="item" :value="item">
                 </el-option>
@@ -23,7 +19,6 @@
             </el-button>
         </div>
         <el-table :data="tableData" border stripe :header-cell-class-name="headBg" style="width: 100%;">
-            <!-- <el-table-column prop="id" label="id" width="80"></el-table-column> -->
             <el-table-column type="index" width="50" :index="getindex"></el-table-column>
             <el-table-column prop="studentid" label="社员学号">
             </el-table-column>
@@ -37,8 +32,6 @@
             </el-table-column>
             <el-table-column prop="intotime" label="加入社团时间">
             </el-table-column>
-            <!-- <el-table-column prop="integral" label="社团积分" width="150">
-            </el-table-column> -->
             <el-table-column label="角色">
                 <template slot-scope="scope">
                     <span>{{ getrole(scope.row.roleid) }}</span>
@@ -83,7 +76,6 @@
                         <el-input v-model="form.phone" type="text" autocomplete="off"></el-input>
                     </el-form-item>
                     <el-form-item label="政治面貌">
-                        <!-- <el-input v-model="form.address" type="text" autocomplete="off"></el-input> -->
                         <el-select v-model="form.status" placeholder="请选择">
                             <el-option v-for="item in ['党员', '预备党员', '共青团员', '群众']" :key="item" :label="item" :value="item">
                             </el-option>
@@ -92,18 +84,15 @@
                     <el-form-item label="加入社团时间">
                         <el-date-picker v-model="form.intotime" type="date" placeholder="选择日期" value-format="yyyy-MM-dd">
                         </el-date-picker>
-                        <!-- <el-input v-model="form.clubtime" type="text" autocomplete="off"></el-input> -->
                     </el-form-item>
 
                     <el-form-item label="角色">
-                        <!-- <el-input v-model="form.address" type="text" autocomplete="off"></el-input> -->
                         <el-select v-model="form.roleid" filterable placeholder="请选择">
                             <el-option v-for="item in roles" :key="item.id" :label="item.rolename" :value="item.id">
                             </el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="所属社团">
-                        <!-- <el-input v-model="form.address" type="text" autocomplete="off"></el-input> -->
                         <el-select v-model="form.clubid" filterable placeholder="请选择">
                             <el-option v-for="item in clubs" :key="item.id" :label="item.clubname" :value="item.id">
                             </el-option>
@@ -177,7 +166,6 @@ export default {
                 status: this.status,
             }
             personapi.getPage(params).then(res => {
-                console.log(res);
                 this.tableData = res.data.records
                 this.total = res.data.total
             })

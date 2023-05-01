@@ -255,25 +255,38 @@ export default {
                 this.load()
         },
         saveUser() {
-            let fromdata = new FormData()
-            fromdata.append("file", this.file.raw)
-            fileapi.upload_photo(fromdata).then(res => {
-                if (res.code === '200') {
-                    this.form.userphoto = res.data.url
-                    userapi.save(this.form).then(res => {
-                        if (res.code === '200') {
-                            this.$message.success("保存成功"),
-                                this.dialogFormVisible = false,
-                                this.load()
-                        } else {
-                            this.$message.error(res.msg)
-                        }
-                    })
-                } else {
-                    this.$message.error(res.msg)
-                    return false
-                }
-            })
+            if (this.file == null) {
+                userapi.save(this.form).then(res => {
+                    if (res.code === '200') {
+                        this.$message.success("保存成功"),
+                            this.dialogFormVisible = false,
+                            this.load()
+                    } else {
+                        this.$message.error(res.msg)
+                    }
+                })
+            } else {
+                let fromdata = new FormData()
+                fromdata.append("file", this.file.raw)
+                fileapi.upload_photo(fromdata).then(res => {
+                    if (res.code === '200') {
+                        this.form.userphoto = res.data.url
+                        userapi.save(this.form).then(res => {
+                            if (res.code === '200') {
+                                this.$message.success("保存成功"),
+                                    this.dialogFormVisible = false,
+                                    this.load()
+                            } else {
+                                this.$message.error(res.msg)
+                            }
+                        })
+                    } else {
+                        this.$message.error(res.msg)
+                        return false
+                    }
+                })
+            }
+
         },
         handleAdd() {
             this.dialogFormVisible = true;
