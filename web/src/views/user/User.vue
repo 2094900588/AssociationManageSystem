@@ -254,7 +254,6 @@ export default {
                 this.address = "",
                 this.load()
         },
-
         saveUser() {
             let fromdata = new FormData()
             fromdata.append("file", this.file.raw)

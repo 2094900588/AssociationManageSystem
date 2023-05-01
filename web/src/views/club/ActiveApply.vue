@@ -1,7 +1,7 @@
 <template>
     <div>
         <div style="width: 35%; margin-left: 30%; margin-top: 10%;">
-            <el-form label-width="100px" size="small">
+            <el-form label-width="130px" size="small">
                 <el-form-item label="活动名称">
                     <el-input v-model="form.optionname" type="text" autocomplete="off"></el-input>
                 </el-form-item>
@@ -13,15 +13,6 @@
                 </el-form-item>
                 <el-form-item label="活动参与人数">
                     <el-input v-model="form.optionnum" type="text" autocomplete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="活动成绩表">
-                    <el-input v-model="form.optionfile" type="text" autocomplete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="活动是否评分">
-                    <el-input v-model="form.optiongrade" type="text" autocomplete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="活动评分">
-                    <el-input v-model="form.optiongrade" type="text" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="活动时间">
                     <el-date-picker v-model="form.optiondate" type="date" placeholder="选择日期" value-format="yyyy-MM-dd" style="width: 100%;">
@@ -37,21 +28,22 @@
                     </el-select>
                     <span style="color: red; font-size: 18px;">推荐举办时间段：{{ msg }}</span>
                 </el-form-item>
-
-                <el-form-item label="角色" v-if="user.sysroleid !== 3">
+                <el-form-item label="活动申请人角色" v-if="user.sysroleid !== 3">
                     <!-- <el-input v-model="form.address" type="text" autocomplete="off"></el-input> -->
                     <el-select v-model="form.roleid" filterable placeholder="请选择" style="width: 100%;">
                         <el-option v-for="item in roles" :key="item.id" :label="item.rolename" :value="item.id">
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="所属社团" v-if="user.sysroleid !== 3">
+                <el-form-item label="活动申请所属社团" v-if="user.sysroleid !== 3">
                     <!-- <el-input v-model="form.address" type="text" autocomplete="off"></el-input> -->
                     <el-select v-model="form.clubid" filterable placeholder="请选择" style="width: 100%;">
                         <el-option v-for="item in clubs" :key="item.id" :label="item.clubname" :value="item.id">
                         </el-option>
                     </el-select>
                 </el-form-item>
+                    <el-button @click="reset" style="margin-left: 45%;">重 置</el-button>
+                    <el-button type="primary" @click="save" >保 存</el-button>
             </el-form>
         </div>
     </div>
@@ -60,7 +52,7 @@
 <script>
 import courseapi from '@/api/page/course'
 import personapi from '@/api/page/person'
-
+import activeapi from '@/api/page/active'
 import roleapi from '@/api/page/role'
 import clubapi from '@/api/page/club'
 import { mapState } from 'vuex'
@@ -94,6 +86,19 @@ export default {
     computed: {
         ...mapState(['user'])
     }, methods: {
+        reset() {
+           this.form = {}
+        },
+        save() {
+            activeapi.save(this.form).then(res => {
+                if (res.code === '200') {
+                    this.$message.success("申请成功，前往活动管理页面查看进度")
+                    this.reset()
+                } else {
+                    this.$message.error("申请失败")
+                }
+            })
+        },
         weekCurrentChange(e) {
             this.courses = this.origin_course.filter(item => item.begin <= e && item.end >= e)
             this.courses = this.courses.filter(item => item.isoeweek == 0 || item.isoeweek % 2 == e % 2) //真保留 假不保留
