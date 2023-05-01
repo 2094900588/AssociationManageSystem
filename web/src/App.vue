@@ -22,7 +22,7 @@ export default {
   /* background-position:left top; */
 }
 
-td {
+th,td {
   text-align: center !important;
 }
 </style>

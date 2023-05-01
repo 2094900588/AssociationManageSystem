@@ -1,12 +1,6 @@
 <template>
     <div class="home">
-        <!-- <div style="margin: 10px 0">
-            <el-input style="width: 200px;cursor: pointer" suffix-icon="el-icon-search" placeholder="请输入学号"
-                v-model=""></el-input>
-            <el-button type="primary" class="ml-5" @click="load">搜索</el-button>
-            <el-button type="warning" class="ml-5" @click="reset">重置</el-button>
-        </div> -->
-        <div>
+        <div style="margin: 10px 0; margin-top: 6.5%;">
             <el-pagination :page-size="1" :pager-count="19" layout="prev, pager, next" :total="19"
                 @current-change="handleCurrentChange" style="float:left">
             </el-pagination>

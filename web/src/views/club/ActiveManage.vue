@@ -21,11 +21,27 @@
             </el-table-column>
             <el-table-column prop="optionnum" label="活动参与人数">
             </el-table-column>
-            <el-table-column prop="isgrade" label="活动是否评分">
-            </el-table-column>
-            <el-table-column prop="optiongrade" label="活动评分">
+            <el-table-column label="活动是否评分">
+                <template slot-scope="scope">
+                    <div v-if="scope.row.isgrade !=0">
+                        {{ scope.row.optiongrade }}
+                    </div>
+                    <div v-else>
+                        <el-button type="primary" @click="handleEdittwo(scope.row)">评分</el-button>
+                    </div>
+                </template>
             </el-table-column>
             <el-table-column prop="optiondate" label="活动时间">
+            </el-table-column>
+            <el-table-column label="活动是否审批">
+                <template slot-scope="scope">
+                    <div v-if="scope.row.ispass !=0">
+                        {{ scope.row.notes }}
+                    </div>
+                    <div v-else>
+                        <el-button type="primary" @click="handleEditpass(scope.row)">审批</el-button>
+                    </div>
+                </template>
             </el-table-column>
             <el-table-column label="角色">
                 <template slot-scope="scope">
@@ -112,6 +128,28 @@
                     <el-button type="primary" @click="save">确 定</el-button>
                 </div>
             </el-dialog>
+            <el-dialog title="活动信息" :visible.sync="dialogFormVisibletwo" width="30%">
+                <el-form label-width="150px" size="small">
+                    <el-form-item label="请对该活动进行评分">
+                        <el-input v-model="form.optiongrade" type="text" autocomplete="off"></el-input>
+                    </el-form-item>
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="dialogFormVisibletwo = false">取 消</el-button>
+                    <el-button type="primary" @click="save">确 定</el-button>
+                </div>
+            </el-dialog>
+            <el-dialog title="活动审批" :visible.sync="dialogFormVisiblepass" width="30%">
+                <el-form label-width="150px" size="small">
+                    <el-form-item label="审批活动">
+                        <el-input v-model="form.notes" type="text" autocomplete="off"></el-input>
+                    </el-form-item>
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="dialogFormVisibletwo = false">取 消</el-button>
+                    <el-button type="primary" @click="save">确 定</el-button>
+                </div>
+            </el-dialog>
         </div>
     </div>
 </template>
@@ -135,6 +173,8 @@ export default {
             pageSize: 10,
             optionname: "",
             dialogFormVisible: false,
+            dialogFormVisibletwo: false,
+            dialogFormVisiblepass: false,
             form: {},
             multipleSelection: [],
             headBg: 'headBg'
@@ -212,11 +252,19 @@ export default {
             })
         },
         save() {
+            if(this.form.notes != null){
+                this.form.ispass = 1
+            }
+            if(this.form.optiongrade != null){
+                this.form.isgrade = 1
+            }
             if (JSON.stringify(this.fileList) == '[]') {
                 activeapi.save(this.form).then(res => {
                     if (res.code === '200') {
                         this.$message.success("保存成功"),
                             this.dialogFormVisible = false,
+                            this.dialogFormVisibletwo = false,
+                            this.dialogFormVisiblepass = false,
                             this.load()
                     } else {
                         this.$message.error("保存失败")
@@ -245,6 +293,16 @@ export default {
                 this.fileList = []
             }
 
+        },
+        //审批弹窗
+        handleEditpass(row){
+            this.form = row,
+            this.dialogFormVisiblepass = true
+        },
+        // 评分弹窗
+        handleEdittwo(row) {
+            this.form = row,
+                this.dialogFormVisibletwo = true
         },
         handleAdd() {
             this.dialogFormVisible = true;

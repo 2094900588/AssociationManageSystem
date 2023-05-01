@@ -52,4 +52,10 @@ public class Option {
     @JsonFormat(pattern = "yyyy-MM-dd",timezone = "Asia/Shanghai")
     @ApiModelProperty("活动时间")
     private Date optiondate;
+
+    @ApiModelProperty("是否审批")
+    private Integer ispass;
+
+    @ApiModelProperty("审批备注")
+    private String notes;
 }
