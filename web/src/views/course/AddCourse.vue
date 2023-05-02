@@ -1,12 +1,5 @@
 <template>
     <div>
-        <!-- <el-table :data="lsls">
-            <el-table-column>
-                <template slot-scope="scope">
-                    <el-checkbox v-model="lsls[0].name">有课</el-checkbox>
-                </template>
-            </el-table-column>
-        </el-table> -->
         <el-form :model="formData" ref="formData" label-width="auto" style="width: 100%;margin-top: 4.2%;">
             <span style="color: red;">注：学号和班级号 只需要输入一个即可</span><br>
             <el-input style="width: 200px;cursor: pointer" placeholder="请输入学号" :disabled="formData.classid !== ''"

@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-        <div style="margin: 10px 0; margin-top: 6.5%;">
+        <div  style="margin: 10px 0; margin-top: 6.5%;">
             <el-pagination :page-size="1" :pager-count="19" layout="prev, pager, next" :total="19"
                 @current-change="handleCurrentChange" style="float:left">
             </el-pagination>

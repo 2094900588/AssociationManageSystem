@@ -12,7 +12,6 @@
             </el-button>
         </div>
         <el-table :data="tableData" border stripe :header-cell-class-name="headBg" style="width: 100%;">
-            <!-- <el-table-column prop="id" label="id" width="80"></el-table-column> -->
             <el-table-column type="index" width="50" :index="getindex"></el-table-column>
             <el-table-column prop="clubname" label="社团名称">
             </el-table-column>
@@ -61,22 +60,13 @@
                     <el-form-item label="社团创始人">
                         <el-input v-model="form.clubfounder" type="text" autocomplete="off"></el-input>
                     </el-form-item>
-                    <!-- <el-form-item label="社团创建时间">
-                        <el-date-picker v-model="form.clubtime" type="date" placeholder="选择日期">
-                        </el-date-picker>
-                        <el-input v-model="form.clubtime" type="text" autocomplete="off"></el-input>
-                    </el-form-item> -->
                     <el-form-item label="社团照片">
                         <el-upload class="upload-demo" ref="upload" action="#" :show-file-list="false"
                             :on-change="handleChange" :auto-upload="false" list-type="picture-card">
-                            <!-- <i class="el-icon-plus"></i> -->
                             <img v-if="form.clubphoto" :src="form.clubphoto" class="avatar" width="148" height="148">
                             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                         </el-upload>
                     </el-form-item>
-                    <!-- <el-form-item label="社团积分">
-                        <el-input v-model="form.integral" type="text" autocomplete="off"></el-input>
-                    </el-form-item> -->
                 </el-form>
                 <div slot="footer" class="dialog-footer">
                     <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -95,6 +85,7 @@ export default {
     data() {
         return {
             tableData: [],
+            file: null,
             total: 0,
             pageNum: 1,
             pageSize: 10,
@@ -155,29 +146,44 @@ export default {
                 this.load()
         },
         save() {
-            let fromdata = new FormData()
-            fromdata.append("file", this.file.raw)
-            fileapi.upload_photo(fromdata).then(res => {
-                if (res.code === '200') {
-                    this.form.clubphoto = res.data.url
-                    clubapi.save(this.form).then(res => {
-                        if (res.code === '200') {
-                            this.$message.success("保存成功"),
-                                this.dialogFormVisible = false,
-                                this.load()
-                        } else {
-                            this.$message.error(res.msg)
-                        }
-                    })
-                } else {
-                    this.$message.error(res.msg)
-                    return false
-                }
-            })
+            if (this.file == null) {
+                clubapi.save(this.form).then(res => {
+                    if (res.code === '200') {
+                        this.$message.success("保存成功"),
+                            this.dialogFormVisible = false,
+                            this.load()
+                    } else {
+                        this.$message.error(res.msg)
+                    }
+                })
+            } else {
+                let fromdata = new FormData()
+                fromdata.append("file", this.file.raw)
+                fileapi.upload_photo(fromdata).then(res => {
+                    if (res.code === '200') {
+                        this.form.clubphoto = res.data.url
+                        clubapi.save(this.form).then(res => {
+                            if (res.code === '200') {
+                                this.$message.success("保存成功"),
+                                    this.dialogFormVisible = false,
+                                    this.load()
+                            } else {
+                                this.$message.error(res.msg)
+                            }
+                        })
+                    } else {
+                        this.$message.error(res.msg)
+                        return false
+                    }
+                })
+            }
+
         },
         handleAdd() {
             this.dialogFormVisible = true;
-            this.form = {}
+            this.form = {
+                clubphoto: ''
+            }
         },
         handleEdit(row) {
             this.form = row,

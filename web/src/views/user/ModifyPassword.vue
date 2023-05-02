@@ -2,9 +2,6 @@
     <div>
         <div style="width:30vw;margin: auto;">
             <el-form :model="pwd" :rules="rules" size="small" ref="pwdFrom">
-                <!-- <el-form-item label="原密码">
-                    <el-input v-model="pwd.oldpassword" type="text" autocomplete="off"></el-input>
-                </el-form-item> -->
                 <el-form-item label="密码" prop="oldpassword">
                     <el-input prop="oldpassword" size="medium" prefix-icon="el-icon-lock" show-password
                         v-model="pwd.oldpassword"></el-input>

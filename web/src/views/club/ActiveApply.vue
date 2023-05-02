@@ -18,7 +18,6 @@
                     <el-date-picker v-model="form.optiondate" type="date" placeholder="选择日期" value-format="yyyy-MM-dd"
                         style="width: 100%;">
                     </el-date-picker>
-                    <!-- <el-input v-model="form.clubtime" type="text" autocomplete="off"></el-input> -->
                 </el-form-item>
                 <el-form-item label="活动周数">
                     <el-select v-model="week" placeholder="请选择周数" @change="weekCurrentChange" style="width: 100%;">
@@ -30,14 +29,12 @@
                     <span style="color: red; font-size: 18px;">{{ msg }}</span>
                 </el-form-item>
                 <el-form-item label="活动申请人角色" v-if="user.sysroleid !== 3">
-                    <!-- <el-input v-model="form.address" type="text" autocomplete="off"></el-input> -->
                     <el-select v-model="form.roleid" filterable placeholder="请选择" style="width: 100%;">
                         <el-option v-for="item in roles" :key="item.id" :label="item.rolename" :value="item.id">
                         </el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="活动申请所属社团" v-if="user.sysroleid !== 3">
-                    <!-- <el-input v-model="form.address" type="text" autocomplete="off"></el-input> -->
                     <el-select v-model="form.clubid" filterable placeholder="请选择" style="width: 100%;">
                         <el-option v-for="item in clubs" :key="item.id" :label="item.clubname" :value="item.id">
                         </el-option>

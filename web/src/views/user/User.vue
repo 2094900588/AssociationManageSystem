@@ -30,7 +30,6 @@
             style="width: 100%;">
             <el-table-column type="selection" width="50">
             </el-table-column>
-            <!-- <el-table-column prop="id" label="id" width="80"></el-table-column> -->
             <el-table-column type="index" width="50" :index="getindex"></el-table-column>
             <el-table-column prop="username" label="用户名">
             </el-table-column>
@@ -112,27 +111,23 @@
                     <el-form-item label="头像">
                         <el-upload class="upload-demo" ref="upload" action="#" :show-file-list="false"
                             :on-change="handleChange" :auto-upload="false" list-type="picture-card">
-                            <!-- <i class="el-icon-plus"></i> -->
                             <img v-if="form.userphoto" :src="form.userphoto" class="avatar" width="148" height="148">
                             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                         </el-upload>
                     </el-form-item>
                     <el-form-item label="角色" v-if="user.sysroleid === 0 || user.sysroleid === 1">
-                        <!-- <el-input v-model="form.address" type="text" autocomplete="off"></el-input> -->
                         <el-select v-model="form.sysroleid" filterable placeholder="请选择">
                             <el-option v-for="item in rolesys" :key="item.id" :label="item.sysrolename" :value="item.id">
                             </el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="从属角色" v-if="form.sysroleid === 3 || user.sysroleid === 2 || user.sysroleid === 3">
-                        <!-- <el-input v-model="form.address" type="text" autocomplete="off"></el-input> -->
                         <el-select v-model="form.roleid" filterable placeholder="请选择">
                             <el-option v-for="item in roles" :key="item.id" :label="item.rolename" :value="item.id">
                             </el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="所属社团">
-                        <!-- <el-input v-model="form.address" type="text" autocomplete="off"></el-input> -->
                         <el-select v-model="form.clubid" filterable placeholder="请选择">
                             <el-option v-for="item in clubs" :key="item.id" :label="item.clubname" :value="item.id">
                             </el-option>
@@ -171,7 +166,8 @@ export default {
             email: "",
             address: "",
             dialogFormVisible: false,
-            form: {},
+            form: {
+            },
             multipleSelection: [],
             headBg: 'headBg'
         }
@@ -196,6 +192,7 @@ export default {
                 return
             }
             this.form.userphoto = file.url
+            console.log(file.url);
             this.file = file
         },
         getindex(index) {
@@ -290,7 +287,9 @@ export default {
         },
         handleAdd() {
             this.dialogFormVisible = true;
-            this.form = {}
+            this.form = {
+                userphoto: '',
+            }
         },
         handleEdit(row) {
             this.form = row,

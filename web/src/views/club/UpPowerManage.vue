@@ -39,11 +39,6 @@
             </el-table-column>
             <el-table-column prop=" " label=" " width="180">
                 <template slot-scope="scope">
-                    <!-- <el-button type="success" @click="handleEdit(scope.row)">编辑<i class="el-icon-edit"></i></el-button>
-                    <el-popconfirm class="ml-5" confirm-button-text='好的' cancel-button-text='我再想想' icon="el-icon-info"
-                        icon-color="red" title="你确定删除吗？" @confirm="handleDel(scope.row.id)">
-                        <el-button slot="reference" type="danger">删除<i class="el-icon-remove-outline"></i></el-button>
-                    </el-popconfirm> -->
                     <el-button type="success" @click="up(scope.row)" v-if="scope.row.roleid !== 0">升职<i
                             class="el-icon-edit"></i></el-button>
                     <el-button type="danger" @click="down(scope.row)" v-if="scope.row.roleid !== 4">降职<i

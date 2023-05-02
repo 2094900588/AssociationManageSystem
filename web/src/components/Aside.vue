@@ -23,12 +23,6 @@
                     <span slot="title">用户管理</span>
                 </template>
             </el-menu-item>
-            <!-- <el-menu-item index="2-2" :route="{ name: '文件管理' }">
-                <template slot="title">
-                    <i class="el-icon-folder-opened"></i>
-                    <span slot="title">文件管理</span>
-                </template>
-            </el-menu-item> -->
             <el-menu-item index="2-3" :route="{ name: '角色管理' }" v-if="user.sysroleid === 0 || user.sysroleid === 1">
                 <template slot="title">
                     <i class="el-icon-s-custom"></i>
