@@ -35,7 +35,7 @@
             </el-table-column>
             <el-table-column label="活动是否审批">
                 <template slot-scope="scope">
-                    <div v-if="scope.row.ispass !=0">
+                    <div v-if="scope.row.ispass !=0 || scope.row.ispass ==-1">
                         {{ scope.row.notes }}
                     </div>
                     <div v-else>
@@ -100,12 +100,6 @@
                             <el-button size="small" type="primary">点击上传</el-button>
                         </el-upload>
                     </el-form-item>
-                    <el-form-item label="活动是否评分">
-                        <el-input v-model="form.isgrade" type="text" autocomplete="off"></el-input>
-                    </el-form-item>
-                    <el-form-item label="活动评分">
-                        <el-input v-model="form.optiongrade" type="text" autocomplete="off"></el-input>
-                    </el-form-item>
                     <el-form-item label="活动时间">
                         <el-date-picker v-model="form.optiondate" type="date" placeholder="选择日期" value-format="yyyy-MM-dd">
                         </el-date-picker>
@@ -144,6 +138,12 @@
                     <el-form-item label="审批活动">
                         <el-input v-model="form.notes" type="text" autocomplete="off"></el-input>
                     </el-form-item>
+                    <el-form-item label="是否通过">
+                        <template>
+                         <el-radio v-model="radio" :label="1">通过</el-radio>
+                        <el-radio v-model="radio" :label="-1">不通过</el-radio>
+                    </template>
+                    </el-form-item>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
                     <el-button @click="dialogFormVisibletwo = false">取 消</el-button>
@@ -177,7 +177,8 @@ export default {
             dialogFormVisiblepass: false,
             form: {},
             multipleSelection: [],
-            headBg: 'headBg'
+            headBg: 'headBg',
+            radio: 0
         }
     },
     created() {
@@ -252,7 +253,10 @@ export default {
             })
         },
         save() {
-            if(this.form.notes != null){
+            if(this.radio == -1){
+                this.form.ispass = -1
+            }
+            if(this.form.notes != null && this.radio !=-1){
                 this.form.ispass = 1
             }
             if(this.form.optiongrade != null){

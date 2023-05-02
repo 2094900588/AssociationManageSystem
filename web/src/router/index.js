@@ -28,6 +28,11 @@ const routes = [
     ]
   },
   {
+    path: '/',
+    redirect: '/login'
+  }
+  ,
+  {
     path: '/about',
     name: 'About',
     component: () => import('../views/About.vue')
