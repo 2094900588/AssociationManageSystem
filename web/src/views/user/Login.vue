@@ -66,6 +66,7 @@ export default {
             if (e.keyCode === 13) this.login();
         },
         login() {
+            this.err_msg = ""
             if (this.username.length > 10 || this.username.length < 3) {
                 this.err_msg = "用户名长度在 3 到 10 个字符"
                 return false

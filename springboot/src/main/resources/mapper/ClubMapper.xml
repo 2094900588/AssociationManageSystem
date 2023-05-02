@@ -14,7 +14,7 @@
         FROM `sys_club`
             left join `sys_option`
             on sys_option.clubid=sys_club.id
-        WHERE ispass = 1 and isgrade = 1
+        WHERE (ispass = 1 or ispass is NULL )and (isgrade = 1 or isgrade is NULL)
         GROUP BY sys_club.id ${ew.customSqlSegment}
     </select>
 

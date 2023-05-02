@@ -10,10 +10,12 @@ import com.ams.springboot.service.IClubService;
 import com.ams.springboot.service.IUserService;
 import com.ams.springboot.utils.TokenUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/club")
@@ -94,9 +96,6 @@ public class ClubController {
             queryWrapper.like("clubname", clubname);
         }
         queryWrapper.orderByDesc("id");
-        //获取当前用户信息
-//            User currentUser = TokenUtils.getCurrentUser();
-//            System.out.println("获取当前用户信息==================" + currentUser.getNickname());
         return Result.success(clubService.getAllClub(new Page<>(pageNum, pageSize),queryWrapper));
     }
 
