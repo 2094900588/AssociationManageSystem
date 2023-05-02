@@ -41,7 +41,7 @@
                     </el-select>
                 </el-form-item>
                 <el-button @click="reset" style="margin-left: 45%;">重 置</el-button>
-                <el-button type="primary" @click="save">保 存</el-button>
+                <el-button type="primary" @click="save">申 请</el-button>
             </el-form>
         </div>
     </div>
@@ -88,6 +88,10 @@ export default {
             this.form = {}
         },
         save() {
+            if (this.user.sysroleid == 3) {
+                this.form.roleid = this.user.roleid
+                this.form.clubid = this.user.clubid
+            }
             activeapi.save(this.form).then(res => {
                 if (res.code === '200') {
                     this.$message.success("申请成功，前往活动管理页面查看进度")

@@ -23,8 +23,11 @@
             </el-table-column>
             <el-table-column label="活动是否评分">
                 <template slot-scope="scope">
-                    <div v-if="scope.row.isgrade !=0">
+                    <div v-if="scope.row.isgrade != 0">
                         {{ scope.row.optiongrade }}
+                    </div>
+                    <div v-else-if="user.sysroleid == 3">
+                        等待评分
                     </div>
                     <div v-else>
                         <el-button type="primary" @click="handleEdittwo(scope.row)">评分</el-button>
@@ -35,12 +38,18 @@
             </el-table-column>
             <el-table-column label="活动是否审批">
                 <template slot-scope="scope">
-                    <div v-if="scope.row.ispass !=0 || scope.row.ispass ==-1">
+
+
+                    <div v-if="scope.row.ispass != 0 || scope.row.ispass == -1">
                         {{ scope.row.notes }}
+                    </div>
+                    <div v-else-if="user.sysroleid == 3">
+                        等待审批
                     </div>
                     <div v-else>
                         <el-button type="primary" @click="handleEditpass(scope.row)">审批</el-button>
                     </div>
+
                 </template>
             </el-table-column>
             <el-table-column label="角色">
@@ -140,9 +149,9 @@
                     </el-form-item>
                     <el-form-item label="是否通过">
                         <template>
-                         <el-radio v-model="radio" :label="1">通过</el-radio>
-                        <el-radio v-model="radio" :label="-1">不通过</el-radio>
-                    </template>
+                            <el-radio v-model="radio" :label="1">通过</el-radio>
+                            <el-radio v-model="radio" :label="-1">不通过</el-radio>
+                        </template>
                     </el-form-item>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
@@ -253,13 +262,13 @@ export default {
             })
         },
         save() {
-            if(this.radio == -1){
+            if (this.radio == -1) {
                 this.form.ispass = -1
             }
-            if(this.form.notes != null && this.radio !=-1){
+            if (this.form.notes != null && this.radio != -1) {
                 this.form.ispass = 1
             }
-            if(this.form.optiongrade != null){
+            if (this.form.optiongrade != null) {
                 this.form.isgrade = 1
             }
             if (JSON.stringify(this.fileList) == '[]') {
@@ -299,9 +308,9 @@ export default {
 
         },
         //审批弹窗
-        handleEditpass(row){
+        handleEditpass(row) {
             this.form = row,
-            this.dialogFormVisiblepass = true
+                this.dialogFormVisiblepass = true
         },
         // 评分弹窗
         handleEdittwo(row) {
