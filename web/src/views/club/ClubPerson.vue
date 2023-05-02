@@ -30,6 +30,16 @@
             </el-table-column>
             <el-table-column prop="status" label="政治面貌">
             </el-table-column>
+            <el-table-column label="性别">
+                <template slot-scope="scope">
+                    <div v-if="scope.row.sex == 0">
+                        男
+                    </div>
+                    <div v-else>
+                        女
+                    </div>
+                </template>
+            </el-table-column>
             <el-table-column prop="intotime" label="加入社团时间">
             </el-table-column>
             <el-table-column label="角色">
@@ -75,6 +85,12 @@
                     <el-form-item label="社员电话">
                         <el-input v-model="form.phone" type="text" autocomplete="off"></el-input>
                     </el-form-item>
+                    <el-form-item>
+                        <template>
+                            <el-radio v-model="form.sex" :label="0">男</el-radio>
+                            <el-radio v-model="form.sex" :label="1">女</el-radio>
+                        </template>
+                    </el-form-item>
                     <el-form-item label="政治面貌">
                         <el-select v-model="form.status" placeholder="请选择">
                             <el-option v-for="item in ['党员', '预备党员', '共青团员', '群众']" :key="item" :label="item" :value="item">
@@ -85,14 +101,13 @@
                         <el-date-picker v-model="form.intotime" type="date" placeholder="选择日期" value-format="yyyy-MM-dd">
                         </el-date-picker>
                     </el-form-item>
-
                     <el-form-item label="角色">
                         <el-select v-model="form.roleid" filterable placeholder="请选择">
                             <el-option v-for="item in roles" :key="item.id" :label="item.rolename" :value="item.id">
                             </el-option>
                         </el-select>
                     </el-form-item>
-                    <el-form-item label="所属社团">
+                    <el-form-item label="所属社团" v-if="user.sysroleid !== 3">
                         <el-select v-model="form.clubid" filterable placeholder="请选择">
                             <el-option v-for="item in clubs" :key="item.id" :label="item.clubname" :value="item.id">
                             </el-option>
@@ -112,6 +127,7 @@
 import personapi from '@/api/page/person'
 import roleapi from '@/api/page/role'
 import clubapi from '@/api/page/club'
+import { mapState } from 'vuex'
 export default {
     name: "Person",
     data() {
@@ -133,6 +149,9 @@ export default {
     },
     created() {
         this.load()
+    },
+    computed: {
+        ...mapState(['user'])
     },
     methods: {
         getindex(index) {
@@ -184,6 +203,9 @@ export default {
             this.load()
         },
         save() {
+            if (this.user.sysroleid == 3) {
+                this.form.clubid = this.user.clubid
+            }
             personapi.save(this.form).then(res => {
                 if (res.code === '200') {
                     this.$message.success("保存成功"),

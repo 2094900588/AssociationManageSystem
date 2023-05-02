@@ -6,7 +6,7 @@
         select c.*, COUNT(a.clubid) as sum
         FROM sys_club c left join sys_am a
         on c.id = a.clubid
-        GROUP BY c.id  order by COUNT(*) desc ${ew.customSqlSegment}
+        GROUP BY c.id  order by COUNT(a.clubid) desc ${ew.customSqlSegment}
     </select>
 
     <select id="getAllClub" resultType="com.ams.springboot.entity.Club">

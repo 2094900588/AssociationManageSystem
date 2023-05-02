@@ -1,8 +1,36 @@
 <template>
-    <div>
+    <div style="width: 100%;">
         <!-- <h1>这是一个主页</h1> -->
         <div>
-            <el-row style="top:150px; left: 70px;">
+            <el-row :gutter="10" style="margin-bottom: 40px;margin-left: 50px;">
+                <el-col :span="3">
+                    <el-card style="color:#409EFF">
+                        <div><i class="el-icon-postcard" />社团总数</div>
+                        <div style="padding: 10px 0; text-align: center; font-weight: bold">
+                            {{ count_club }}
+                        </div>
+                    </el-card>
+                </el-col>
+                <el-col :span="3" style="margin-left: 30px;">
+                    <el-card style="color:#F56C6C">
+                        <div><i class="el-icon-user-solid" />社员总人数</div>
+                        <div style="padding: 10px 0; text-align: center; font-weight: bold">
+                            {{ count_am }}
+                        </div>
+                    </el-card>
+                </el-col>
+                <el-col :span="3" style="margin-left: 30px;">
+                    <el-card style="color:#F56C6C">
+                        <div><i class="el-icon-user" />用户总人数</div>
+                        <div style="padding: 10px 0; text-align: center; font-weight: bold">
+                            {{ count_user }}
+                        </div>
+                    </el-card>
+                </el-col>
+            </el-row>
+        </div>
+        <div>
+            <el-row style="top:0px; margin-left: 50px;">
                 <el-col :span="10" :offset="0">
                     <el-card :body-style="{ padding: '0px' }" class="table_card">
                         <h1 style="margin-top: 30px;margin-bottom: 20px;">社团积分榜</h1>
@@ -54,6 +82,7 @@
 
 <script>
 import homeapi from '@/api/page/home'
+
 export default {
     name: "Home",
     data() {
@@ -70,12 +99,16 @@ export default {
                 require('@/assets/1.png'),
                 require('@/assets/2.png'),
                 require('@/assets/3.png'),
-            ]
+            ],
+            count_club: 0,
+            count_am: 0,
+            count_user: 0
         }
     },
     created() {
         this.InteLoad()
         this.NumLoad()
+        this.getinfo()
     },
     methods: {
         InteLoad() {
@@ -85,7 +118,6 @@ export default {
                 pageSize: this.IntepageSize,
             }
             homeapi.getIntePage(params).then(res => {
-                console.log(res);
                 this.InteTableData = res.data.records
                 this.Intetotal = res.data.total
                 for (var i = 0; i < this.InteTableData.length; i++)
@@ -108,6 +140,13 @@ export default {
                 // console.log(this.NumTableData);
             })
 
+        },
+        getinfo() {
+            homeapi.getinfo().then(res => {
+                this.count_club = res.data.count_club
+                this.count_am = res.data.count_am
+                this.count_user = res.data.count_user
+            })
         }
     }
 }

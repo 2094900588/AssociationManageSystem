@@ -8,4 +8,7 @@ export default {
     getNumPage(params) {
         return ajax.get("/club/page/sum", { params });
     },
+    getinfo() {
+        return ajax.get("/sys/getinfo")
+    }
 }

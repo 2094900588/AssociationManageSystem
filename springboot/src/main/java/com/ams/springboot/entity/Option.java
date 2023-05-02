@@ -49,7 +49,7 @@ public class Option {
     @ApiModelProperty("举办活动角色ID")
     private Integer roleid;
 
-    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "Asia/Shanghai")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "Asia/Shanghai")
     @ApiModelProperty("活动时间")
     private Date optiondate;
 

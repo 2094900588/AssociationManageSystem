@@ -37,7 +37,7 @@ public class AmController {
     public Result delete(@PathVariable Integer id) {
         User user = TokenUtils.getCurrentUser();
         Operator operator = new Operator();
-        SysRole sysRole = sysRoleService.getById(user.getId());
+        SysRole sysRole = sysRoleService.getById(user.getSysroleid());
         Club club = clubService.getById(user.getClubid());
 
         //填入需要填写的数据

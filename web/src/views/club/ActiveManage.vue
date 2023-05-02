@@ -110,7 +110,8 @@
                         </el-upload>
                     </el-form-item>
                     <el-form-item label="活动时间">
-                        <el-date-picker v-model="form.optiondate" type="date" placeholder="选择日期" value-format="yyyy-MM-dd">
+                        <el-date-picker v-model="form.optiondate" type="date" placeholder="选择日期"
+                            value-format="yyyy-MM-dd HH:mm:ss">
                         </el-date-picker>
                     </el-form-item>
                     <el-form-item label="角色" v-if="user.sysroleid !== 3">

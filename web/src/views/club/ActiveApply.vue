@@ -15,8 +15,8 @@
                     <el-input v-model="form.optionnum" type="text" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="活动时间">
-                    <el-date-picker v-model="form.optiondate" type="date" placeholder="选择日期" value-format="yyyy-MM-dd"
-                        style="width: 100%;">
+                    <el-date-picker v-model="form.optiondate" type="datetime" placeholder="选择日期"
+                        value-format="yyyy-MM-dd HH:mm:ss" style="width: 100%;">
                     </el-date-picker>
                 </el-form-item>
                 <el-form-item label="活动周数">
