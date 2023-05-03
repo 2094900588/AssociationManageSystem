@@ -15,6 +15,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -34,9 +35,10 @@ public class ClubController {
         if (isPower(user)){
             if ("".equals(club.getId())||club.getId()==null){
                 //如果社团id为空说明是新增，直接执行既可
+                club.setClubtime(new Date());
             return Result.success(clubService.saveOrUpdate(club));
             }else {
-                if (isPower(user)||user.getClubid()==club.getId()){
+                if (isPower(user)&&user.getClubid()==club.getId()){
                     return Result.success(clubService.saveOrUpdate(club));
                 }else {
                     return  Result.error(Constants.CODE_401,"社团信息只能由本社团会长和社团联合会管理人员更改!");
@@ -121,7 +123,7 @@ public class ClubController {
 
     //进行权限验证
     public  boolean isPower(User user){
-        if (user.getSysroleid()==0 || user.getSysroleid()==1 || user.getSysroleid()==2 || user.getSysroleid()==3){
+        if (user.getSysroleid()==0 || user.getSysroleid()==1 || user.getSysroleid()==2|| user.getSysroleid()==3){
             return true;
         }else {
             return false;
