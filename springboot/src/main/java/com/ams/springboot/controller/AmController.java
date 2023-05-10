@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/am")
@@ -32,6 +33,11 @@ public class AmController {
         return Result.success(amService.saveOrUpdate(am));
     }
 
+    @PostMapping("import")
+    public Result importAll(@RequestBody List<Am> ams){
+
+        return Result.success(amService.saveBatch(ams));
+    }
     //根据id删除记录
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable Integer id) {

@@ -30,9 +30,9 @@ class SpringbootApplicationTests {
     private ClubMapper clubMapper;
     @Test
     void contextLoads() throws IOException {
-        Page<Club> page = new Page<>(1,1);
-        IPage<Club> clubIPage = clubMapper.getAllClub(page,new QueryWrapper<>());
-        System.out.println(clubIPage.getRecords());
+//        Page<Club> page = new Page<>(1,1);
+//        IPage<Club> clubIPage = clubMapper.getAllClub(page,new QueryWrapper<>());
+//        System.out.println(clubIPage.getRecords());
 //        System.out.println(clubMapper.getAllClub(new QueryWrapper<>()));
     }
 

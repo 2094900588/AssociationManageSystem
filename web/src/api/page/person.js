@@ -13,5 +13,8 @@ export default {
     },
     list() {
         return ajax.get("/am/list");
+    },
+    importAll(data) {
+        return ajax.post("/am/import", data);
     }
 }

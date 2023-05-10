@@ -21,6 +21,7 @@ const routes = [
       { path: 'activeapply', name: '社团活动申请', component: () => import('../views/club/ActiveApply') },
       { path: 'clubmanage', name: '社团管理', component: () => import('../views/club/ClubManage') },
       { path: 'clubperson', name: '社团人员管理', component: () => import('../views/club/ClubPerson') },
+      { path: 'importperson', name: '导入社团人员', component: () => import('../views/club/ImportPerson') },
       { path: 'uppowerperson', name: '社团人员升降职', component: () => import('../views/club/UpPowerManage') },
       { path: 'addcourst', name: '添加无课课表', component: () => import('../views/course/AddCourse') },
       { path: 'listcourse', name: '显示无课课表', component: () => import('../views/course/ListCourse') },

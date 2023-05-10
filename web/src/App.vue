@@ -18,11 +18,12 @@ export default {
 
 <style>
 .index_background {
-  background: url('./assets/bj.bmp') center top no-repeat;
+  background: #7dc24e center top no-repeat;
   /* background-position:left top; */
 }
 
-th,td {
+th,
+td {
   text-align: center !important;
 }
 </style>

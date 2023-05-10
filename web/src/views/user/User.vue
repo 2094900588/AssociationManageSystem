@@ -50,7 +50,7 @@
             </el-table-column>
             <el-table-column label="所属社团">
                 <template slot-scope="scope">
-                    <span>{{ getclub(scope.row.clubid) }}</span>
+                    <span>{{ getclub(scope.row.clubid, scope.row.sysroleid) }}</span>
                 </template>
             </el-table-column>
             <el-table-column prop="studentid" label="学号">
@@ -209,7 +209,8 @@ export default {
             if (t.length === 1) return t[0].rolename;
             return id;
         },
-        getclub(id) {
+        getclub(id, sysid) {
+            if (sysid != null && sysid !== 3) return "无";
             var t = this.clubs.filter((item) => id == item.id)
             if (t.length === 1) return t[0].clubname;
             return id;

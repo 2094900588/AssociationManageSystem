@@ -39,6 +39,7 @@
 import { mapActions, mapState } from 'vuex'
 import userapi from '@/api/page/user'
 import fileapi from '@/api/page/file'
+import router from '@/router'
 export default {
     name: "Person",
     data() {
@@ -77,26 +78,40 @@ export default {
         },
         saveUser() {
             // this.form.password = ""
+            if (this.file == null) {
+                userapi.modifyinfo(this.form).then(res => {
+                    if (res.code === '200') {
+                        this.$message.success("保存成功")
+                        //触发父级更新User的方法
+                        this.getUserInfo()
+                        router.push({ name: "主页" })
+                    } else {
+                        this.$message.error("保存失败")
+                    }
+                })
 
-            let fromdata = new FormData()
-            fromdata.append("file", this.file.raw)
-            fileapi.upload_photo(fromdata).then(res => {
-                if (res.code === '200') {
-                    this.form.userphoto = res.data.url
-                    userapi.modifyinfo(this.form).then(res => {
-                        if (res.code === '200') {
-                            this.$message.success("保存成功")
-                            //触发父级更新User的方法
-                            this.getUserInfo()
-                        } else {
-                            this.$message.error("保存失败")
-                        }
-                    })
-                } else {
-                    this.$message.error(res.msg)
-                    return false
-                }
-            })
+            } else {
+                let fromdata = new FormData()
+                fromdata.append("file", this.file.raw)
+                fileapi.upload_photo(fromdata).then(res => {
+                    if (res.code === '200') {
+                        this.form.userphoto = res.data.url
+                        userapi.modifyinfo(this.form).then(res => {
+                            if (res.code === '200') {
+                                this.$message.success("保存成功")
+                                //触发父级更新User的方法
+                                this.getUserInfo()
+                                router.push({ name: "主页" })
+                            } else {
+                                this.$message.error("保存失败")
+                            }
+                        })
+                    } else {
+                        this.$message.error(res.msg)
+                        return false
+                    }
+                })
+            }
         },
         handleAvatarSuccess(res) {
             this.form.avatarUrl = res
